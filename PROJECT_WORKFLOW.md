@@ -1,0 +1,262 @@
+# Project Workflow Instructions
+
+## Overview
+
+This project follows a **4-phase linear workflow** for software development, with feedback loops and two hard approval gates. The phases are:
+
+**Discovery → Iteration → Documentation → Implementation**
+
+---
+
+## Phase 1: Discovery
+
+**Goal:** Understand the problem space, define requirements at a high level, and establish enough clarity to begin building.
+
+**Activities:**
+- Gather requirements and constraints
+- Define success criteria
+- Identify stakeholders and risks
+- Scope the project
+
+**Exit:** When there is sufficient clarity to begin Iteration. No hard gate — judgment call by the project lead.
+
+---
+
+## Phase 2: Iteration
+
+**Goal:** Build, explore, and decide on the core architecture and product direction. Produce the ARD and PRD.
+
+**Activities:**
+- Develop and refine the **Architecture Requirements Document (ARD)** using the industry-standard ARD template (see below)
+- Develop and refine the **Product Requirements Document (PRD)** using the industry-standard PRD template (see below)
+- Prototype, spike, and validate technical and product assumptions
+- Resolve open questions surfaced during Discovery
+
+**Exit:** 🔒 **Hard Gate — Approval Required (Gate 1)**
+- The project lead reviews the completed ARD and PRD
+- Approval is recorded in the **Approvals Log** (see below)
+- If not approved, team continues iterating or returns to Discovery as needed
+
+---
+
+## Phase 3: Documentation
+
+**Goal:** Produce the full documentation suite required before implementation begins.
+
+**Deliverables:**
+- ✅ Architecture Requirements Document (ARD) — finalized from Iteration
+- ✅ Product Requirements Document (PRD) — finalized from Iteration
+- ✅ Technical Spec / System Design Doc
+- ✅ Deployment / Rollout Plan
+- ✅ User-Facing Docs / Changelog
+
+All deliverables use the defined templates (see Templates section below).
+
+**Exit:** 🔒 **Hard Gate — Approval Required (Gate 2)**
+- The project lead reviews all documentation deliverables against the Gate 2 checklist
+- Approval is recorded in the **Approvals Log**
+- If not approved, team returns to Documentation or Iteration as needed
+
+---
+
+## Phase 4: Implementation
+
+**Goal:** Build and ship the software based on the approved documentation.
+
+**Activities:**
+- Execute against the technical spec and deployment plan
+- Keep user-facing docs and changelog current
+- Surface issues that require looping back (see Feedback Loops)
+
+**Exit:** Shipping / delivery of the project.
+
+---
+
+## Feedback Loops
+
+At any point during **Iteration**, **Documentation**, or **Implementation**, the team may loop back to:
+
+- **Discovery** — if fundamental assumptions or requirements change
+- **Iteration** — if new technical or product decisions need to be made
+
+Looping back does **not** restart a phase from scratch — the team resumes from the point relevant to the issue at hand. However, if changes are substantial enough to affect previously approved gate deliverables, a new approval must be obtained before proceeding forward again.
+
+---
+
+## Approval Process
+
+Both gates use the **same approval process**:
+
+1. **Approver:** Project lead / owner (single approver)
+2. **Process:**
+   - Review all phase deliverables against the relevant gate checklist (below)
+   - Leave written approval or written feedback in the **Approvals Log**
+   - Explicitly state any conditions or concerns before greenlighting
+3. **Record:** All approvals are recorded in this project's **Approvals Log doc**
+
+### Gate 1 Checklist (Iteration → Documentation)
+- [ ] ARD is complete and reviewed
+- [ ] PRD is complete and reviewed
+- [ ] All open questions from Discovery and Iteration are resolved or documented
+- [ ] Technical approach is agreed upon
+
+### Gate 2 Checklist (Documentation → Implementation)
+- [ ] Technical Spec / System Design Doc is complete
+- [ ] Deployment / Rollout Plan is complete
+- [ ] User-Facing Docs / Changelog draft is complete
+- [ ] ARD and PRD reflect any changes made during Documentation
+- [ ] No unresolved blockers
+
+---
+
+## Templates
+
+### ARD — Architecture Requirements Document (Industry Standard)
+
+```
+# Architecture Requirements Document (ARD)
+
+## 1. Overview
+- Project name
+- Purpose and goals
+- Scope
+
+## 2. System Context
+- High-level architecture diagram
+- External systems and integrations
+- Actors / users
+
+## 3. Functional Requirements
+- Core capabilities the system must support
+
+## 4. Non-Functional Requirements
+- Performance, scalability, availability, security, compliance
+
+## 5. Architecture Decisions
+- Key decisions made and rationale (use ADR format where applicable)
+- Alternatives considered and why they were rejected
+
+## 6. Data Architecture
+- Data models, storage, flows
+
+## 7. Security & Access Control
+
+## 8. Infrastructure & Deployment Overview
+
+## 9. Open Questions / Risks
+
+## 10. Revision History
+```
+
+---
+
+### PRD — Product Requirements Document (Industry Standard)
+
+```
+# Product Requirements Document (PRD)
+
+## 1. Overview
+- Product / feature name
+- Problem statement
+- Goals and non-goals
+
+## 2. Background & Context
+- Why now? What led to this?
+
+## 3. User Stories / Jobs to Be Done
+- Who are the users?
+- What are they trying to accomplish?
+
+## 4. Requirements
+### Functional Requirements
+- Feature-by-feature breakdown
+
+### Non-Functional Requirements
+- UX, accessibility, performance expectations
+
+## 5. Success Metrics
+- How will success be measured?
+
+## 6. Out of Scope
+
+## 7. Dependencies & Risks
+
+## 8. Timeline / Milestones (if known)
+
+## 9. Open Questions
+
+## 10. Revision History
+```
+
+---
+
+### Technical Spec / System Design Doc
+
+```
+# Technical Spec
+
+## 1. Summary
+## 2. Goals & Non-Goals
+## 3. Design / Architecture
+## 4. API Contracts
+## 5. Data Models
+## 6. Error Handling & Edge Cases
+## 7. Testing Strategy
+## 8. Performance Considerations
+## 9. Open Questions
+## 10. Revision History
+```
+
+---
+
+### Deployment / Rollout Plan
+
+```
+# Deployment / Rollout Plan
+
+## 1. Overview & Goals
+## 2. Environments (dev, staging, prod)
+## 3. Deployment Steps
+## 4. Rollback Plan
+## 5. Feature Flags / Gradual Rollout Strategy
+## 6. Monitoring & Alerting
+## 7. Go/No-Go Criteria
+## 8. Communication Plan
+```
+
+---
+
+### User-Facing Docs / Changelog
+
+```
+# [Feature / Release Name] — User Documentation
+
+## What's New
+- Summary of changes for end users
+
+## How to Use
+- Step-by-step instructions
+
+## Known Issues / Limitations
+
+---
+
+# Changelog
+
+## [Version] — [Date]
+### Added
+### Changed
+### Fixed
+### Removed
+```
+
+---
+
+## Approvals Log
+
+> All gate approvals are recorded here by the project lead.
+
+| Gate | Date | Approver | Decision | Notes |
+|------|------|----------|----------|-------|
+| Gate 1 (Iteration → Documentation) | 2026-03-11 | Project Lead | Approved | ARD and PRD approved. Key decisions: client-side streaks with server-persisted longest streak, client-side local notifications with server-synced schedules, date-as-doc-ID dedup, user-selected timezone, server-side stats. |
+| Gate 2 (Documentation → Implementation) | | | | |
