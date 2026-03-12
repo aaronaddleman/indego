@@ -1,0 +1,130 @@
+# ─── Scalars ───
+
+scalar DateTime
+scalar Date
+
+# ─── Enums ───
+
+enum FrequencyType {
+  DAILY
+  WEEKLY
+  CUSTOM
+}
+
+# ─── Input Types ───
+
+input FrequencyInput {
+  type: FrequencyType!
+  daysPerWeek: Int
+  specificDays: [String!]
+}
+
+input ReminderInput {
+  enabled: Boolean!
+  time: String        # "HH:MM" in UTC, required if enabled=true
+}
+
+input CreateHabitInput {
+  name: String!
+  frequency: FrequencyInput!
+  reminder: ReminderInput
+}
+
+input UpdateHabitInput {
+  name: String
+  frequency: FrequencyInput
+  reminder: ReminderInput
+}
+
+input DateRangeInput {
+  startDate: Date!
+  endDate: Date!
+}
+
+# ─── Types ───
+
+type User {
+  id: ID!
+  displayName: String!
+  email: String!
+  createdAt: DateTime!
+}
+
+type Frequency {
+  type: FrequencyType!
+  daysPerWeek: Int
+  specificDays: [String!]
+}
+
+type Reminder {
+  enabled: Boolean!
+  time: String          # "HH:MM" in UTC
+}
+
+type Completion {
+  date: Date!
+  completedAt: DateTime!
+}
+
+type Habit {
+  id: ID!
+  name: String!
+  frequency: Frequency!
+  reminder: Reminder!
+  longestStreak: Int!
+  completions: [Completion!]!     # Derived from completions map on habit document
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type HabitStats {
+  habitId: ID!
+  habitName: String!
+  totalCompletions: Int!
+  longestStreak: Int!
+  completionRate: Float!        # 0.0 - 1.0
+}
+
+type UserStats {
+  totalHabits: Int!
+  totalCompletions: Int!
+  habitStats: [HabitStats!]!
+}
+
+# ─── Queries ───
+
+type Query {
+  """Get the current authenticated user's profile"""
+  me: User!
+
+  """Get all habits for the authenticated user"""
+  habits: [Habit!]!
+
+  """Get a single habit by ID"""
+  habit(id: ID!): Habit
+
+  """Get stats for the authenticated user"""
+  stats(dateRange: DateRangeInput!): UserStats!
+}
+
+# ─── Mutations ───
+
+type Mutation {
+  """Create or update the user profile (called on first login)"""
+  upsertUser(displayName: String!): User!
+
+  """Create a new habit"""
+  createHabit(input: CreateHabitInput!): Habit!
+
+  """Update an existing habit"""
+  updateHabit(id: ID!, input: UpdateHabitInput!): Habit!
+
+  """Delete a habit (hard delete)"""
+  deleteHabit(id: ID!): Boolean!
+
+  """Log a completion for a habit on a given date (idempotent). Date is a map key on the habit document."""
+  logCompletion(habitId: ID!, date: Date!): Completion!
+
+  """Remove a completion for a habit on a given date (removes map key)"""
+  undoCompletion(habitId: ID!, date: Date!): Boolean!
+}

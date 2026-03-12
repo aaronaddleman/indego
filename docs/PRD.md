@@ -57,19 +57,18 @@ The project starts as a backend API to establish the data model and business log
 - **List habits:** return all habits for the authenticated user with completion history (clients compute today's status and streaks locally)
 
 #### 4.3 Completion Tracking
-- **Log completion:** mark a habit as done for a given date (defaults to today). Uses date as document ID for natural deduplication — logging the same date twice is an idempotent overwrite.
-- **Undo completion:** remove a completion entry for a given date (delete by date ID)
-- **Completion history:** query completions for a habit within a date range
+- **Log completion:** mark a habit as done for a given date (defaults to today). Stored as a map entry on the habit document (date → UTC timestamp). Logging the same date twice is an idempotent overwrite.
+- **Undo completion:** remove a completion entry for a given date (delete map key)
+- **Completion history:** completions are returned with the habit document — no separate query needed. Clients can filter by date range locally.
 
 #### 4.4 Streaks (client-side with server-persisted longest)
-- **Current streak:** calculated client-side by comparing completion history against the habit's frequency and the current date
-- **Longest streak:** highest current streak ever achieved, persisted on the habit document as a high-water mark. Clients update this when a new record is set. Survives app reinstall / new device without recomputation.
+- **Current streak:** calculated client-side by comparing the completions map against the habit's frequency and the current date (in local timezone)
+- **Longest streak:** highest current streak ever achieved, persisted on the habit document as a high-water mark. Clients write this directly to Firestore when a new record is set. Survives app reinstall / new device without recomputation.
 - Streaks are derived data — the server stores completions, clients compute current streaks
 - Missing a scheduled period resets the current streak to 0
-- "Today" is determined by the user's selected timezone (stored on user profile)
 
 #### 4.5 Reminders (client-side with server-synced schedules)
-- Per-habit reminder with a specific time and timezone, stored on the server
+- Per-habit reminder with a specific time (stored as UTC on the server)
 - Each client subscribes to reminder schedule changes via Firestore real-time listeners
 - Each client independently schedules local notifications (iOS: UNUserNotificationCenter, Web: Service Worker / Notification API)
 - User can enable/disable reminders per habit
@@ -84,13 +83,14 @@ The project starts as a backend API to establish the data model and business log
 #### 4.7 Stats & Analytics (v1 — basic, server-side)
 - Completion rate per habit (completions / expected completions over a date range)
 - Current and longest streak per habit
-- Total completions per habit
-- Computed server-side to support cross-device queries over full history
+- Total completions per habit (count of completions map keys)
+- Computed from the completions map on each habit document — single read per habit
 
-#### 4.8 Timezone
-- User selects a timezone on their profile (defaults to device timezone on signup)
-- "Today" boundary for completions and streaks is based on this timezone
-- v1: timezone is manually set. Future: automatic timezone detection when traveling.
+#### 4.8 Dates & Timezone
+- All dates and timestamps stored as UTC
+- Server is timezone-agnostic — no timezone fields stored
+- Clients convert UTC to the device's local timezone for display and scheduling
+- Completion date keys are determined by the client based on UTC + local timezone offset
 
 ### Non-Functional Requirements
 
@@ -124,7 +124,7 @@ The project starts as a backend API to establish the data model and business log
 | 1 | Firebase Auth availability | Users can't log in | Firebase SLA 99.95%; no mitigation needed for v1 |
 | 2 | Cloud Functions cold starts | Slow first request | Accepted — use min instances in production |
 | 3 | Python → Java/Scala migration | Engineering effort | Layered architecture minimizes blast radius |
-| 4 | Firestore per-read pricing | Cost at scale | Paginate completion queries |
+| 4 | Firestore per-read pricing | Cost at scale | Mitigated — completions stored on habit doc, 1 read per habit |
 | 5 | Offline clients firing stale reminder schedules | Slightly wrong reminder times | Accepted — better than no reminder |
 
 ## 8. Timeline / Milestones
@@ -155,3 +155,4 @@ The project starts as a backend API to establish the data model and business log
 | 2026-03-11 | Discovery/Iteration | Initial draft |
 | 2026-03-11 | Iteration | Moved streaks to client-side, reminders to client-side local notifications with server-synced schedules, removed FCM dependency |
 | 2026-03-11 | Iteration | Added longestStreak persistence, date-as-doc-ID dedup, sync status indicator, server-side stats, user timezone for date boundaries |
+| 2026-03-11 | Documentation | All dates UTC, completions as map on habit doc, removed updateLongestStreak mutation, server timezone-agnostic |
