@@ -129,8 +129,9 @@ class TestLogCompletion:
 
         result = habit_service.log_completion("user-1", "habit-abc", "2026-03-11")
 
-        assert result["date"] == "2026-03-11"
-        assert result["completedAt"] is not None
+        assert result["id"] == "habit-abc"
+        assert result["name"] == "Read for 30 minutes"
+        assert "completions" in result
 
     def test_rejects_future_date(self):
         with pytest.raises(ValidationError, match="future date"):
@@ -150,14 +151,17 @@ class TestLogCompletion:
 
 class TestUndoCompletion:
     @patch("app.services.habit_service.habit_repo")
-    def test_undoes_completion(self, mock_repo):
-        mock_repo.undo_completion.return_value = True
+    def test_undoes_completion(self, mock_repo, sample_habit):
+        mock_repo.undo_completion.return_value = sample_habit
 
-        assert habit_service.undo_completion("user-1", "habit-abc", "2026-03-11") is True
+        result = habit_service.undo_completion("user-1", "habit-abc", "2026-03-11")
+
+        assert result["id"] == "habit-abc"
+        assert result["name"] == "Read for 30 minutes"
 
     @patch("app.services.habit_service.habit_repo")
     def test_raises_not_found(self, mock_repo):
-        mock_repo.undo_completion.return_value = False
+        mock_repo.undo_completion.return_value = None
 
         with pytest.raises(NotFoundError, match="Habit not found"):
             habit_service.undo_completion("user-1", "missing", "2026-03-11")

@@ -1,0 +1,64 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-3);
+}
+
+.monthLabel {
+  font-weight: var(--font-weight-semibold);
+}
+
+.navBtn {
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-sm);
+  color: var(--color-neutral-600);
+  font-size: var(--font-size-lg);
+}
+
+.navBtn:hover {
+  background: var(--color-neutral-100);
+}
+
+.weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: var(--space-1);
+  margin-bottom: var(--space-2);
+}
+
+.weekday {
+  text-align: center;
+  font-size: var(--font-size-xs);
+  color: var(--color-neutral-500);
+  font-weight: var(--font-weight-medium);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: var(--space-1);
+}
+
+.cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-1);
+  min-height: 56px;
+}
+
+.outside {
+  opacity: 0.3;
+}
+
+.dayNum {
+  font-size: var(--font-size-xs);
+  color: var(--color-neutral-600);
+}
+
+.today {
+  color: var(--color-primary-600);
+  font-weight: var(--font-weight-bold);
+}

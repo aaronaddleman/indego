@@ -131,8 +131,8 @@ type Mutation {
   deleteHabit(id: ID!): Boolean!
 
   """Log a completion for a habit on a given date (idempotent). Date is a map key on the habit document."""
-  logCompletion(habitId: ID!, date: Date!): Completion!
+  logCompletion(habitId: ID!, date: Date!): Habit!
 
   """Remove a completion for a habit on a given date (removes map key)"""
-  undoCompletion(habitId: ID!, date: Date!): Boolean!
+  undoCompletion(habitId: ID!, date: Date!): Habit!
 }

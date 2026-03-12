@@ -1,0 +1,55 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: var(--space-6);
+}
+
+.title {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+}
+
+.frequency {
+  color: var(--color-neutral-500);
+  font-size: var(--font-size-sm);
+  text-transform: capitalize;
+  margin-top: var(--space-1);
+}
+
+.actions {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.editBtn {
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-neutral-300);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+  color: var(--color-neutral-700);
+  transition: background var(--transition-fast);
+}
+
+.editBtn:hover {
+  background: var(--color-neutral-100);
+}
+
+.deleteBtn {
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-error);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+  color: var(--color-error);
+  transition: background var(--transition-fast);
+}
+
+.deleteBtn:hover {
+  background: var(--color-error-light);
+}
+
+.streaks {
+  display: flex;
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+}

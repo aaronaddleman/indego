@@ -1,0 +1,23 @@
+.container {
+  text-align: center;
+  padding: var(--space-12) var(--space-4);
+}
+
+.message {
+  color: var(--color-neutral-500);
+  font-size: var(--font-size-lg);
+  margin-bottom: var(--space-4);
+}
+
+.btn {
+  padding: var(--space-3) var(--space-6);
+  background: var(--color-primary-600);
+  color: white;
+  border-radius: var(--radius-md);
+  font-weight: var(--font-weight-medium);
+  transition: background var(--transition-fast);
+}
+
+.btn:hover {
+  background: var(--color-primary-700);
+}
