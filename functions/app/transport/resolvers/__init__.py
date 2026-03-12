@@ -1,15 +1,24 @@
 """GraphQL resolvers package."""
 
+import json
 import os
+from pathlib import Path
 
 from ariadne import QueryType, MutationType, ObjectType
 
 
+def _load_version():
+    version_file = Path(__file__).resolve().parent.parent.parent.parent / "version.json"
+    if version_file.exists():
+        return json.loads(version_file.read_text())
+    return {"commit": "unknown", "deployedAt": "unknown"}
+
+
+_version_info = _load_version()
+
+
 def resolve_version(_, info):
-    return {
-        "commit": os.getenv("GIT_COMMIT", "unknown"),
-        "deployedAt": os.getenv("DEPLOYED_AT", "unknown"),
-    }
+    return _version_info
 
 from app.transport.resolvers.user import resolve_me, resolve_upsert_user
 from app.transport.resolvers.habit import (

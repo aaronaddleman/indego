@@ -12,7 +12,78 @@ from app.auth import get_context_value
 
 initialize_app()
 schema = create_schema()
-explorer = ExplorerGraphiQL()
+explorer = ExplorerGraphiQL(
+    default_query="""\
+# Indago Habits API — Example Queries
+# Run version check first (no auth needed), then set
+# an Authorization header below for the rest.
+
+# ─── No Auth Required ───────────────────────────
+{ version { commit deployedAt } }
+
+# ─── Queries (require Authorization header) ─────
+#
+# { me { id email displayName createdAt } }
+#
+# { habits { id name frequency reminderTime createdAt } }
+#
+# query GetHabit($id: ID!) {
+#   habit(id: $id) {
+#     id name frequency
+#     completions { date completedAt }
+#   }
+# }
+#
+# {
+#   stats(from: "2026-03-01", to: "2026-03-11") {
+#     totalHabits completionRate completions expected
+#   }
+# }
+
+# ─── Mutations (require Authorization header) ────
+#
+# mutation {
+#   upsertUser(input: { displayName: "Aaron" }) {
+#     id email displayName createdAt
+#   }
+# }
+#
+# mutation {
+#   createHabit(input: {
+#     name: "Morning Run"
+#     frequency: DAILY
+#     reminderTime: "07:00"
+#   }) {
+#     id name frequency reminderTime createdAt
+#   }
+# }
+#
+# mutation UpdateHabit($id: ID!) {
+#   updateHabit(id: $id, input: {
+#     name: "Evening Run"
+#     reminderTime: "18:00"
+#   }) {
+#     id name reminderTime
+#   }
+# }
+#
+# mutation LogCompletion($id: ID!) {
+#   logCompletion(habitId: $id, date: "2026-03-11") {
+#     id name completions { date completedAt }
+#   }
+# }
+#
+# mutation UndoCompletion($id: ID!) {
+#   undoCompletion(habitId: $id, date: "2026-03-11") {
+#     id name completions { date completedAt }
+#   }
+# }
+#
+# mutation DeleteHabit($id: ID!) {
+#   deleteHabit(id: $id)
+# }
+""",
+)
 
 
 @https_fn.on_request()

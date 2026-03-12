@@ -2,7 +2,13 @@
   "functions": {
     "source": "functions",
     "runtime": "python312",
-    "codebase": "default"
+    "codebase": "default",
+    "ignore": [
+      "venv",
+      "__pycache__",
+      ".pytest_cache",
+      "tests"
+    ]
   },
   "firestore": {
     "rules": "firestore.rules"
