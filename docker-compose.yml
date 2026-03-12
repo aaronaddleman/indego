@@ -1,0 +1,39 @@
+services:
+  emulators:
+    build: .
+    command: firebase emulators:start --project demo-indago
+    ports:
+      - "4000:4000"   # Emulator UI
+      - "5001:5001"   # Cloud Functions
+      - "8080:8080"   # Firestore
+      - "9099:9099"   # Auth
+    volumes:
+      - ./functions:/app/functions    # Hot reload
+      - ./firebase.json:/app/firebase.json
+      - ./firestore.rules:/app/firestore.rules
+    environment:
+      - GCLOUD_PROJECT=demo-indago
+      - FIRESTORE_EMULATOR_HOST=localhost:8080
+      - FIREBASE_AUTH_EMULATOR_HOST=localhost:9099
+
+  test:
+    build: .
+    command: >
+      firebase emulators:exec
+        "pytest functions/tests/ -v"
+        --project demo-indago
+    environment:
+      - FIRESTORE_EMULATOR_HOST=localhost:8080
+      - FIREBASE_AUTH_EMULATOR_HOST=localhost:9099
+    profiles: ["test"]
+
+  firebase:
+    build: .
+    entrypoint: firebase
+    volumes:
+      - ./.firebaserc:/app/.firebaserc
+      - firebase-config:/root/.config    # Persist login credentials
+    profiles: ["cli"]
+
+volumes:
+  firebase-config:

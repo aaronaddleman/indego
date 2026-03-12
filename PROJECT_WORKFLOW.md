@@ -259,4 +259,4 @@ Both gates use the **same approval process**:
 | Gate | Date | Approver | Decision | Notes |
 |------|------|----------|----------|-------|
 | Gate 1 (Iteration → Documentation) | 2026-03-11 | Project Lead | Approved | ARD and PRD approved. Key decisions: client-side streaks with server-persisted longest streak, client-side local notifications with server-synced schedules, date-as-doc-ID dedup, user-selected timezone, server-side stats. |
-| Gate 2 (Documentation → Implementation) | | | | |
+| Gate 2 (Documentation → Implementation) | 2026-03-11 | Project Lead | Approved | Full doc suite approved. Technical Spec, Deployment Plan, and Changelog all consistent with ARD/PRD. Final architecture: all dates UTC, completions as map on habit doc, no updateLongestStreak mutation, simplified project structure, Docker for dev/CI/CD, firebase.json config. |
