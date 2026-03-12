@@ -35,5 +35,15 @@ services:
       - firebase-config:/root/.config    # Persist login credentials
     profiles: ["cli"]
 
+  deploy-web:
+    build: .
+    entrypoint: firebase
+    command: deploy --only hosting --project indego-bc76b
+    volumes:
+      - ../web/dist:/app/dist
+      - ../web/firebase.json:/app/firebase.json
+      - firebase-config:/root/.config
+    profiles: ["deploy"]
+
 volumes:
   firebase-config:

@@ -138,21 +138,22 @@ def delete_habit(user_id: str, habit_id: str) -> bool:
 
 
 def log_completion(user_id: str, habit_id: str, date_str: str) -> dict:
-    """Log a completion for a habit on a given date."""
+    """Log a completion for a habit on a given date. Returns the updated habit."""
     _validate_date(date_str)
 
     result = habit_repo.log_completion(user_id, habit_id, date_str)
     if result is None:
         raise NotFoundError("Habit not found")
 
-    completed_at = result["completions"].get(date_str)
-    return {"date": date_str, "completedAt": completed_at}
+    return result
 
 
-def undo_completion(user_id: str, habit_id: str, date_str: str) -> bool:
-    """Remove a completion for a habit on a given date."""
+def undo_completion(user_id: str, habit_id: str, date_str: str) -> dict:
+    """Remove a completion for a habit on a given date. Returns the updated habit."""
     _validate_date(date_str)
-    found = habit_repo.undo_completion(user_id, habit_id, date_str)
-    if not found:
+
+    result = habit_repo.undo_completion(user_id, habit_id, date_str)
+    if result is None:
         raise NotFoundError("Habit not found")
-    return True
+
+    return result

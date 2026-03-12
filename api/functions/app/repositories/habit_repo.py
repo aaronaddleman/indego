@@ -106,15 +106,19 @@ def log_completion(user_id: str, habit_id: str, date_str: str) -> dict | None:
     return result
 
 
-def undo_completion(user_id: str, habit_id: str, date_str: str) -> bool:
-    """Remove a completion map key. Returns True if habit exists."""
+def undo_completion(user_id: str, habit_id: str, date_str: str) -> dict | None:
+    """Remove a completion map key. Returns updated habit data, or None if not found."""
     ref = _habits_collection(user_id).document(habit_id)
     doc = ref.get()
     if not doc.exists:
-        return False
+        return None
 
     ref.update({
         f"completions.{date_str}": firestore.DELETE_FIELD,
         "updatedAt": datetime.now(timezone.utc),
     })
-    return True
+
+    updated = ref.get()
+    result = updated.to_dict()
+    result["id"] = updated.id
+    return result

@@ -1,0 +1,41 @@
+services:
+  dev:
+    build: .
+    command: npm run dev -- --host 0.0.0.0
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./src:/app/src
+      - ./public:/app/public
+      - ./index.html:/app/index.html
+      - ./vite.config.ts:/app/vite.config.ts
+      - ./tsconfig.json:/app/tsconfig.json
+      - ./tsconfig.app.json:/app/tsconfig.app.json
+    environment:
+      - VITE_GRAPHQL_URL=https://us-central1-indego-bc76b.cloudfunctions.net/graphql
+      - VITE_FIREBASE_API_KEY=${VITE_FIREBASE_API_KEY}
+      - VITE_FIREBASE_AUTH_DOMAIN=indego-bc76b.firebaseapp.com
+      - VITE_FIREBASE_PROJECT_ID=indego-bc76b
+
+  build:
+    build: .
+    command: npm run build
+    volumes:
+      - ./src:/app/src
+      - ./public:/app/public
+      - ./index.html:/app/index.html
+      - ./vite.config.ts:/app/vite.config.ts
+      - ./tsconfig.json:/app/tsconfig.json
+      - ./tsconfig.app.json:/app/tsconfig.app.json
+      - ./dist:/app/dist
+    environment:
+      - VITE_GRAPHQL_URL=https://us-central1-indego-bc76b.cloudfunctions.net/graphql
+    profiles: ["build"]
+
+  test:
+    build: .
+    command: npm test
+    volumes:
+      - ./src:/app/src
+      - ./tests:/app/tests
+    profiles: ["test"]
