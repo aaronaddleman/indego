@@ -4,21 +4,24 @@
 
 ```
 indago/
-├── functions/              # GraphQL API (Python/Ariadne on Firebase Cloud Functions)
-│   ├── schema.graphql      # ← Single source of truth for the API contract
-│   ├── main.py             # Cloud Function entry point
-│   └── app/                # Layered: transport → services → repositories
-├── ios/                    # iOS client (SwiftUI) — planned
-├── web/                    # Web client — planned
-├── docs/                   # Project documentation (ARD, PRD, specs)
-├── Dockerfile              # Build/test/deploy image
-├── docker-compose.yml      # Local dev (emulators), tests, Firebase CLI
-└── firestore.rules         # Firestore security rules
+├── api/                       # Firebase backend
+│   ├── functions/             # GraphQL API (Python/Ariadne on Firebase Cloud Functions)
+│   │   ├── schema.graphql     # ← Single source of truth for the API contract
+│   │   ├── main.py            # Cloud Function entry point
+│   │   └── app/               # Layered: transport → services → repositories
+│   ├── Dockerfile             # Build/test/deploy image
+│   ├── docker-compose.yml     # Local dev (emulators), tests, Firebase CLI
+│   ├── firebase.json          # Firebase config
+│   └── firestore.rules        # Firestore security rules
+├── ios/                       # iOS client (SwiftUI) — planned
+├── web/                       # Web client — planned
+├── docs/                      # Project documentation (ARD, PRD, specs)
+└── PROJECT_WORKFLOW.md        # Workflow definition and gate approvals
 ```
 
 ## Key Architecture Decisions
 
-- **GraphQL API** (schema-first with Ariadne) — `functions/schema.graphql` is the contract
+- **GraphQL API** (schema-first with Ariadne) — `api/functions/schema.graphql` is the contract
 - **Firebase**: Cloud Functions (Python 3.12), Firestore (Native mode), Firebase Auth
 - **All dates UTC** — server is timezone-agnostic, clients handle conversion
 - **Completions** stored as a map on the habit document (date string → UTC timestamp)
@@ -35,7 +38,11 @@ indago/
 
 ## Docker Commands
 
+All Docker commands run from the `api/` directory:
+
 ```bash
+cd api/
+
 # Run tests
 docker compose run --rm test
 
@@ -45,6 +52,11 @@ docker compose up emulators
 # Firebase CLI (login, deploy, etc.)
 docker compose run --rm firebase login --no-localhost
 docker compose run --rm firebase deploy --only functions,firestore:rules --project indego-bc76b
+
+# Deploy with version tracking
+echo '{"commit":"'$(git -C .. rev-parse --short HEAD)'","deployedAt":"'$(date -u +%Y-%m-%dT%H:%M:%SZ)'"}' > functions/version.json
+docker compose build firebase
+docker compose run --rm firebase deploy --only functions --project indego-bc76b
 ```
 
 ## Document Storage
@@ -67,8 +79,8 @@ See [PROJECT_WORKFLOW.md](PROJECT_WORKFLOW.md) for the full workflow definition,
 
 ## Conventions
 
-- `functions/schema.graphql` is the single source of truth — update it first, then resolvers, then clients
+- `api/functions/schema.graphql` is the single source of truth — update it first, then resolvers, then clients
 - All client projects (iOS, web) should reference the shared schema
 - Follow templates defined in PROJECT_WORKFLOW.md when creating documents
 - When generating or updating docs, always write to the `docs/` directory
-- Use Docker for all build/test/deploy operations
+- Use Docker for all build/test/deploy operations (run from `api/`)
