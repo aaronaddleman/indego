@@ -16,6 +16,20 @@ interface Props {
   onClose: () => void;
 }
 
+function utcToLocal(utcTime: string): string {
+  const [h, m] = utcTime.split(':').map(Number);
+  const now = new Date();
+  now.setUTCHours(h, m, 0, 0);
+  return `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+}
+
+function localToUtc(localTime: string): string {
+  const [h, m] = localTime.split(':').map(Number);
+  const now = new Date();
+  now.setHours(h, m, 0, 0);
+  return `${String(now.getUTCHours()).padStart(2, '0')}:${String(now.getUTCMinutes()).padStart(2, '0')}`;
+}
+
 export default function HabitForm({ habit, onClose }: Props) {
   const isEdit = !!habit;
   const [name, setName] = useState(habit?.name || '');
@@ -23,7 +37,9 @@ export default function HabitForm({ habit, onClose }: Props) {
   const [daysPerWeek, setDaysPerWeek] = useState(habit?.frequency.daysPerWeek || 3);
   const [specificDays, setSpecificDays] = useState<string[]>(habit?.frequency.specificDays || []);
   const [reminderEnabled, setReminderEnabled] = useState(habit?.reminder.enabled || false);
-  const [reminderTime, setReminderTime] = useState(habit?.reminder.time || '09:00');
+  const [reminderTime, setReminderTime] = useState(
+    habit?.reminder.time ? utcToLocal(habit.reminder.time) : '09:00'
+  );
   const [error, setError] = useState('');
 
   const [createHabit, { loading: creating }] = useMutation(CREATE_HABIT, {
@@ -53,7 +69,7 @@ export default function HabitForm({ habit, onClose }: Props) {
 
     const reminder = {
       enabled: reminderEnabled,
-      ...(reminderEnabled && { time: reminderTime }),
+      ...(reminderEnabled && { time: localToUtc(reminderTime) }),
     };
 
     const input = { name, frequency, reminder };
@@ -141,7 +157,7 @@ export default function HabitForm({ habit, onClose }: Props) {
 
           {reminderEnabled && (
             <label className={styles.label}>
-              Reminder time (UTC)
+              Reminder time
               <input
                 type="time"
                 value={reminderTime}

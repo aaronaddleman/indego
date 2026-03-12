@@ -1,7 +1,7 @@
 """Business logic for Habit and Completion operations."""
 
 import re
-from datetime import date, datetime, timezone
+from datetime import date, datetime, timedelta, timezone
 
 from graphql import GraphQLError
 
@@ -72,7 +72,8 @@ def _validate_date(date_str: str) -> date:
     except ValueError:
         raise ValidationError(f"Invalid date: {date_str}")
 
-    if parsed > date.today():
+    # Allow up to +1 day ahead to accommodate clients ahead of UTC (up to UTC+14)
+    if parsed > date.today() + timedelta(days=1):
         raise ValidationError("Cannot log completion for a future date")
 
     return parsed

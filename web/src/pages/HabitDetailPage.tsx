@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/client';
+import { format, parseISO } from 'date-fns';
 import { GET_HABIT, GET_HABITS } from '../graphql/queries';
 import { DELETE_HABIT } from '../graphql/mutations';
 import CalendarTabs from '../components/calendar/CalendarTabs';
@@ -56,6 +57,28 @@ export default function HabitDetailPage() {
       </div>
 
       <CalendarTabs habit={habit} />
+
+      <div className={styles.historySection}>
+        <h2 className={styles.historyTitle}>Completion History</h2>
+        {habit.completions.length === 0 ? (
+          <p className={styles.historyEmpty}>No completions yet.</p>
+        ) : (
+          <div className={styles.historyList}>
+            {[...habit.completions]
+              .sort((a: { date: string }, b: { date: string }) => b.date.localeCompare(a.date))
+              .map((c: { date: string; completedAt: string }) => (
+                <div key={c.date} className={styles.historyItem}>
+                  <span className={styles.historyDate}>
+                    {format(parseISO(c.date), 'EEE, MMM d, yyyy')}
+                  </span>
+                  <span className={styles.historyTime}>
+                    {format(parseISO(c.completedAt), 'h:mm a')}
+                  </span>
+                </div>
+              ))}
+          </div>
+        )}
+      </div>
 
       {showEdit && (
         <HabitForm habit={habit} onClose={() => setShowEdit(false)} />
