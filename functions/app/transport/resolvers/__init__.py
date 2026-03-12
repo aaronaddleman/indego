@@ -1,6 +1,15 @@
 """GraphQL resolvers package."""
 
+import os
+
 from ariadne import QueryType, MutationType, ObjectType
+
+
+def resolve_version(_, info):
+    return {
+        "commit": os.getenv("GIT_COMMIT", "unknown"),
+        "deployedAt": os.getenv("DEPLOYED_AT", "unknown"),
+    }
 
 from app.transport.resolvers.user import resolve_me, resolve_upsert_user
 from app.transport.resolvers.habit import (
@@ -20,6 +29,7 @@ mutation = MutationType()
 habit_type = ObjectType("Habit")
 
 # Queries
+query.set_field("version", resolve_version)
 query.set_field("me", resolve_me)
 query.set_field("habits", resolve_habits)
 query.set_field("habit", resolve_habit)

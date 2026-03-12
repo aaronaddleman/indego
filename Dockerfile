@@ -9,6 +9,12 @@ RUN apt-get update && apt-get install -y curl openjdk-21-jre-headless && \
 
 WORKDIR /app
 
+# Version info (passed at build time)
+ARG GIT_COMMIT=unknown
+ARG DEPLOYED_AT=unknown
+ENV GIT_COMMIT=${GIT_COMMIT}
+ENV DEPLOYED_AT=${DEPLOYED_AT}
+
 # Copy project
 COPY . .
 

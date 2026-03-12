@@ -85,6 +85,11 @@ type HabitStats {
   completionRate: Float!        # 0.0 - 1.0
 }
 
+type Version {
+  commit: String!
+  deployedAt: String!
+}
+
 type UserStats {
   totalHabits: Int!
   totalCompletions: Int!
@@ -94,6 +99,9 @@ type UserStats {
 # ─── Queries ───
 
 type Query {
+  """API version info (no auth required)"""
+  version: Version!
+
   """Get the current authenticated user's profile"""
   me: User!
 

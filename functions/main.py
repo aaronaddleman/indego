@@ -5,12 +5,14 @@ import json
 from firebase_functions import https_fn
 from firebase_admin import initialize_app
 from ariadne import graphql_sync
+from ariadne.explorer import ExplorerGraphiQL
 
 from app import create_schema
 from app.auth import get_context_value
 
 initialize_app()
 schema = create_schema()
+explorer = ExplorerGraphiQL()
 
 
 @https_fn.on_request()
@@ -26,8 +28,10 @@ def graphql(req: https_fn.Request) -> https_fn.Response:
         }
         return https_fn.Response("", status=204, headers=headers)
 
-    if req.method != "POST":
-        return https_fn.Response("Method not allowed", status=405)
+    # Serve GraphiQL explorer on GET requests
+    if req.method == "GET":
+        html = explorer.html(None)
+        return https_fn.Response(html, status=200, content_type="text/html")
 
     try:
         data = req.get_json()
