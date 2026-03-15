@@ -1,4 +1,3 @@
-import { useMemo } from 'react';
 import { addDays, format, startOfDay } from 'date-fns';
 import { useMutation } from '@apollo/client';
 import { LOG_COMPLETION, UNDO_COMPLETION } from '../../graphql/mutations';
@@ -17,15 +16,8 @@ interface Props {
 export default function WeekStrip({ habitId, completions }: Props) {
   const today = startOfDay(new Date());
   const todayStr = format(today, 'yyyy-MM-dd');
-  const completedDates = useMemo(
-    () => new Set(completions.map(c => c.date)),
-    [completions]
-  );
-
-  const days = useMemo(
-    () => [-3, -2, -1, 0, 1, 2, 3].map(offset => addDays(today, offset)),
-    [todayStr]
-  );
+  const completedDates = new Set(completions.map(c => c.date));
+  const days = [-3, -2, -1, 0, 1, 2, 3].map(offset => addDays(today, offset));
 
   const [logCompletion, { loading: logging }] = useMutation(LOG_COMPLETION);
   const [undoCompletion, { loading: undoing }] = useMutation(UNDO_COMPLETION);
