@@ -5,7 +5,7 @@ on:
     branches: [main]
 
 jobs:
-  # ── API: Test + Deploy to preview ──
+  # ── API: Test + Deploy ──
   api-test:
     runs-on: ubuntu-latest
     defaults:
@@ -13,7 +13,39 @@ jobs:
         working-directory: api
     steps:
       - uses: actions/checkout@v4
-      - run: docker compose run --rm test
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Cache Docker layers
+        uses: actions/cache@v4
+        with:
+          path: /tmp/.buildx-cache
+          key: docker-api-${{ hashFiles('api/Dockerfile', 'api/functions/requirements.txt') }}
+          restore-keys: docker-api-
+
+      - name: Build Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: api
+          load: true
+          tags: indago-api:test
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max
+
+      - name: Run tests
+        run: |
+          docker run --rm indago-api:test \
+            firebase emulators:exec \
+              "pytest functions/tests/ -v" \
+              --project demo-indago
+
+      # Prevent cache from growing unbounded
+      - name: Move cache
+        if: always()
+        run: |
+          rm -rf /tmp/.buildx-cache
+          mv /tmp/.buildx-cache-new /tmp/.buildx-cache
 
   api-deploy:
     needs: api-test
@@ -42,8 +74,7 @@ jobs:
         run: npm install -g firebase-tools
 
       - name: Install Python dependencies
-        run: |
-          python3 -m pip install -r functions/requirements.txt
+        run: python3 -m pip install -r functions/requirements.txt
 
       - name: Deploy functions + Firestore rules
         run: firebase deploy --only functions,firestore:rules --project indego-bc76b
