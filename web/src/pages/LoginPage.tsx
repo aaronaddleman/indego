@@ -52,19 +52,31 @@ export default function LoginPage() {
     e.preventDefault();
     setError('');
 
-    // Check allowlist before auth
-    const allowed = await checkEmailAllowed(email);
-    if (!allowed) {
-      navigate('/restricted');
-      return;
-    }
-
     try {
       if (isSignUp) {
         const result = await createUserWithEmailAndPassword(auth, email, password);
-        await handleSuccess(result.user.email || 'User');
+        const userEmail = result.user.email || '';
+
+        // Check allowlist after account creation but before upsertUser
+        const allowed = await checkEmailAllowed(userEmail);
+        if (!allowed) {
+          await auth.signOut();
+          navigate('/restricted');
+          return;
+        }
+
+        await handleSuccess(userEmail || 'User');
       } else {
         await signInWithEmailAndPassword(auth, email, password);
+
+        // Check allowlist after sign-in but before navigating
+        const allowed = await checkEmailAllowed(email);
+        if (!allowed) {
+          await auth.signOut();
+          navigate('/restricted');
+          return;
+        }
+
         navigate('/');
       }
     } catch (err: unknown) {
