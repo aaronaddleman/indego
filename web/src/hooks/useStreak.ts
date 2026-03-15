@@ -1,5 +1,5 @@
-import { useMemo } from 'react';
-import { format, subDays } from 'date-fns';
+import { format } from 'date-fns';
+import { computeStreaks, type StreakResult } from './streakCalc';
 
 interface Completion {
   date: string;
@@ -11,52 +11,9 @@ interface Habit {
   completions: Completion[];
 }
 
-export function useStreak(habit: Habit | null | undefined): number {
-  return useMemo(() => {
-    if (!habit) return 0;
+export function useStreak(habit: Habit | null | undefined): StreakResult {
+  if (!habit) return { current: 0, longest: 0 };
 
-    const completedDates = new Set(habit.completions.map(c => c.date));
-    const today = format(new Date(), 'yyyy-MM-dd');
-    const freqType = habit.frequency.type;
-
-    // For DAILY: walk backwards from today counting consecutive completed days
-    if (freqType === 'DAILY') {
-      let streak = 0;
-      let current = new Date();
-
-      // If today isn't completed yet, start checking from yesterday
-      if (!completedDates.has(today)) {
-        current = subDays(current, 1);
-      }
-
-      while (true) {
-        const dateStr = format(current, 'yyyy-MM-dd');
-        if (completedDates.has(dateStr)) {
-          streak++;
-          current = subDays(current, 1);
-        } else {
-          break;
-        }
-      }
-      return streak;
-    }
-
-    // For WEEKLY and CUSTOM: simplified — count consecutive completed days
-    // A more precise implementation would check only expected days
-    let streak = 0;
-    let current = new Date();
-    if (!completedDates.has(today)) {
-      current = subDays(current, 1);
-    }
-    while (true) {
-      const dateStr = format(current, 'yyyy-MM-dd');
-      if (completedDates.has(dateStr)) {
-        streak++;
-        current = subDays(current, 1);
-      } else {
-        break;
-      }
-    }
-    return streak;
-  }, [habit]);
+  const today = format(new Date(), 'yyyy-MM-dd');
+  return computeStreaks(habit.completions, habit.frequency, today);
 }

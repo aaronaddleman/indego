@@ -8,6 +8,7 @@ import WeekStrip from '../components/calendar/WeekStrip';
 import CompleteButton from '../components/habits/CompleteButton';
 import HabitForm from '../components/habits/HabitForm';
 import { useStreak } from '../hooks/useStreak';
+import { useLongestStreakSync } from '../hooks/useLongestStreakSync';
 import styles from './HabitDetailPage.module.css';
 
 function formatFrequency(frequency: { type: string; daysPerWeek?: number; specificDays?: string[] }): string {
@@ -32,8 +33,11 @@ export default function HabitDetailPage() {
   const today = format(new Date(), 'yyyy-MM-dd');
 
   const habit = data?.habit;
-  const currentStreak = useStreak(habit);
+  const streaks = useStreak(habit);
   const completedToday = habit?.completions.some((c: { date: string }) => c.date === today) ?? false;
+
+  // Sync longest streak to Firestore (immediate write on detail page)
+  useLongestStreakSync(habit?.id, streaks.longest, habit?.longestStreak ?? 0);
 
   const [logCompletion, { loading: logging }] = useMutation(LOG_COMPLETION);
   const [undoCompletion, { loading: undoing }] = useMutation(UNDO_COMPLETION);
@@ -80,11 +84,11 @@ export default function HabitDetailPage() {
 
       <div className={styles.streaks}>
         <div className={styles.streakItem}>
-          <span className={styles.streakNumber}>{currentStreak}</span>
+          <span className={styles.streakNumber}>{streaks.current}</span>
           <span className={styles.streakLabel}>current</span>
         </div>
         <div className={styles.streakItem}>
-          <span className={styles.streakNumber}>{habit.longestStreak}</span>
+          <span className={styles.streakNumber}>{streaks.longest}</span>
           <span className={styles.streakLabel}>longest</span>
         </div>
       </div>
