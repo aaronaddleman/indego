@@ -5,6 +5,7 @@ import {
   GoogleAuthProvider,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
+  deleteUser,
 } from 'firebase/auth';
 import { useMutation } from '@apollo/client';
 import { auth } from '../config/firebase';
@@ -60,7 +61,7 @@ export default function LoginPage() {
         // Check allowlist after account creation but before upsertUser
         const allowed = await checkEmailAllowed(userEmail);
         if (!allowed) {
-          await auth.signOut();
+          await deleteUser(result.user);
           navigate('/restricted');
           return;
         }
