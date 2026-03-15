@@ -24,18 +24,29 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
+
       - name: Write version.json
         run: |
           echo '{"commit":"'$(git rev-parse --short HEAD)'","deployedAt":"'$(date -u +%Y-%m-%dT%H:%M:%SZ)'"}' > functions/version.json
 
-      - name: Build Docker image
-        run: docker compose build firebase
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Firebase CLI
+        run: npm install -g firebase-tools
+
+      - name: Install Python dependencies
+        run: |
+          python3 -m pip install -r functions/requirements.txt
 
       - name: Deploy functions + Firestore rules
-        run: |
-          docker compose run --rm \
-            -e FIREBASE_TOKEN=${{ secrets.FIREBASE_TOKEN }} \
-            firebase deploy --only functions,firestore:rules --project indego-bc76b
+        run: firebase deploy --only functions,firestore:rules --project indego-bc76b
 
   # ── Web: Lint + Build + Deploy preview channel ──
   web-test:
@@ -86,7 +97,7 @@ jobs:
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
-          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          firebaseServiceAccount: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
           projectId: indego-bc76b
           entryPoint: web
           expires: 7d
