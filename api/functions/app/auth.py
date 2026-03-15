@@ -3,6 +3,7 @@
 from firebase_admin import auth
 from ariadne import format_error
 from graphql import GraphQLError
+from app.repositories.allowlist_repo import is_email_allowed
 
 
 class AuthError(GraphQLError):
@@ -15,11 +16,8 @@ class AuthError(GraphQLError):
         )
 
 
-def get_user_id_from_request(request) -> str:
-    """Extract and verify Firebase ID token from the Authorization header.
-
-    Returns the user's UID on success, raises AuthError on failure.
-    """
+def _verify_token(request):
+    """Verify Firebase ID token and return decoded token."""
     auth_header = request.headers.get("Authorization", "")
 
     if not auth_header.startswith("Bearer "):
@@ -28,8 +26,7 @@ def get_user_id_from_request(request) -> str:
     token = auth_header[7:]  # Strip "Bearer "
 
     try:
-        decoded_token = auth.verify_id_token(token)
-        return decoded_token["uid"]
+        return auth.verify_id_token(token)
     except Exception:
         raise AuthError("Invalid or expired token")
 
@@ -37,13 +34,19 @@ def get_user_id_from_request(request) -> str:
 def get_context_value(request):
     """Build the GraphQL context from the incoming request.
 
-    Injects user_id into context for use by resolvers.
+    Verifies the token, checks the email allowlist, and injects
+    user_id into context for use by resolvers.
     """
     try:
-        user_id = get_user_id_from_request(request)
+        decoded_token = _verify_token(request)
+        user_id = decoded_token["uid"]
+        email = decoded_token.get("email", "").lower()
     except AuthError:
-        # Allow the request through — resolvers that need auth will check context
-        user_id = None
+        return {"request": request, "user_id": None}
+
+    # Allowlist check — fail closed
+    if not email or not is_email_allowed(email):
+        return {"request": request, "user_id": None}
 
     return {"request": request, "user_id": user_id}
 

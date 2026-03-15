@@ -9,6 +9,7 @@ import {
 import { useMutation } from '@apollo/client';
 import { auth } from '../config/firebase';
 import { UPSERT_USER } from '../graphql/mutations';
+import { checkEmailAllowed } from '../hooks/useAllowlist';
 import styles from './LoginPage.module.css';
 
 export default function LoginPage() {
@@ -31,7 +32,17 @@ export default function LoginPage() {
   const handleGoogle = async () => {
     try {
       const result = await signInWithPopup(auth, new GoogleAuthProvider());
-      await handleSuccess(result.user.displayName || result.user.email || 'User');
+      const userEmail = result.user.email || '';
+
+      // Check allowlist before upsertUser
+      const allowed = await checkEmailAllowed(userEmail);
+      if (!allowed) {
+        await auth.signOut();
+        navigate('/restricted');
+        return;
+      }
+
+      await handleSuccess(result.user.displayName || userEmail || 'User');
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : 'Google sign-in failed');
     }
@@ -40,6 +51,14 @@ export default function LoginPage() {
   const handleEmail = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
+
+    // Check allowlist before auth
+    const allowed = await checkEmailAllowed(email);
+    if (!allowed) {
+      navigate('/restricted');
+      return;
+    }
+
     try {
       if (isSignUp) {
         const result = await createUserWithEmailAndPassword(auth, email, password);
