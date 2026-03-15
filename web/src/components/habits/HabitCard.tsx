@@ -19,7 +19,8 @@ export default function HabitCard({ habit }: { habit: Habit }) {
   const navigate = useNavigate();
   const today = new Date().toISOString().split('T')[0];
   const isCompletedToday = habit.completions.some(c => c.date === today);
-  const currentStreak = useStreak(habit);
+  const streaks = useStreak(habit);
+  const streakUnit = habit.frequency.type === 'WEEKLY' ? 'week' : 'day';
 
   return (
     <div
@@ -30,7 +31,7 @@ export default function HabitCard({ habit }: { habit: Habit }) {
       <div className={styles.info}>
         <h3 className={styles.name}>{habit.name}</h3>
         <span className={styles.streak}>
-          {currentStreak > 0 ? `${currentStreak} day streak` : 'No streak'}
+          {streaks.current > 0 ? `${streaks.current} ${streakUnit} streak` : 'No streak'}
         </span>
       </div>
       <CompletionToggle habitId={habit.id} date={today} completed={isCompletedToday} />
