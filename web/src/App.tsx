@@ -2,7 +2,8 @@ import { lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { ApolloProvider } from '@apollo/client';
 import { client } from './config/apollo';
-import { AuthProvider, useAuth } from './auth/AuthProvider';
+import { AuthProvider } from './auth/AuthProvider';
+import { useAuth } from './auth/useAuth';
 import { AuthGuard } from './auth/AuthGuard';
 import './styles/global.css';
 
