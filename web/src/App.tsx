@@ -8,6 +8,7 @@ import { AuthGuard } from './auth/AuthGuard';
 import './styles/global.css';
 
 const LoginPage = lazy(() => import('./pages/LoginPage'));
+const RestrictedPage = lazy(() => import('./pages/RestrictedPage'));
 const DashboardPage = lazy(() => import('./pages/DashboardPage'));
 const HabitDetailPage = lazy(() => import('./pages/HabitDetailPage'));
 const HabitHistoryPage = lazy(() => import('./pages/HabitHistoryPage'));
@@ -29,6 +30,7 @@ export default function App() {
           <Suspense fallback={<div style={{ textAlign: 'center', padding: '2rem' }}>Loading...</div>}>
             <Routes>
               <Route path="/login" element={<LoginRoute />} />
+              <Route path="/restricted" element={<RestrictedPage />} />
               <Route path="/" element={<AuthGuard><DashboardPage /></AuthGuard>} />
               <Route path="/habit/:id" element={<AuthGuard><HabitDetailPage /></AuthGuard>} />
               <Route path="/habit/:id/history" element={<AuthGuard><HabitHistoryPage /></AuthGuard>} />
