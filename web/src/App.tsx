@@ -10,6 +10,7 @@ import './styles/global.css';
 const LoginPage = lazy(() => import('./pages/LoginPage'));
 const DashboardPage = lazy(() => import('./pages/DashboardPage'));
 const HabitDetailPage = lazy(() => import('./pages/HabitDetailPage'));
+const HabitHistoryPage = lazy(() => import('./pages/HabitHistoryPage'));
 const StatsPage = lazy(() => import('./pages/StatsPage'));
 const SettingsPage = lazy(() => import('./pages/SettingsPage'));
 
@@ -30,6 +31,7 @@ export default function App() {
               <Route path="/login" element={<LoginRoute />} />
               <Route path="/" element={<AuthGuard><DashboardPage /></AuthGuard>} />
               <Route path="/habit/:id" element={<AuthGuard><HabitDetailPage /></AuthGuard>} />
+              <Route path="/habit/:id/history" element={<AuthGuard><HabitHistoryPage /></AuthGuard>} />
               <Route path="/stats" element={<AuthGuard><StatsPage /></AuthGuard>} />
               <Route path="/settings" element={<AuthGuard><SettingsPage /></AuthGuard>} />
               <Route path="*" element={<Navigate to="/" replace />} />

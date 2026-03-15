@@ -1,7 +1,9 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
-import { CREATE_HABIT, UPDATE_HABIT } from '../../graphql/mutations';
+import { CREATE_HABIT, UPDATE_HABIT, DELETE_HABIT } from '../../graphql/mutations';
 import { GET_HABITS } from '../../graphql/queries';
+import ConfirmDialog from '../common/ConfirmDialog';
 import styles from './HabitForm.module.css';
 
 interface Habit {
@@ -32,6 +34,7 @@ function localToUtc(localTime: string): string {
 
 export default function HabitForm({ habit, onClose }: Props) {
   const isEdit = !!habit;
+  const navigate = useNavigate();
   const [name, setName] = useState(habit?.name || '');
   const [freqType, setFreqType] = useState(habit?.frequency.type || 'DAILY');
   const [daysPerWeek, setDaysPerWeek] = useState(habit?.frequency.daysPerWeek || 3);
@@ -41,6 +44,7 @@ export default function HabitForm({ habit, onClose }: Props) {
     habit?.reminder.time ? utcToLocal(habit.reminder.time) : '09:00'
   );
   const [error, setError] = useState('');
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
   const [createHabit, { loading: creating }] = useMutation(CREATE_HABIT, {
     refetchQueries: [{ query: GET_HABITS }],
@@ -48,8 +52,11 @@ export default function HabitForm({ habit, onClose }: Props) {
   const [updateHabit, { loading: updating }] = useMutation(UPDATE_HABIT, {
     refetchQueries: [{ query: GET_HABITS }],
   });
+  const [deleteHabit, { loading: deleting }] = useMutation(DELETE_HABIT, {
+    refetchQueries: [{ query: GET_HABITS }],
+  });
 
-  const loading = creating || updating;
+  const loading = creating || updating || deleting;
 
   const allDays = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
 
@@ -177,7 +184,31 @@ export default function HabitForm({ habit, onClose }: Props) {
               {loading ? 'Saving...' : isEdit ? 'Save' : 'Create'}
             </button>
           </div>
+
+          {isEdit && (
+            <button
+              type="button"
+              className={styles.deleteBtn}
+              onClick={() => setShowDeleteConfirm(true)}
+              disabled={loading}
+            >
+              Delete Habit
+            </button>
+          )}
         </form>
+
+        {showDeleteConfirm && habit && (
+          <ConfirmDialog
+            title="Delete Habit"
+            message={`Are you sure you want to delete "${habit.name}"? This cannot be undone.`}
+            onConfirm={async () => {
+              await deleteHabit({ variables: { id: habit.id } });
+              onClose();
+              navigate('/');
+            }}
+            onCancel={() => setShowDeleteConfirm(false)}
+          />
+        )}
       </div>
     </div>
   );

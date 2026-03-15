@@ -32,6 +32,13 @@ services:
       - VITE_GRAPHQL_URL=https://us-central1-indego-bc76b.cloudfunctions.net/graphql
     profiles: ["build"]
 
+  lint:
+    build: .
+    command: npm run lint
+    volumes:
+      - ./src:/app/src
+    profiles: ["lint"]
+
   test:
     build: .
     command: npm test
