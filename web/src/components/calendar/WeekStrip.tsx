@@ -24,7 +24,7 @@ export default function WeekStrip({ habitId, completions }: Props) {
 
   const days = useMemo(
     () => [-3, -2, -1, 0, 1, 2, 3].map(offset => addDays(today, offset)),
-    [today.getTime()]
+    [todayStr]
   );
 
   const [logCompletion, { loading: logging }] = useMutation(LOG_COMPLETION);
