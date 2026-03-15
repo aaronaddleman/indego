@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# Check if any web/ files are staged
+if git diff --cached --name-only | grep -q '^web/'; then
+  echo "Running web lint check..."
+  cd web && docker compose run --rm lint
+  LINT_EXIT=$?
+  cd ..
+  if [ $LINT_EXIT -ne 0 ]; then
+    echo "Lint failed. Fix errors before committing."
+    exit 1
+  fi
+fi
