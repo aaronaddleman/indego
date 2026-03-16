@@ -10,10 +10,13 @@
     <script>
       (function() {
         var t = localStorage.getItem('theme') || 'system';
-        var d = t === 'system'
-          ? window.matchMedia('(prefers-color-scheme: dark)').matches
-          : t === 'dark';
-        if (d) document.documentElement.setAttribute('data-theme', 'dark');
+        var resolved = t;
+        if (t === 'system') {
+          resolved = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        if (resolved !== 'light') {
+          document.documentElement.setAttribute('data-theme', resolved);
+        }
       })();
     </script>
   </head>

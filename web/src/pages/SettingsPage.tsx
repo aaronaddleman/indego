@@ -10,6 +10,10 @@ const THEME_OPTIONS: { value: ThemeOption; label: string }[] = [
   { value: 'light', label: 'Light' },
   { value: 'dark', label: 'Dark' },
   { value: 'system', label: 'System' },
+  { value: 'dracula', label: 'Dracula' },
+  { value: 'nord', label: 'Nord' },
+  { value: 'solarized', label: 'Solarized' },
+  { value: 'monokai', label: 'Monokai' },
 ];
 
 export default function SettingsPage() {

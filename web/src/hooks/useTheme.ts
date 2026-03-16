@@ -1,27 +1,27 @@
 import { useEffect, useState, useCallback } from 'react';
 
-export type ThemeOption = 'light' | 'dark' | 'system';
+export type ThemeOption = 'light' | 'dark' | 'system' | 'dracula' | 'nord' | 'solarized' | 'monokai';
 
 interface UseThemeReturn {
   theme: ThemeOption;
   setTheme: (theme: ThemeOption) => void;
-  resolvedTheme: 'light' | 'dark';
+  resolvedTheme: string;
 }
 
 function getSystemTheme(): 'light' | 'dark' {
   return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
 }
 
-function resolveTheme(theme: ThemeOption): 'light' | 'dark' {
+function resolveTheme(theme: ThemeOption): string {
   if (theme === 'system') return getSystemTheme();
   return theme;
 }
 
-function applyTheme(resolved: 'light' | 'dark') {
-  if (resolved === 'dark') {
-    document.documentElement.setAttribute('data-theme', 'dark');
-  } else {
+function applyTheme(resolved: string) {
+  if (resolved === 'light') {
     document.documentElement.removeAttribute('data-theme');
+  } else {
+    document.documentElement.setAttribute('data-theme', resolved);
   }
 }
 
