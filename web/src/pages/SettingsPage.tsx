@@ -74,12 +74,20 @@ export default function SettingsPage() {
       <div className={styles.section}>
         <h2 className={styles.sectionTitle}>About</h2>
         <div className={styles.info}>
-          <span className={styles.label}>Version</span>
+          <span className={styles.label}>API Version</span>
           <span>{versionData?.version?.commit || 'unknown'}</span>
         </div>
         <div className={styles.info}>
-          <span className={styles.label}>Deployed</span>
+          <span className={styles.label}>API Deployed</span>
           <span>{versionData?.version?.deployedAt || 'unknown'}</span>
+        </div>
+        <div className={styles.info}>
+          <span className={styles.label}>Web Version</span>
+          <span>{__APP_COMMIT__.slice(0, 7)}</span>
+        </div>
+        <div className={styles.info}>
+          <span className={styles.label}>Web Branch</span>
+          <span>{__APP_BRANCH__}</span>
         </div>
       </div>
 
