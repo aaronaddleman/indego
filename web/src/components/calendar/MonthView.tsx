@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import {
   startOfMonth,
   endOfMonth,
@@ -9,8 +9,14 @@ import {
   isSameMonth,
   addMonths,
   subMonths,
+  setMonth,
+  setYear,
+  getMonth,
+  getYear,
 } from 'date-fns';
 import CompletionToggle from '../habits/CompletionToggle';
+import MonthPicker from './MonthPicker';
+import YearPicker from './YearPicker';
 import styles from './MonthView.module.css';
 
 interface Completion {
@@ -25,10 +31,10 @@ interface Habit {
 
 export default function MonthView({ habit }: { habit: Habit }) {
   const [currentMonth, setCurrentMonth] = useState(new Date());
-  const completedDates = useMemo(
-    () => new Set(habit.completions.map(c => c.date)),
-    [habit.completions]
-  );
+  const [showMonthPicker, setShowMonthPicker] = useState(false);
+  const [showYearPicker, setShowYearPicker] = useState(false);
+
+  const completedDates = new Set(habit.completions.map(c => c.date));
 
   const monthStart = startOfMonth(currentMonth);
   const monthEnd = endOfMonth(currentMonth);
@@ -38,13 +44,88 @@ export default function MonthView({ habit }: { habit: Habit }) {
 
   const today = format(new Date(), 'yyyy-MM-dd');
 
+  // Compute min year from completions
+  const sortedDates = habit.completions.map(c => c.date).sort();
+  const minYear = sortedDates.length > 0
+    ? parseInt(sortedDates[0].split('-')[0])
+    : getYear(new Date());
+
+  const handleMonthSelect = (month: number) => {
+    setCurrentMonth(setMonth(currentMonth, month));
+    setShowMonthPicker(false);
+  };
+
+  const handleYearSelect = (year: number) => {
+    setCurrentMonth(setYear(currentMonth, year));
+    setShowYearPicker(false);
+  };
+
+  if (showMonthPicker) {
+    return (
+      <div>
+        <div className={styles.header}>
+          <button
+            className={styles.pickerBackBtn}
+            onClick={() => setShowMonthPicker(false)}
+          >
+            ←
+          </button>
+          <span className={styles.monthLabel}>Select Month</span>
+          <span />
+        </div>
+        <MonthPicker
+          selectedMonth={getMonth(currentMonth)}
+          onSelect={handleMonthSelect}
+        />
+      </div>
+    );
+  }
+
+  if (showYearPicker) {
+    return (
+      <div>
+        <div className={styles.header}>
+          <button
+            className={styles.pickerBackBtn}
+            onClick={() => setShowYearPicker(false)}
+          >
+            ←
+          </button>
+          <span className={styles.monthLabel}>Select Year</span>
+          <span />
+        </div>
+        <YearPicker
+          selectedYear={getYear(currentMonth)}
+          minYear={minYear}
+          onSelect={handleYearSelect}
+        />
+      </div>
+    );
+  }
+
   return (
     <div>
       <div className={styles.header}>
         <button className={styles.navBtn} onClick={() => setCurrentMonth(subMonths(currentMonth, 1))}>
           &lt;
         </button>
-        <span className={styles.monthLabel}>{format(currentMonth, 'MMMM yyyy')}</span>
+        <span className={styles.monthLabel}>
+          <button
+            className={styles.monthBtn}
+            onClick={() => setShowMonthPicker(true)}
+            aria-label="Select month"
+          >
+            {format(currentMonth, 'MMMM')}
+          </button>
+          {' '}
+          <button
+            className={styles.yearBtn}
+            onClick={() => setShowYearPicker(true)}
+            aria-label="Select year"
+          >
+            {format(currentMonth, 'yyyy')}
+          </button>
+        </span>
         <button className={styles.navBtn} onClick={() => setCurrentMonth(addMonths(currentMonth, 1))}>
           &gt;
         </button>

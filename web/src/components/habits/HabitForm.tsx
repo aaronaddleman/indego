@@ -16,6 +16,7 @@ interface Habit {
 interface Props {
   habit?: Habit;
   onClose: () => void;
+  inline?: boolean;
 }
 
 function utcToLocal(utcTime: string): string {
@@ -32,7 +33,7 @@ function localToUtc(localTime: string): string {
   return `${String(now.getUTCHours()).padStart(2, '0')}:${String(now.getUTCMinutes()).padStart(2, '0')}`;
 }
 
-export default function HabitForm({ habit, onClose }: Props) {
+export default function HabitForm({ habit, onClose, inline }: Props) {
   const isEdit = !!habit;
   const navigate = useNavigate();
   const [name, setName] = useState(habit?.name || '');
@@ -93,12 +94,9 @@ export default function HabitForm({ habit, onClose }: Props) {
     }
   };
 
-  return (
-    <div className={styles.overlay} onClick={onClose}>
-      <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
-        <h2 className={styles.title}>{isEdit ? 'Edit Habit' : 'New Habit'}</h2>
-
-        <form onSubmit={handleSubmit} className={styles.form}>
+  const formContent = (
+    <>
+      <form onSubmit={handleSubmit} className={styles.form}>
           <label className={styles.label}>
             Name
             <input
@@ -197,18 +195,30 @@ export default function HabitForm({ habit, onClose }: Props) {
           )}
         </form>
 
-        {showDeleteConfirm && habit && (
-          <ConfirmDialog
-            title="Delete Habit"
-            message={`Are you sure you want to delete "${habit.name}"? This cannot be undone.`}
-            onConfirm={async () => {
-              await deleteHabit({ variables: { id: habit.id } });
-              onClose();
-              navigate('/');
-            }}
-            onCancel={() => setShowDeleteConfirm(false)}
-          />
-        )}
+      {showDeleteConfirm && habit && (
+        <ConfirmDialog
+          title="Delete Habit"
+          message={`Are you sure you want to delete "${habit.name}"? This cannot be undone.`}
+          onConfirm={async () => {
+            await deleteHabit({ variables: { id: habit.id } });
+            onClose();
+            navigate('/');
+          }}
+          onCancel={() => setShowDeleteConfirm(false)}
+        />
+      )}
+    </>
+  );
+
+  if (inline) {
+    return formContent;
+  }
+
+  return (
+    <div className={styles.overlay} onClick={onClose}>
+      <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
+        <h2 className={styles.title}>{isEdit ? 'Edit Habit' : 'New Habit'}</h2>
+        {formContent}
       </div>
     </div>
   );

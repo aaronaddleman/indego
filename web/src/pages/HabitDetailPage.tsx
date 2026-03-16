@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/client';
 import { format } from 'date-fns';
@@ -7,8 +7,12 @@ import { LOG_COMPLETION, UNDO_COMPLETION } from '../graphql/mutations';
 import WeekStrip from '../components/calendar/WeekStrip';
 import CompleteButton from '../components/habits/CompleteButton';
 import HabitForm from '../components/habits/HabitForm';
+import CalendarTabs from '../components/calendar/CalendarTabs';
+import TabbedModal from '../components/common/TabbedModal';
 import { useStreak } from '../hooks/useStreak';
-import { useLongestStreakSync } from '../hooks/useLongestStreakSync';
+import { useLongestStreakSync, writeLongestStreak } from '../hooks/useLongestStreakSync';
+import { computeStreaks } from '../hooks/streakCalc';
+import { useAuth } from '../auth/useAuth';
 import styles from './HabitDetailPage.module.css';
 
 function formatFrequency(frequency: { type: string; daysPerWeek?: number; specificDays?: string[] }): string {
@@ -27,8 +31,10 @@ function formatFrequency(frequency: { type: string; daysPerWeek?: number; specif
 export default function HabitDetailPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const { user } = useAuth();
   const { data, loading: queryLoading, error } = useQuery(GET_HABIT, { variables: { id } });
-  const [showEdit, setShowEdit] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState('settings');
 
   const today = format(new Date(), 'yyyy-MM-dd');
 
@@ -43,12 +49,40 @@ export default function HabitDetailPage() {
   const [undoCompletion, { loading: undoing }] = useMutation(UNDO_COMPLETION);
   const mutationLoading = logging || undoing;
 
+  // Ref for deferred streak write on modal close
+  const habitRef = useRef(habit);
+  const userRef = useRef(user);
+
+  useEffect(() => {
+    habitRef.current = habit;
+  }, [habit]);
+
+  useEffect(() => {
+    userRef.current = user;
+  }, [user]);
+
   const handleCompleteToggle = async () => {
     if (!id || mutationLoading) return;
     if (completedToday) {
       await undoCompletion({ variables: { habitId: id, date: today } });
     } else {
       await logCompletion({ variables: { habitId: id, date: today } });
+    }
+  };
+
+  const openModal = (tab: string) => {
+    setActiveTab(tab);
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+    // Deferred streak write on modal close
+    const h = habitRef.current;
+    const u = userRef.current;
+    if (h && u?.uid) {
+      const { longest } = computeStreaks(h.completions, h.frequency, today);
+      void writeLongestStreak(u.uid, h.id, longest);
     }
   };
 
@@ -71,11 +105,36 @@ export default function HabitDetailPage() {
     );
   }
 
+  const modalTabs = [
+    {
+      id: 'settings',
+      label: 'Settings',
+      content: <HabitForm habit={habit} onClose={closeModal} inline />,
+    },
+    {
+      id: 'history',
+      label: 'History',
+      content: <CalendarTabs habit={habit} />,
+    },
+  ];
+
   return (
     <div className={styles.container}>
-      <button className={styles.backBtn} onClick={() => navigate('/')} aria-label="Back to habits">
-        ←
-      </button>
+      <div className={styles.topBar}>
+        <button className={styles.backBtn} onClick={() => navigate('/')} aria-label="Back to habits">
+          ←
+        </button>
+        <button
+          className={styles.iconBtn}
+          onClick={() => openModal('settings')}
+          aria-label="Edit habit"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+          </svg>
+        </button>
+      </div>
 
       <div className={styles.hero}>
         <h1 className={styles.habitName}>{habit.name}</h1>
@@ -103,21 +162,13 @@ export default function HabitDetailPage() {
         />
       </div>
 
-      <div className={styles.actionBar}>
-        <button className={styles.actionBtn} onClick={() => setShowEdit(true)} aria-label="Edit habit">
-          ✏️ Edit
-        </button>
-        <button
-          className={styles.actionBtn}
-          onClick={() => navigate(`/habit/${id}/history`)}
-          aria-label="View history"
-        >
-          📅 History
-        </button>
-      </div>
-
-      {showEdit && (
-        <HabitForm habit={habit} onClose={() => setShowEdit(false)} />
+      {modalOpen && (
+        <TabbedModal
+          tabs={modalTabs}
+          activeTab={activeTab}
+          onTabChange={setActiveTab}
+          onClose={closeModal}
+        />
       )}
     </div>
   );
