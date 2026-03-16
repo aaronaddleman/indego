@@ -18,7 +18,7 @@
 }
 
 .active {
-  background: white;
+  background: var(--color-surface);
   color: var(--color-primary-600);
   box-shadow: var(--shadow-sm);
 }

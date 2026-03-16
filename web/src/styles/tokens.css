@@ -30,6 +30,11 @@
   --color-error: #ef4444;
   --color-error-light: #fee2e2;
 
+  /* Surface & Background */
+  --color-bg: var(--color-neutral-50);
+  --color-surface: #ffffff;
+  --color-surface-hover: var(--color-neutral-100);
+
   /* Spacing */
   --space-1: 0.25rem;
   --space-2: 0.5rem;
@@ -70,4 +75,198 @@
   /* Transitions */
   --transition-fast: 150ms ease;
   --transition-base: 200ms ease;
+}
+
+/* ─── Dark Theme ─────────────────────────────────────────────────────────── */
+
+[data-theme="dark"] {
+  /* Backgrounds */
+  --color-bg: #111827;
+  --color-surface: #1f2937;
+  --color-surface-hover: #374151;
+
+  /* Neutral (inverted for dark backgrounds) */
+  --color-neutral-50: #111827;
+  --color-neutral-100: #1f2937;
+  --color-neutral-200: #374151;
+  --color-neutral-300: #4b5563;
+  --color-neutral-400: #9ca3af;
+  --color-neutral-500: #9ca3af;
+  --color-neutral-600: #d1d5db;
+  --color-neutral-700: #e5e7eb;
+  --color-neutral-800: #f3f4f6;
+  --color-neutral-900: #f9fafb;
+
+  /* Primary — slightly brighter for dark backgrounds */
+  --color-primary-50: #1e1b4b;
+  --color-primary-100: #312e81;
+
+  /* Semantic adjustments for dark backgrounds */
+  --color-success-light: #064e3b;
+  --color-error-light: #7f1d1d;
+
+  /* Shadows (more visible on dark) */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4);
+}
+
+/* ─── Dracula ────────────────────────────────────────────────────────────── */
+
+[data-theme="dracula"] {
+  --color-bg: #282a36;
+  --color-surface: #44475a;
+  --color-surface-hover: #6272a4;
+
+  --color-neutral-50: #282a36;
+  --color-neutral-100: #44475a;
+  --color-neutral-200: #6272a4;
+  --color-neutral-300: #6272a4;
+  --color-neutral-400: #bd93f9;
+  --color-neutral-500: #bd93f9;
+  --color-neutral-600: #f8f8f2;
+  --color-neutral-700: #f8f8f2;
+  --color-neutral-800: #f8f8f2;
+  --color-neutral-900: #f8f8f2;
+
+  --color-primary-50: #3b2d5e;
+  --color-primary-100: #44355b;
+  --color-primary-200: #bd93f9;
+  --color-primary-300: #bd93f9;
+  --color-primary-400: #bd93f9;
+  --color-primary-500: #bd93f9;
+  --color-primary-600: #bd93f9;
+  --color-primary-700: #caa8fb;
+  --color-primary-800: #f8f8f2;
+  --color-primary-900: #f8f8f2;
+
+  --color-success: #50fa7b;
+  --color-success-light: #1a3a2a;
+  --color-error: #ff5555;
+  --color-error-light: #4a1a1a;
+  --color-warning: #f1fa8c;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+}
+
+/* ─── Nord ───────────────────────────────────────────────────────────────── */
+
+[data-theme="nord"] {
+  --color-bg: #2e3440;
+  --color-surface: #3b4252;
+  --color-surface-hover: #434c5e;
+
+  --color-neutral-50: #2e3440;
+  --color-neutral-100: #3b4252;
+  --color-neutral-200: #434c5e;
+  --color-neutral-300: #4c566a;
+  --color-neutral-400: #d8dee9;
+  --color-neutral-500: #d8dee9;
+  --color-neutral-600: #e5e9f0;
+  --color-neutral-700: #eceff4;
+  --color-neutral-800: #eceff4;
+  --color-neutral-900: #eceff4;
+
+  --color-primary-50: #2e3440;
+  --color-primary-100: #3b4252;
+  --color-primary-200: #5e81ac;
+  --color-primary-300: #81a1c1;
+  --color-primary-400: #88c0d0;
+  --color-primary-500: #81a1c1;
+  --color-primary-600: #5e81ac;
+  --color-primary-700: #81a1c1;
+  --color-primary-800: #eceff4;
+  --color-primary-900: #eceff4;
+
+  --color-success: #a3be8c;
+  --color-success-light: #2e3b2e;
+  --color-error: #bf616a;
+  --color-error-light: #3b2e2e;
+  --color-warning: #ebcb8b;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4);
+}
+
+/* ─── Solarized Dark ─────────────────────────────────────────────────────── */
+
+[data-theme="solarized"] {
+  --color-bg: #002b36;
+  --color-surface: #073642;
+  --color-surface-hover: #586e75;
+
+  --color-neutral-50: #002b36;
+  --color-neutral-100: #073642;
+  --color-neutral-200: #586e75;
+  --color-neutral-300: #657b83;
+  --color-neutral-400: #839496;
+  --color-neutral-500: #93a1a1;
+  --color-neutral-600: #eee8d5;
+  --color-neutral-700: #fdf6e3;
+  --color-neutral-800: #fdf6e3;
+  --color-neutral-900: #fdf6e3;
+
+  --color-primary-50: #002b36;
+  --color-primary-100: #073642;
+  --color-primary-200: #268bd2;
+  --color-primary-300: #268bd2;
+  --color-primary-400: #268bd2;
+  --color-primary-500: #268bd2;
+  --color-primary-600: #268bd2;
+  --color-primary-700: #2aa198;
+  --color-primary-800: #fdf6e3;
+  --color-primary-900: #fdf6e3;
+
+  --color-success: #859900;
+  --color-success-light: #1a2600;
+  --color-error: #dc322f;
+  --color-error-light: #3b1a1a;
+  --color-warning: #b58900;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+}
+
+/* ─── Monokai ────────────────────────────────────────────────────────────── */
+
+[data-theme="monokai"] {
+  --color-bg: #272822;
+  --color-surface: #3e3d32;
+  --color-surface-hover: #49483e;
+
+  --color-neutral-50: #272822;
+  --color-neutral-100: #3e3d32;
+  --color-neutral-200: #49483e;
+  --color-neutral-300: #75715e;
+  --color-neutral-400: #a6a28c;
+  --color-neutral-500: #a6a28c;
+  --color-neutral-600: #f8f8f2;
+  --color-neutral-700: #f8f8f2;
+  --color-neutral-800: #f8f8f2;
+  --color-neutral-900: #f8f8f2;
+
+  --color-primary-50: #3e3d32;
+  --color-primary-100: #49483e;
+  --color-primary-200: #ae81ff;
+  --color-primary-300: #ae81ff;
+  --color-primary-400: #ae81ff;
+  --color-primary-500: #ae81ff;
+  --color-primary-600: #ae81ff;
+  --color-primary-700: #c4a7ff;
+  --color-primary-800: #f8f8f2;
+  --color-primary-900: #f8f8f2;
+
+  --color-success: #a6e22e;
+  --color-success-light: #2a3a12;
+  --color-error: #f92672;
+  --color-error-light: #3b1a2a;
+  --color-warning: #e6db74;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
 }
