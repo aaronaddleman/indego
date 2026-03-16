@@ -37,7 +37,7 @@ export default function HabitDetailPage() {
   const completedToday = habit?.completions.some((c: { date: string }) => c.date === today) ?? false;
 
   // Sync longest streak to Firestore (immediate write on detail page)
-  useLongestStreakSync(habit?.id, streaks.longest, habit?.longestStreak ?? 0);
+  useLongestStreakSync(habit?.id, streaks.longest);
 
   const [logCompletion, { loading: logging }] = useMutation(LOG_COMPLETION);
   const [undoCompletion, { loading: undoing }] = useMutation(UNDO_COMPLETION);

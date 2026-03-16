@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { doc, runTransaction } from 'firebase/firestore';
 import { db } from '../config/firebase';
 import { useAuth } from '../auth/useAuth';
@@ -23,21 +23,22 @@ async function writeLongestStreak(
 
 /**
  * Sync computed longest streak to Firestore via transaction.
- * Only writes if the computed value differs from stored value.
+ * Tracks last written value locally to avoid unnecessary writes.
+ * The transaction handles concurrent client safety.
  */
 export function useLongestStreakSync(
   habitId: string | undefined,
-  computedLongest: number,
-  storedLongest: number
+  computedLongest: number
 ): void {
   const { user } = useAuth();
+  const lastWrittenRef = useRef<number | null>(null);
 
   useEffect(() => {
     if (!habitId || !user?.uid) return;
-    if (computedLongest !== storedLongest) {
-      void writeLongestStreak(user.uid, habitId, computedLongest);
-    }
-  }, [habitId, computedLongest, storedLongest, user?.uid]);
+    if (computedLongest === lastWrittenRef.current) return;
+    lastWrittenRef.current = computedLongest;
+    void writeLongestStreak(user.uid, habitId, computedLongest);
+  }, [habitId, computedLongest, user?.uid]);
 }
 
 /**
