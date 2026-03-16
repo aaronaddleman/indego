@@ -72,7 +72,7 @@ export default function SettingsPage() {
       </div>
 
       <div className={styles.section}>
-        <h2 className={styles.sectionTitle}>About</h2>
+        <h2 className={styles.sectionTitle}>Version Info</h2>
         <div className={styles.info}>
           <span className={styles.label}>API Version</span>
           <span>{versionData?.version?.commit || 'unknown'}</span>
