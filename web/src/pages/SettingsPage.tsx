@@ -3,12 +3,20 @@ import { useQuery } from '@apollo/client';
 import { auth } from '../config/firebase';
 import { GET_VERSION, GET_ME } from '../graphql/queries';
 import PageShell from '../components/layout/PageShell';
+import { useTheme, type ThemeOption } from '../hooks/useTheme';
 import styles from './SettingsPage.module.css';
+
+const THEME_OPTIONS: { value: ThemeOption; label: string }[] = [
+  { value: 'light', label: 'Light' },
+  { value: 'dark', label: 'Dark' },
+  { value: 'system', label: 'System' },
+];
 
 export default function SettingsPage() {
   const navigate = useNavigate();
   const { data: meData } = useQuery(GET_ME);
   const { data: versionData } = useQuery(GET_VERSION);
+  const { theme, setTheme } = useTheme();
 
   const handleSignOut = async () => {
     await auth.signOut();
@@ -18,6 +26,22 @@ export default function SettingsPage() {
   return (
     <PageShell title="Settings">
       <h1 className={styles.title}>Settings</h1>
+
+      <div className={styles.section}>
+        <h2 className={styles.sectionTitle}>Appearance</h2>
+        <div className={styles.themeSelector}>
+          {THEME_OPTIONS.map(opt => (
+            <button
+              key={opt.value}
+              className={`${styles.themeBtn} ${theme === opt.value ? styles.themeBtnActive : ''}`}
+              onClick={() => setTheme(opt.value)}
+              aria-pressed={theme === opt.value}
+            >
+              {opt.label}
+            </button>
+          ))}
+        </div>
+      </div>
 
       <div className={styles.section}>
         <h2 className={styles.sectionTitle}>Account</h2>
