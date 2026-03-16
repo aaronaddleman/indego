@@ -110,6 +110,8 @@ jobs:
           VITE_FIREBASE_AUTH_DOMAIN: indego-bc76b.firebaseapp.com
           VITE_FIREBASE_PROJECT_ID: indego-bc76b
           VITE_FIREBASE_API_KEY: ${{ secrets.VITE_FIREBASE_API_KEY }}
+          VITE_APP_COMMIT: ${{ github.sha }}
+          VITE_APP_BRANCH: ${{ github.head_ref || github.ref_name }}
 
   web-deploy:
     needs: [web-test]
@@ -133,6 +135,8 @@ jobs:
           VITE_FIREBASE_AUTH_DOMAIN: indego-bc76b.firebaseapp.com
           VITE_FIREBASE_PROJECT_ID: indego-bc76b
           VITE_FIREBASE_API_KEY: ${{ secrets.VITE_FIREBASE_API_KEY }}
+          VITE_APP_COMMIT: ${{ github.sha }}
+          VITE_APP_BRANCH: ${{ github.head_ref || github.ref_name }}
 
       - name: Deploy to Firebase Hosting (production)
         if: github.event_name == 'push'
