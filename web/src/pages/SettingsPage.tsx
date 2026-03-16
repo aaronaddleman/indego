@@ -27,6 +27,18 @@ export default function SettingsPage() {
     navigate('/login');
   };
 
+  const handleClearCache = async () => {
+    if ('caches' in window) {
+      const names = await caches.keys();
+      await Promise.all(names.map(name => caches.delete(name)));
+    }
+    const registrations = await navigator.serviceWorker?.getRegistrations();
+    if (registrations) {
+      await Promise.all(registrations.map(r => r.unregister()));
+    }
+    window.location.reload();
+  };
+
   return (
     <PageShell title="Settings">
       <h1 className={styles.title}>Settings</h1>
@@ -70,6 +82,10 @@ export default function SettingsPage() {
           <span>{versionData?.version?.deployedAt || 'unknown'}</span>
         </div>
       </div>
+
+      <button className={styles.clearCacheBtn} onClick={handleClearCache}>
+        Clear Cache & Reload
+      </button>
 
       <button className={styles.signOutBtn} onClick={handleSignOut}>
         Sign Out

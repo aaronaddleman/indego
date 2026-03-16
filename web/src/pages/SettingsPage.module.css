@@ -67,6 +67,21 @@
   box-shadow: var(--shadow-sm);
 }
 
+.clearCacheBtn {
+  width: 100%;
+  padding: var(--space-3);
+  border: 1px solid var(--color-neutral-300);
+  border-radius: var(--radius-md);
+  color: var(--color-neutral-600);
+  font-weight: var(--font-weight-medium);
+  margin-bottom: var(--space-3);
+  transition: background var(--transition-fast);
+}
+
+.clearCacheBtn:hover {
+  background: var(--color-surface-hover);
+}
+
 .signOutBtn {
   width: 100%;
   padding: var(--space-3);
