@@ -33,11 +33,6 @@
   background: var(--color-neutral-100);
 }
 
-.topActions {
-  display: flex;
-  gap: var(--space-1);
-}
-
 .iconBtn {
   padding: var(--space-2);
   border: none;
