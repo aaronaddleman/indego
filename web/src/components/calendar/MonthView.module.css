@@ -7,6 +7,45 @@
 
 .monthLabel {
   font-weight: var(--font-weight-semibold);
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.monthBtn,
+.yearBtn {
+  border: none;
+  background: none;
+  font-weight: var(--font-weight-semibold);
+  font-size: inherit;
+  color: var(--color-primary-600);
+  cursor: pointer;
+  padding: var(--space-1);
+  border-radius: var(--radius-sm);
+}
+
+.monthBtn:hover,
+.yearBtn:hover {
+  background: var(--color-primary-50);
+}
+
+.pickerBackBtn {
+  padding: var(--space-1) var(--space-2);
+  border: none;
+  background: none;
+  font-size: var(--font-size-lg);
+  color: var(--color-neutral-600);
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  min-width: 44px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pickerBackBtn:hover {
+  background: var(--color-neutral-100);
 }
 
 .navBtn {
