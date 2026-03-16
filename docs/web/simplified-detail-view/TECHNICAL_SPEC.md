@@ -8,7 +8,7 @@ Simplify the habit detail view: consolidate Edit and History into a tabbed modal
 
 ### Goals
 - Tabbed modal with Settings + History tabs
-- Slide-to-complete on touch devices, click on desktop
+- Complete button stays as click/tap for all devices
 - Tappable month/year pickers in calendar
 - Remove `/habit/:id/history` route and `HabitHistoryPage`
 - Deferred streak write on modal close
@@ -31,7 +31,7 @@ Simplify the habit detail view: consolidate Edit and History into a tabbed modal
 ├── HabitHeader (name, frequency)
 ├── StreakDisplay (current, longest)
 ├── WeekStrip (7-day view)
-├── SlideToComplete (touch devices) OR CompleteButton (desktop)
+├── CompleteButton (click/tap)
 ├── TabbedModal
 │   ├── Tab: Settings
 │   │   ├── HabitForm (name, frequency, reminder)
@@ -47,88 +47,6 @@ Simplify the habit detail view: consolidate Edit and History into a tabbed modal
 ```
 
 ## 4. New Components
-
-### SlideToComplete
-
-`src/components/habits/SlideToComplete.tsx`
-
-**Props:**
-```typescript
-interface SlideToCompleteProps {
-  completed: boolean;
-  onComplete: () => void;
-  loading?: boolean;
-}
-```
-
-**Behavior:**
-- Renders a track (rounded rect) with a draggable thumb (circle + SVG arrow)
-- Touch events: `onTouchStart`, `onTouchMove`, `onTouchEnd`
-- Track width measured via ref on mount
-- Thumb position updated via CSS `transform: translateX()` (no layout thrashing)
-- Threshold: 70% of track width
-- Below threshold on release: spring back to start (CSS transition)
-- Above threshold: trigger `onComplete()`, transition to completed state
-- Completed state: lighter background, disabled, "Completed" text
-
-**SVG Arrow:**
-```svg
-<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-  <path d="M5 12h14M12 5l7 7-7 7" />
-</svg>
-```
-
-**CSS (key styles):**
-```css
-.track {
-  position: relative;
-  height: 56px;
-  border-radius: 28px;
-  background: var(--color-primary-500);
-  overflow: hidden;
-}
-
-.track[data-completed] {
-  background: var(--color-primary-200);
-  pointer-events: none;
-}
-
-.thumb {
-  position: absolute;
-  left: 4px;
-  top: 4px;
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  background: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  touch-action: none;
-  will-change: transform;
-}
-
-.label {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-weight: var(--font-weight-semibold);
-  pointer-events: none;
-}
-```
-
-### useTouchDevice
-
-`src/hooks/useTouchDevice.ts`
-
-```typescript
-export function useTouchDevice(): boolean {
-  return 'ontouchstart' in window;
-}
-```
 
 ### TabbedModal
 
@@ -207,7 +125,6 @@ Major changes:
 ```typescript
 const [modalOpen, setModalOpen] = useState(false);
 const [activeTab, setActiveTab] = useState('settings');
-const isTouchDevice = useTouchDevice();
 
 const openModal = (tab: string) => {
   setActiveTab(tab);
@@ -266,15 +183,12 @@ const HabitHistoryPage = lazy(() => import('./pages/HabitHistoryPage'));
 
 | Action | File |
 |--------|------|
-| **Create** | `src/components/habits/SlideToComplete.tsx` |
-| **Create** | `src/components/habits/SlideToComplete.module.css` |
 | **Create** | `src/components/common/TabbedModal.tsx` |
 | **Create** | `src/components/common/TabbedModal.module.css` |
 | **Create** | `src/components/calendar/MonthPicker.tsx` |
 | **Create** | `src/components/calendar/MonthPicker.module.css` |
 | **Create** | `src/components/calendar/YearPicker.tsx` |
 | **Create** | `src/components/calendar/YearPicker.module.css` |
-| **Create** | `src/hooks/useTouchDevice.ts` |
 | **Modify** | `src/pages/HabitDetailPage.tsx` |
 | **Modify** | `src/pages/HabitDetailPage.module.css` |
 | **Modify** | `src/components/calendar/MonthView.tsx` |
@@ -287,31 +201,22 @@ const HabitHistoryPage = lazy(() => import('./pages/HabitHistoryPage'));
 
 | Scenario | Handling |
 |----------|---------|
-| Touch detection fails | Fallback to click button |
-| Slide gesture interrupted (finger leaves screen) | Thumb snaps back to start |
 | Modal close during loading mutation | Let mutation complete, streak write fires |
 | Year picker with no completions | Show current year only |
 
 ## 8. Testing Strategy
 
 ### Component Tests
-- **SlideToComplete:** Renders track/thumb, fires onComplete at threshold, disabled when completed
 - **TabbedModal:** Renders tabs, switches content, closes on ESC/overlay/X
 - **MonthPicker:** Renders 12 months, fires onSelect
 - **YearPicker:** Renders year range, fires onSelect
-- **useTouchDevice:** Returns boolean based on touch support
-
 ### Integration
 - Open modal via edit icon → Settings tab active
 - Open modal via history icon → History tab active
-- Slide to complete → habit marked, slide disabled
 - Backfill in History tab → close modal → longest streak updates
 
 ## 9. Performance Considerations
 
-- Slide animation: CSS `transform` only (GPU composited, no layout)
-- `will-change: transform` on thumb for layer promotion
-- `touch-action: none` on thumb to prevent scroll interference
 - Month/year pickers: simple lists, no virtualization needed
 
 ## 10. Open Questions

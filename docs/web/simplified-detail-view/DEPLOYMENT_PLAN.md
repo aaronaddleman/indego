@@ -8,9 +8,7 @@ Simplify the habit detail view. Web client only — no API or infrastructure cha
 
 1. Merge PR to main
 2. CI deploys web client to production
-3. Verify on mobile: slide-to-complete works
-4. Verify on desktop: click-to-complete works
-5. Verify tabbed modal: Settings and History tabs work
+3. Verify tabbed modal: Settings and History tabs work
 6. Verify calendar: tappable month/year navigation
 
 ## 3. Rollback Plan
@@ -19,9 +17,7 @@ Revert merge commit. Previous layout (separate action bar, history page) returns
 
 ## 4. Go/No-Go Criteria
 
-- [ ] Slide-to-complete works on mobile (iOS Safari, Chrome Android)
-- [ ] Click-to-complete works on desktop
-- [ ] Completed state shows lighter disabled style
+- [ ] Complete button works (click/tap)
 - [ ] Edit icon opens modal on Settings tab
 - [ ] History icon opens modal on History tab
 - [ ] Calendar month name tappable → month picker

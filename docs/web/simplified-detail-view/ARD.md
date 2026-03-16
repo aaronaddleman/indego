@@ -6,7 +6,6 @@
 - **Purpose:** Simplify the fullscreen habit detail view by consolidating Edit and History into a tabbed modal, replacing the Complete button with a slide-to-complete gesture on touch devices, and cleaning up the layout.
 - **Goals:**
   - Fewer on-screen elements — cleaner, more focused view
-  - Slide-to-complete on touch devices prevents accidental completions
   - Edit and History combined in one tabbed modal
   - Tappable month/year navigation in the calendar
   - Remove the separate history page route
@@ -42,8 +41,7 @@
 │   streak     streak      │
 │  [--- Week Strip ---]    │
 │                          │
-│  [══► Slide to complete] │  ← touch devices
-│  [ ✓ Complete Button   ] │  ← desktop (click)
+│  [ ✓ Complete Button   ] │  ← click/tap
 │                          │
 └──────────────────────────┘
 
@@ -66,17 +64,13 @@ web/src/
 │   └── HabitHistoryPage.module.css   ← Delete
 ├── components/
 │   ├── habits/
-│   │   ├── SlideToComplete.tsx       ← New: slide gesture component
-│   │   ├── SlideToComplete.module.css
-│   │   └── HabitForm.tsx             ← Modify: remove delete button (moves to Settings tab)
+│   │   └── HabitForm.tsx             ← Modify: extract form content for tabbed modal
 │   ├── calendar/
 │   │   ├── MonthView.tsx             ← Modify: tappable month/year navigation
 │   │   ├── MonthPicker.tsx           ← New: month selection list
 │   │   └── YearPicker.tsx            ← New: year selection list
 │   └── common/
 │       └── TabbedModal.tsx           ← New: reusable tabbed modal
-├── hooks/
-│   └── useTouchDevice.ts            ← New: detect touch capability
 └── App.tsx                           ← Modify: remove /habit/:id/history route
 ```
 
@@ -96,19 +90,9 @@ web/src/
 - Deferred streak write: recompute and write `longestStreak` when modal closes
 - Nearly fullscreen on mobile (scrollable), centered card on desktop
 
-### Slide-to-Complete (touch devices)
-- Detected via `'ontouchstart' in window`
-- Visual: track with a draggable thumb containing an SVG right-arrow
-- Text: "Slide to complete →" or similar
-- Behavior: drag thumb from left to right past threshold → triggers `logCompletion`
-- One-direction only — cannot slide back to undo
-- **Completed state:** Track and thumb change to lighter color, disabled, shows "Completed ✓"
-- Undo only available via History tab in the modal
-
-### Click-to-Complete (desktop / non-touch)
-- Standard button (existing `CompleteButton` component)
-- After click: shows completed state (same lighter disabled look)
-- Undo only via History tab
+### Complete Button
+- Existing `CompleteButton` component — click/tap for all devices
+- Slide-to-complete deferred to native iOS app
 
 ### Calendar Navigation (in History tab)
 - **Month name tappable:** Opens a month picker list (Jan–Dec for the current year)
@@ -130,21 +114,9 @@ web/src/
 - **Decision:** Remove `/habit/:id/history` route. Combine edit and history in a tabbed modal.
 - **Rationale:** Fewer routes, less navigation, edit and history are related management actions. Deferred streak write moves to modal close (simpler than page unmount).
 
-### AD-SDV2: Touch detection for slide vs click
-- **Decision:** Use `'ontouchstart' in window` to detect touch capability.
-- **Rationale:** Detects actual touch support, not just viewport size. A laptop with touch screen gets the slide. A desktop without touch gets the click.
-
-### AD-SDV3: Slide is irreversible
-- **Decision:** Once slid to complete, cannot undo from the slide. Must use History tab.
-- **Rationale:** The slide gesture is intentional — it requires physical effort. Making it reversible defeats the purpose of preventing accidental completions.
-
-### AD-SDV4: Deferred streak write on modal close
+### AD-SDV2: Deferred streak write on modal close
 - **Decision:** Recompute and write `longestStreak` when the tabbed modal closes, not on every completion toggle inside it.
 - **Rationale:** Same batching benefit as the previous history page unmount approach. Modal close is a cleaner lifecycle event than page unmount.
-
-### AD-SDV5: SVG-based slide arrow
-- **Decision:** Use an inline SVG for the slide thumb arrow — minimalistic right-pointing chevron.
-- **Rationale:** No image assets needed. Scales perfectly. Matches the indigo design system.
 
 ## 6. Data Architecture
 
@@ -162,8 +134,7 @@ No changes. Web client deploy only.
 
 | # | Question / Risk | Status |
 |---|----------------|--------|
-| 1 | Slide gesture on older mobile browsers? | Low risk — touch events are widely supported. Fallback to click button if touch detection fails. |
-| 2 | Modal height on small screens with calendar? | Use max-height with scroll. Calendar month view fits in ~350px. |
+| 1 | Modal height on small screens with calendar? | Use max-height with scroll. Calendar month view fits in ~350px. |
 | 3 | Tab state persistence — if user switches tabs, should form state persist? | Yes — React state persists while modal is open. |
 
 ## 10. Revision History
