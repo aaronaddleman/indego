@@ -144,11 +144,17 @@ jobs:
               --allow-unauthenticated \
               --quiet
           fi
-          # Output the tagged URL
-          URL=$(gcloud run services describe ${{ env.CLOUD_RUN_SERVICE }} \
+          # Output the tagged revision URL
+          TAG_URL=$(gcloud run services describe ${{ env.CLOUD_RUN_SERVICE }} \
             --region ${{ env.GCP_REGION }} \
-            --format="value(status.url)")
-          echo "url=${URL}" >> $GITHUB_OUTPUT
+            --format="value(status.traffic[].url)" | grep "pr-${{ github.event.pull_request.number }}" | head -1)
+          if [ -z "$TAG_URL" ]; then
+            # Fallback to base service URL
+            TAG_URL=$(gcloud run services describe ${{ env.CLOUD_RUN_SERVICE }} \
+              --region ${{ env.GCP_REGION }} \
+              --format="value(status.url)")
+          fi
+          echo "url=${TAG_URL}" >> $GITHUB_OUTPUT
 
   # ── Firestore Rules (production only) ──
   firestore-rules:
