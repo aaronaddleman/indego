@@ -156,6 +156,35 @@ jobs:
           fi
           echo "url=${TAG_URL}" >> $GITHUB_OUTPUT
 
+      - name: Comment API preview URL on PR
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const url = '${{ steps.deploy-preview.outputs.url }}';
+            const body = `**API Preview URL:** ${url}\n\n- Health: ${url}/health\n- Version: ${url}/version\n- GraphiQL: ${url}/`;
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+            });
+            const existing = comments.find(c => c.body.includes('API Preview URL:'));
+            if (existing) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: existing.id,
+                body,
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body,
+              });
+            }
+
   # ── Firestore Rules (production only) ──
   firestore-rules:
     if: github.event_name == 'push'
