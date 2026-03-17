@@ -80,7 +80,11 @@ jobs:
         id: meta
         run: |
           SHORT_SHA=$(echo ${{ github.sha }} | cut -c1-7)
-          echo "image=${{ env.AR_REPO }}/api:${SHORT_SHA}" >> $GITHUB_OUTPUT
+          if [ "${{ github.event_name }}" = "push" ]; then
+            echo "image=${{ env.AR_REPO }}/api:prod-${SHORT_SHA}" >> $GITHUB_OUTPUT
+          else
+            echo "image=${{ env.AR_REPO }}/api:pr-${SHORT_SHA}" >> $GITHUB_OUTPUT
+          fi
 
       - name: Build and push
         uses: docker/build-push-action@v6
