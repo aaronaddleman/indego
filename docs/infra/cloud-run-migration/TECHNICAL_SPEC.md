@@ -73,6 +73,10 @@ def graphql_endpoint():
     status = 200 if success else 400
     return json.dumps(result), status, {**headers, "Content-Type": "application/json"}
 
+@app.route("/health", methods=["GET"])
+def health():
+    return jsonify({"status": "ok"}), 200
+
 @app.route("/version", methods=["GET"])
 def version():
     return jsonify({
@@ -125,6 +129,10 @@ ENV GIT_COMMIT=${GIT_COMMIT}
 ENV DEPLOYED_AT=${DEPLOYED_AT}
 
 EXPOSE 8080
+
+HEALTHCHECK --interval=30s --timeout=5s --retries=3 \
+  CMD curl -f http://localhost:8080/health || exit 1
+
 CMD ["gunicorn", "--bind", "0.0.0.0:8080", "--workers", "2", "--timeout", "30", "server:app"]
 ```
 
