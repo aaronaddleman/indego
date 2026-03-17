@@ -147,7 +147,7 @@ jobs:
           # Output the tagged revision URL
           TAG_URL=$(gcloud run services describe ${{ env.CLOUD_RUN_SERVICE }} \
             --region ${{ env.GCP_REGION }} \
-            --format="value(status.traffic[].url)" | grep "pr-${{ github.event.pull_request.number }}" | head -1)
+            --format="value(status.traffic[].url)" | tr ';' '\n' | grep "pr-${{ github.event.pull_request.number }}" | head -1)
           if [ -z "$TAG_URL" ]; then
             # Fallback to base service URL
             TAG_URL=$(gcloud run services describe ${{ env.CLOUD_RUN_SERVICE }} \
