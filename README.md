@@ -30,4 +30,10 @@ docker compose run --rm build
 
 # Run tests
 docker compose run --rm test
+
+# Add/remove npm packages (updates both package.json and package-lock.json)
+docker compose run --rm npm install <package-name>
+docker compose run --rm npm uninstall <package-name>
 ```
+
+**Important:** Never edit `package.json` by hand. Always use the `npm` Docker service to add/remove packages. This keeps `package-lock.json` in sync. CI uses `npm ci` which fails if the lock file is out of sync.
