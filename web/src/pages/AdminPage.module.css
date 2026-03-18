@@ -1,0 +1,213 @@
+.container {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-4);
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.topBar {
+  display: flex;
+  align-items: center;
+  margin-bottom: var(--space-6);
+}
+
+.backBtn {
+  padding: var(--space-2) var(--space-3);
+  border: none;
+  background: none;
+  font-size: var(--font-size-xl);
+  color: var(--color-neutral-600);
+  cursor: pointer;
+  border-radius: var(--radius-md);
+  min-width: 44px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.backBtn:hover {
+  background: var(--color-neutral-100);
+}
+
+.title {
+  flex: 1;
+  text-align: center;
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+}
+
+.spacer {
+  width: 44px;
+}
+
+.addForm {
+  display: flex;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+}
+
+.input {
+  flex: 1;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-neutral-300);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-base);
+  background: var(--color-surface);
+  color: var(--color-neutral-900);
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--color-primary-500);
+  box-shadow: 0 0 0 3px var(--color-primary-100);
+}
+
+.addBtn {
+  padding: var(--space-2) var(--space-4);
+  background: var(--color-primary-600);
+  color: white;
+  border-radius: var(--radius-md);
+  font-weight: var(--font-weight-medium);
+  transition: background var(--transition-fast);
+}
+
+.addBtn:hover:not(:disabled) {
+  background: var(--color-primary-700);
+}
+
+.addBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.formError {
+  color: var(--color-error);
+  font-size: var(--font-size-sm);
+  margin-bottom: var(--space-4);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+}
+
+.emailInfo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex: 1;
+  min-width: 0;
+}
+
+.email {
+  font-size: var(--font-size-sm);
+  color: var(--color-neutral-800);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.adminBadge {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-primary-600);
+  background: var(--color-primary-50);
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-full);
+  white-space: nowrap;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.adminToggle {
+  padding: var(--space-1) var(--space-2);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  border: 1px solid var(--color-neutral-300);
+  border-radius: var(--radius-full);
+  background: none;
+  color: var(--color-neutral-500);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all var(--transition-fast);
+}
+
+.adminToggle:hover:not(:disabled) {
+  border-color: var(--color-primary-400);
+  color: var(--color-primary-600);
+}
+
+.adminActive {
+  background: var(--color-primary-50);
+  border-color: var(--color-primary-400);
+  color: var(--color-primary-600);
+  font-weight: var(--font-weight-semibold);
+}
+
+.adminToggle:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.selfBadge {
+  font-size: var(--font-size-xs);
+  color: var(--color-neutral-400);
+  white-space: nowrap;
+}
+
+.removeBtn {
+  padding: var(--space-1) var(--space-2);
+  border: none;
+  background: none;
+  color: var(--color-neutral-400);
+  font-size: var(--font-size-base);
+  cursor: pointer;
+  border-radius: var(--radius-md);
+  min-width: 44px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+}
+
+.removeBtn:hover:not(:disabled) {
+  color: var(--color-error);
+  background: var(--color-error-light);
+}
+
+.removeBtn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.loading {
+  text-align: center;
+  padding: var(--space-8);
+  color: var(--color-neutral-500);
+}
+
+.error {
+  text-align: center;
+  padding: var(--space-8);
+  color: var(--color-error);
+}

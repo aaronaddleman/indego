@@ -5,6 +5,7 @@ import { client } from './config/apollo';
 import { AuthProvider } from './auth/AuthProvider';
 import { useAuth } from './auth/useAuth';
 import { AuthGuard } from './auth/AuthGuard';
+import { AdminGuard } from './auth/AdminGuard';
 import './styles/global.css';
 
 const LoginPage = lazy(() => import('./pages/LoginPage'));
@@ -13,6 +14,7 @@ const DashboardPage = lazy(() => import('./pages/DashboardPage'));
 const HabitDetailPage = lazy(() => import('./pages/HabitDetailPage'));
 const StatsPage = lazy(() => import('./pages/StatsPage'));
 const SettingsPage = lazy(() => import('./pages/SettingsPage'));
+const AdminPage = lazy(() => import('./pages/AdminPage'));
 
 function LoginRoute() {
   const { user, loading } = useAuth();
@@ -34,6 +36,7 @@ export default function App() {
               <Route path="/habit/:id" element={<AuthGuard><HabitDetailPage /></AuthGuard>} />
               <Route path="/stats" element={<AuthGuard><StatsPage /></AuthGuard>} />
               <Route path="/settings" element={<AuthGuard><SettingsPage /></AuthGuard>} />
+              <Route path="/admin" element={<AdminGuard><AdminPage /></AdminGuard>} />
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </Suspense>

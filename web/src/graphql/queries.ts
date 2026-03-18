@@ -54,3 +54,12 @@ export const GET_VERSION = gql`
     version { commit deployedAt }
   }
 `;
+
+export const GET_ALLOWED_EMAILS = gql`
+  query GetAllowedEmails {
+    allowedEmails {
+      email
+      isAdmin
+    }
+  }
+`;

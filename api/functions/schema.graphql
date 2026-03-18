@@ -90,6 +90,11 @@ type Version {
   deployedAt: String!
 }
 
+type AllowedEmail {
+  email: String!
+  isAdmin: Boolean!
+}
+
 type UserStats {
   totalHabits: Int!
   totalCompletions: Int!
@@ -113,6 +118,9 @@ type Query {
 
   """Get stats for the authenticated user"""
   stats(dateRange: DateRangeInput!): UserStats!
+
+  """List all allowed emails (admin only)"""
+  allowedEmails: [AllowedEmail!]!
 }
 
 # ─── Mutations ───
@@ -135,4 +143,13 @@ type Mutation {
 
   """Remove a completion for a habit on a given date (removes map key)"""
   undoCompletion(habitId: ID!, date: Date!): Habit!
+
+  """Add an email to the allowlist (admin only)"""
+  addAllowedEmail(email: String!): AllowedEmail!
+
+  """Remove an email from the allowlist (admin only)"""
+  removeAllowedEmail(email: String!): Boolean!
+
+  """Set admin status for an email (admin only)"""
+  setAdminStatus(email: String!, isAdmin: Boolean!): AllowedEmail!
 }
