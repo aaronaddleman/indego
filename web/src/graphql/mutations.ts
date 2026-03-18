@@ -54,3 +54,18 @@ export const UNDO_COMPLETION = gql`
     undoCompletion(habitId: $habitId, date: $date) { ...HabitFields }
   }
 `;
+
+export const ADD_ALLOWED_EMAIL = gql`
+  mutation AddAllowedEmail($email: String!) {
+    addAllowedEmail(email: $email) {
+      email
+      isAdmin
+    }
+  }
+`;
+
+export const REMOVE_ALLOWED_EMAIL = gql`
+  mutation RemoveAllowedEmail($email: String!) {
+    removeAllowedEmail(email: $email)
+  }
+`;

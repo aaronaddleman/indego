@@ -3,7 +3,7 @@
 from firebase_admin import auth
 from ariadne import format_error
 from graphql import GraphQLError
-from app.repositories.allowlist_repo import is_email_allowed
+from app.repositories.allowlist_repo import is_email_allowed, is_email_admin
 
 
 class AuthError(GraphQLError):
@@ -35,25 +35,34 @@ def get_context_value(request):
     """Build the GraphQL context from the incoming request.
 
     Verifies the token, checks the email allowlist, and injects
-    user_id into context for use by resolvers.
+    user_id and email into context for use by resolvers.
     """
     try:
         decoded_token = _verify_token(request)
         user_id = decoded_token["uid"]
         email = decoded_token.get("email", "").lower()
     except AuthError:
-        return {"request": request, "user_id": None}
+        return {"request": request, "user_id": None, "email": None}
 
     # Allowlist check — fail closed
     if not email or not is_email_allowed(email):
-        return {"request": request, "user_id": None}
+        return {"request": request, "user_id": None, "email": None}
 
-    return {"request": request, "user_id": user_id}
+    return {"request": request, "user_id": user_id, "email": email}
 
 
 def require_auth(context: dict) -> str:
     """Require authentication in a resolver. Returns user_id or raises AuthError."""
     user_id = context.get("user_id")
     if not user_id:
+        raise AuthError()
+    return user_id
+
+
+def require_admin(context: dict) -> str:
+    """Require admin privileges in a resolver. Returns user_id or raises AuthError."""
+    user_id = require_auth(context)
+    email = context.get("email")
+    if not email or not is_email_admin(email):
         raise AuthError()
     return user_id

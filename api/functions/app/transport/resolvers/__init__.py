@@ -35,6 +35,11 @@ from app.transport.resolvers.habit import (
     resolve_habit_completions,
 )
 from app.transport.resolvers.stats import resolve_stats
+from app.transport.resolvers.admin import (
+    resolve_allowed_emails,
+    resolve_add_allowed_email,
+    resolve_remove_allowed_email,
+)
 
 query = QueryType()
 mutation = MutationType()
@@ -46,6 +51,7 @@ query.set_field("me", resolve_me)
 query.set_field("habits", resolve_habits)
 query.set_field("habit", resolve_habit)
 query.set_field("stats", resolve_stats)
+query.set_field("allowedEmails", resolve_allowed_emails)
 
 # Mutations
 mutation.set_field("upsertUser", resolve_upsert_user)
@@ -54,6 +60,8 @@ mutation.set_field("updateHabit", resolve_update_habit)
 mutation.set_field("deleteHabit", resolve_delete_habit)
 mutation.set_field("logCompletion", resolve_log_completion)
 mutation.set_field("undoCompletion", resolve_undo_completion)
+mutation.set_field("addAllowedEmail", resolve_add_allowed_email)
+mutation.set_field("removeAllowedEmail", resolve_remove_allowed_email)
 
 # Habit field resolvers
 habit_type.set_field("completions", resolve_habit_completions)

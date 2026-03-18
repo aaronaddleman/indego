@@ -4,6 +4,7 @@ import { auth } from '../config/firebase';
 import { GET_VERSION, GET_ME } from '../graphql/queries';
 import PageShell from '../components/layout/PageShell';
 import { useTheme, type ThemeOption } from '../hooks/useTheme';
+import { useIsAdmin } from '../hooks/useIsAdmin';
 import styles from './SettingsPage.module.css';
 
 const THEME_OPTIONS: { value: ThemeOption; label: string }[] = [
@@ -21,6 +22,7 @@ export default function SettingsPage() {
   const { data: meData } = useQuery(GET_ME);
   const { data: versionData } = useQuery(GET_VERSION);
   const { theme, setTheme } = useTheme();
+  const isAdmin = useIsAdmin();
 
   const handleSignOut = async () => {
     await auth.signOut();
@@ -90,6 +92,12 @@ export default function SettingsPage() {
           <span>{__APP_BRANCH__}</span>
         </div>
       </div>
+
+      {isAdmin && (
+        <button className={styles.adminBtn} onClick={() => navigate('/admin')}>
+          Manage Access
+        </button>
+      )}
 
       <button className={styles.clearCacheBtn} onClick={handleClearCache}>
         Clear Cache & Reload
