@@ -27,6 +27,8 @@ This project follows a **4-phase linear workflow** for software development, wit
 **Goal:** Build, explore, and decide on the core architecture and product direction. Produce the ARD and PRD.
 
 **Activities:**
+- **Read the consolidated ARD and PRD first** (`docs/web/ARD.md`, `docs/api/ARD.md`, etc.) to understand existing architecture and requirements
+- **Check for conflicts** between the new feature and existing decisions
 - Develop and refine the **Architecture Requirements Document (ARD)** using the industry-standard ARD template (see below)
 - Develop and refine the **Product Requirements Document (PRD)** using the industry-standard PRD template (see below)
 - Prototype, spike, and validate technical and product assumptions
@@ -67,6 +69,11 @@ All deliverables use the defined templates (see Templates section below).
 - Execute against the technical spec and deployment plan
 - Keep user-facing docs and changelog current
 - Surface issues that require looping back (see Feedback Loops)
+
+**On merge:**
+- **Update the consolidated ARD and PRD** (`docs/web/ARD.md`, `docs/api/ARD.md`, etc.) with the feature's architecture decisions and requirements
+- Do not just append — resolve conflicts and update existing sections affected by the new feature
+- Remove the per-feature ARD.md and PRD.md files (keep tech specs, deployment plans, changelogs as historical records)
 
 **Exit:** Shipping / delivery of the project.
 
