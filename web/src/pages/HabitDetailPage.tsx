@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/client';
-import { format } from 'date-fns';
+import { getLocalDate } from '../utils/date';
 import { GET_HABIT } from '../graphql/queries';
 import { LOG_COMPLETION, UNDO_COMPLETION } from '../graphql/mutations';
 import WeekStrip from '../components/calendar/WeekStrip';
@@ -36,7 +36,7 @@ export default function HabitDetailPage() {
   const [modalOpen, setModalOpen] = useState(false);
   const [activeTab, setActiveTab] = useState('settings');
 
-  const today = format(new Date(), 'yyyy-MM-dd');
+  const today = getLocalDate();
 
   const habit = data?.habit;
   const streaks = useStreak(habit);

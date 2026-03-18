@@ -1,3 +1,4 @@
+import { getLocalDate } from '../../utils/date';
 import { useMemo, useState } from 'react';
 import { startOfWeek, addWeeks, subWeeks, eachDayOfInterval, format, addDays } from 'date-fns';
 import CompletionToggle from '../habits/CompletionToggle';
@@ -25,7 +26,7 @@ export default function WeekView({ habit }: { habit: Habit }) {
     end: addDays(weekStart, 6),
   });
 
-  const today = format(new Date(), 'yyyy-MM-dd');
+  const today = getLocalDate();
 
   return (
     <div>

@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import CompletionToggle from './CompletionToggle';
 import { useStreak } from '../../hooks/useStreak';
+import { getLocalDate } from '../../utils/date';
 import styles from './HabitCard.module.css';
 
 interface Completion {
@@ -17,7 +18,7 @@ interface Habit {
 
 export default function HabitCard({ habit }: { habit: Habit }) {
   const navigate = useNavigate();
-  const today = new Date().toISOString().split('T')[0];
+  const today = getLocalDate();
   const isCompletedToday = habit.completions.some(c => c.date === today);
   const streaks = useStreak(habit);
   const streakUnit = habit.frequency.type === 'WEEKLY' ? 'week' : 'day';

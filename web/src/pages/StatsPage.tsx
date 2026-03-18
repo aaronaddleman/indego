@@ -1,3 +1,4 @@
+import { getLocalDate } from '../utils/date';
 import { useMemo } from 'react';
 import { useQuery } from '@apollo/client';
 import { format, subDays } from 'date-fns';
@@ -10,7 +11,7 @@ import styles from './StatsPage.module.css';
 export default function StatsPage() {
   const dateRange = useMemo(() => ({
     startDate: format(subDays(new Date(), 7), 'yyyy-MM-dd'),
-    endDate: format(new Date(), 'yyyy-MM-dd'),
+    endDate: getLocalDate(),
   }), []);
 
   const { data, loading, error } = useQuery(GET_STATS, {

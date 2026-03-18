@@ -1,4 +1,5 @@
-import { format } from 'date-fns';
+import { getLocalDate } from '../utils/date';
+
 import { computeStreaks, type StreakResult } from './streakCalc';
 
 interface Completion {
@@ -14,6 +15,6 @@ interface Habit {
 export function useStreak(habit: Habit | null | undefined): StreakResult {
   if (!habit) return { current: 0, longest: 0 };
 
-  const today = format(new Date(), 'yyyy-MM-dd');
+  const today = getLocalDate();
   return computeStreaks(habit.completions, habit.frequency, today);
 }
