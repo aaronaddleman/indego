@@ -4,12 +4,13 @@ from firebase_admin import auth
 from ariadne import format_error
 from graphql import GraphQLError
 from app.repositories.allowlist_repo import is_email_allowed, is_email_admin
+from app.messages import AUTH_REQUIRED, AUTH_MISSING_HEADER, AUTH_INVALID_TOKEN
 
 
 class AuthError(GraphQLError):
     """Authentication error with UNAUTHENTICATED extension code."""
 
-    def __init__(self, message: str = "Authentication required"):
+    def __init__(self, message: str = AUTH_REQUIRED):
         super().__init__(
             message,
             extensions={"code": "UNAUTHENTICATED"},
@@ -21,14 +22,14 @@ def _verify_token(request):
     auth_header = request.headers.get("Authorization", "")
 
     if not auth_header.startswith("Bearer "):
-        raise AuthError("Missing or malformed Authorization header")
+        raise AuthError(AUTH_MISSING_HEADER)
 
     token = auth_header[7:]  # Strip "Bearer "
 
     try:
         return auth.verify_id_token(token)
     except Exception:
-        raise AuthError("Invalid or expired token")
+        raise AuthError(AUTH_INVALID_TOKEN)
 
 
 def get_context_value(request):

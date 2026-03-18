@@ -4,6 +4,7 @@ import { useQuery, useMutation } from '@apollo/client';
 import { GET_ALLOWED_EMAILS } from '../graphql/queries';
 import { ADD_ALLOWED_EMAIL, REMOVE_ALLOWED_EMAIL, SET_ADMIN_STATUS } from '../graphql/mutations';
 import { useAuth } from '../auth/useAuth';
+import { toUIMessage } from '../messages';
 import styles from './AdminPage.module.css';
 
 export default function AdminPage() {
@@ -33,7 +34,7 @@ export default function AdminPage() {
       await addEmail({ variables: { email: newEmail } });
       setNewEmail('');
     } catch (err: unknown) {
-      setFormError(err instanceof Error ? err.message : 'Failed to add email');
+      setFormError(toUIMessage(err, 'Failed to add email'));
     }
   };
 
@@ -42,7 +43,7 @@ export default function AdminPage() {
     try {
       await removeEmail({ variables: { email } });
     } catch (err: unknown) {
-      setFormError(err instanceof Error ? err.message : 'Failed to remove email');
+      setFormError(toUIMessage(err, 'Failed to remove this email'));
     }
   };
 
@@ -51,7 +52,7 @@ export default function AdminPage() {
     try {
       await setAdmin({ variables: { email, isAdmin: !currentStatus } });
     } catch (err: unknown) {
-      setFormError(err instanceof Error ? err.message : 'Failed to update admin status');
+      setFormError(toUIMessage(err, 'Failed to update admin status'));
     }
   };
 
