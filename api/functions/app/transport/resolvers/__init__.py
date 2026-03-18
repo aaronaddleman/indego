@@ -11,7 +11,10 @@ def _load_version():
     version_file = Path(__file__).resolve().parent.parent.parent.parent / "version.json"
     if version_file.exists():
         return json.loads(version_file.read_text())
-    return {"commit": "unknown", "deployedAt": "unknown"}
+    return {
+        "commit": os.environ.get("GIT_COMMIT", "unknown"),
+        "deployedAt": os.environ.get("DEPLOYED_AT", "unknown"),
+    }
 
 
 _version_info = _load_version()

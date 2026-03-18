@@ -1,3 +1,5 @@
+flask>=3.0.0
+gunicorn>=22.0.0
 firebase-functions>=0.1.0
 firebase-admin>=6.4.0
 ariadne>=0.23.0

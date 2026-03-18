@@ -11,8 +11,14 @@ permissions:
   contents: read
   pull-requests: write
 
+env:
+  GCP_PROJECT: indego-bc76b
+  GCP_REGION: us-central1
+  CLOUD_RUN_SERVICE: indego-api
+  AR_REPO: us-central1-docker.pkg.dev/indego-bc76b/indego
+
 jobs:
-  # ── API: Test + Deploy ──
+  # ── API: Test ──
   api-test:
     runs-on: ubuntu-latest
     defaults:
@@ -31,7 +37,7 @@ jobs:
           key: docker-api-${{ hashFiles('api/Dockerfile', 'api/functions/requirements.txt') }}
           restore-keys: docker-api-
 
-      - name: Build Docker image
+      - name: Build test image
         uses: docker/build-push-action@v6
         with:
           context: api
@@ -47,15 +53,140 @@ jobs:
               "pytest functions/tests/ -v" \
               --project demo-indago
 
-      # Prevent cache from growing unbounded
       - name: Move cache
         if: always()
         run: |
           rm -rf /tmp/.buildx-cache
           mv /tmp/.buildx-cache-new /tmp/.buildx-cache
 
-  api-deploy:
+  # ── API: Build + Push Image ──
+  api-build:
     needs: api-test
+    runs-on: ubuntu-latest
+    outputs:
+      image: ${{ steps.meta.outputs.image }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
+
+      - name: Configure Docker for Artifact Registry
+        run: gcloud auth configure-docker us-central1-docker.pkg.dev --quiet
+
+      - name: Set image tag
+        id: meta
+        run: |
+          SHORT_SHA=$(echo ${{ github.sha }} | cut -c1-7)
+          if [ "${{ github.event_name }}" = "push" ]; then
+            echo "image=${{ env.AR_REPO }}/api:prod-${SHORT_SHA}" >> $GITHUB_OUTPUT
+          else
+            echo "image=${{ env.AR_REPO }}/api:pr-${SHORT_SHA}" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Set deploy timestamp
+        id: timestamp
+        run: echo "now=$(date -u +%Y-%m-%dT%H:%M:%SZ)" >> $GITHUB_OUTPUT
+
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          context: api/functions
+          file: api/Dockerfile.cloudrun
+          push: true
+          tags: ${{ steps.meta.outputs.image }}
+          build-args: |
+            GIT_COMMIT=${{ github.sha }}
+            DEPLOYED_AT=${{ steps.timestamp.outputs.now }}
+
+  # ── API: Deploy to Cloud Run ──
+  api-deploy:
+    needs: api-build
+    runs-on: ubuntu-latest
+    outputs:
+      url: ${{ steps.deploy-prod.outputs.url || steps.deploy-preview.outputs.url }}
+    steps:
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
+
+      - name: Deploy to Cloud Run (production)
+        if: github.event_name == 'push'
+        id: deploy-prod
+        uses: google-github-actions/deploy-cloudrun@v2
+        with:
+          service: ${{ env.CLOUD_RUN_SERVICE }}
+          region: ${{ env.GCP_REGION }}
+          image: ${{ needs.api-build.outputs.image }}
+
+      - name: Deploy to Cloud Run (PR preview)
+        if: github.event_name == 'pull_request'
+        id: deploy-preview
+        run: |
+          # Check if service exists
+          if gcloud run services describe ${{ env.CLOUD_RUN_SERVICE }} --region ${{ env.GCP_REGION }} --format="value(status.url)" 2>/dev/null; then
+            # Service exists — deploy tagged revision with no traffic
+            gcloud run deploy ${{ env.CLOUD_RUN_SERVICE }} \
+              --image ${{ needs.api-build.outputs.image }} \
+              --region ${{ env.GCP_REGION }} \
+              --tag pr-${{ github.event.pull_request.number }} \
+              --no-traffic \
+              --allow-unauthenticated \
+              --quiet
+          else
+            # First deploy — create service (must have traffic)
+            gcloud run deploy ${{ env.CLOUD_RUN_SERVICE }} \
+              --image ${{ needs.api-build.outputs.image }} \
+              --region ${{ env.GCP_REGION }} \
+              --allow-unauthenticated \
+              --quiet
+          fi
+          # Output the tagged revision URL
+          TAG_URL=$(gcloud run services describe ${{ env.CLOUD_RUN_SERVICE }} \
+            --region ${{ env.GCP_REGION }} \
+            --format="value(status.traffic[].url)" | tr ';' '\n' | grep "pr-${{ github.event.pull_request.number }}" | head -1)
+          if [ -z "$TAG_URL" ]; then
+            # Fallback to base service URL
+            TAG_URL=$(gcloud run services describe ${{ env.CLOUD_RUN_SERVICE }} \
+              --region ${{ env.GCP_REGION }} \
+              --format="value(status.url)")
+          fi
+          echo "url=${TAG_URL}" >> $GITHUB_OUTPUT
+
+      - name: Comment API preview URL on PR
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const url = '${{ steps.deploy-preview.outputs.url }}';
+            const body = `**API Preview URL:** ${url}\n\n- Health: ${url}/health\n- Version: ${url}/version\n- GraphiQL: ${url}/`;
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+            });
+            const existing = comments.find(c => c.body.includes('API Preview URL:'));
+            if (existing) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: existing.id,
+                body,
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body,
+              });
+            }
+
+  # ── Firestore Rules (production only) ──
+  firestore-rules:
     if: github.event_name == 'push'
     runs-on: ubuntu-latest
     defaults:
@@ -69,27 +200,15 @@ jobs:
         with:
           credentials_json: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
 
-      - name: Write version.json
-        run: |
-          echo '{"commit":"'$(git rev-parse --short HEAD)'","deployedAt":"'$(date -u +%Y-%m-%dT%H:%M:%SZ)'"}' > functions/version.json
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 20
 
-      - name: Install Firebase CLI
-        run: npm install -g firebase-tools
+      - run: npm install -g firebase-tools
 
-      - name: Create venv and install Python dependencies
-        run: |
-          python3 -m venv functions/venv
-          functions/venv/bin/pip install -r functions/requirements.txt
+      - run: firebase deploy --only firestore:rules --project indego-bc76b
 
-      - name: Deploy functions + Firestore rules
-        run: firebase deploy --only functions,firestore:rules --project indego-bc76b
-
-  # ── Web: Lint + Build + Deploy ──
+  # ── Web: Lint + Build ──
   web-test:
     runs-on: ubuntu-latest
     defaults:
@@ -106,15 +225,16 @@ jobs:
       - run: npm run lint
       - run: npm run build
         env:
-          VITE_GRAPHQL_URL: https://us-central1-indego-bc76b.cloudfunctions.net/graphql
+          VITE_GRAPHQL_URL: https://placeholder.run.app
           VITE_FIREBASE_AUTH_DOMAIN: indego-bc76b.firebaseapp.com
           VITE_FIREBASE_PROJECT_ID: indego-bc76b
           VITE_FIREBASE_API_KEY: ${{ secrets.VITE_FIREBASE_API_KEY }}
           VITE_APP_COMMIT: ${{ github.sha }}
           VITE_APP_BRANCH: ${{ github.head_ref || github.ref_name }}
 
+  # ── Web: Deploy ──
   web-deploy:
-    needs: [web-test]
+    needs: [web-test, api-deploy]
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -128,10 +248,11 @@ jobs:
           cache-dependency-path: web/package-lock.json
 
       - run: npm ci
-      - name: Build for production
+
+      - name: Build
         run: npm run build
         env:
-          VITE_GRAPHQL_URL: https://us-central1-indego-bc76b.cloudfunctions.net/graphql
+          VITE_GRAPHQL_URL: ${{ needs.api-deploy.outputs.url }}
           VITE_FIREBASE_AUTH_DOMAIN: indego-bc76b.firebaseapp.com
           VITE_FIREBASE_PROJECT_ID: indego-bc76b
           VITE_FIREBASE_API_KEY: ${{ secrets.VITE_FIREBASE_API_KEY }}
