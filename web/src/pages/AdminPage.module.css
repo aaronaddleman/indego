@@ -132,6 +132,42 @@
   white-space: nowrap;
 }
 
+.actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.adminToggle {
+  padding: var(--space-1) var(--space-2);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  border: 1px solid var(--color-neutral-300);
+  border-radius: var(--radius-full);
+  background: none;
+  color: var(--color-neutral-500);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all var(--transition-fast);
+}
+
+.adminToggle:hover:not(:disabled) {
+  border-color: var(--color-primary-400);
+  color: var(--color-primary-600);
+}
+
+.adminActive {
+  background: var(--color-primary-50);
+  border-color: var(--color-primary-400);
+  color: var(--color-primary-600);
+  font-weight: var(--font-weight-semibold);
+}
+
+.adminToggle:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 .selfBadge {
   font-size: var(--font-size-xs);
   color: var(--color-neutral-400);

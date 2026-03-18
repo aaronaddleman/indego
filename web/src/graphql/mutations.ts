@@ -69,3 +69,12 @@ export const REMOVE_ALLOWED_EMAIL = gql`
     removeAllowedEmail(email: $email)
   }
 `;
+
+export const SET_ADMIN_STATUS = gql`
+  mutation SetAdminStatus($email: String!, $isAdmin: Boolean!) {
+    setAdminStatus(email: $email, isAdmin: $isAdmin) {
+      email
+      isAdmin
+    }
+  }
+`;

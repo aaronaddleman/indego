@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/client';
 import { GET_ALLOWED_EMAILS } from '../graphql/queries';
-import { ADD_ALLOWED_EMAIL, REMOVE_ALLOWED_EMAIL } from '../graphql/mutations';
+import { ADD_ALLOWED_EMAIL, REMOVE_ALLOWED_EMAIL, SET_ADMIN_STATUS } from '../graphql/mutations';
 import { useAuth } from '../auth/useAuth';
 import styles from './AdminPage.module.css';
 
@@ -19,8 +19,11 @@ export default function AdminPage() {
   const [removeEmail, { loading: removing }] = useMutation(REMOVE_ALLOWED_EMAIL, {
     refetchQueries: [{ query: GET_ALLOWED_EMAILS }],
   });
+  const [setAdmin, { loading: settingAdmin }] = useMutation(SET_ADMIN_STATUS, {
+    refetchQueries: [{ query: GET_ALLOWED_EMAILS }],
+  });
 
-  const mutationLoading = adding || removing;
+  const mutationLoading = adding || removing || settingAdmin;
   const currentEmail = user?.email?.toLowerCase() || '';
 
   const handleAdd = async (e: React.FormEvent) => {
@@ -40,6 +43,15 @@ export default function AdminPage() {
       await removeEmail({ variables: { email } });
     } catch (err: unknown) {
       setFormError(err instanceof Error ? err.message : 'Failed to remove email');
+    }
+  };
+
+  const handleToggleAdmin = async (email: string, currentStatus: boolean) => {
+    setFormError('');
+    try {
+      await setAdmin({ variables: { email, isAdmin: !currentStatus } });
+    } catch (err: unknown) {
+      setFormError(err instanceof Error ? err.message : 'Failed to update admin status');
     }
   };
 
@@ -98,19 +110,28 @@ export default function AdminPage() {
             <div key={email} className={styles.row}>
               <div className={styles.emailInfo}>
                 <span className={styles.email}>{email}</span>
-                {isAdmin && <span className={styles.adminBadge}>Admin</span>}
                 {isSelf && <span className={styles.selfBadge}>you</span>}
               </div>
-              {!isSelf && (
+              <div className={styles.actions}>
                 <button
-                  className={styles.removeBtn}
-                  onClick={() => handleRemove(email)}
+                  className={`${styles.adminToggle} ${isAdmin ? styles.adminActive : ''}`}
+                  onClick={() => handleToggleAdmin(email, isAdmin)}
                   disabled={mutationLoading}
-                  aria-label={`Remove ${email}`}
+                  aria-label={isAdmin ? `Revoke admin for ${email}` : `Grant admin to ${email}`}
                 >
-                  ✕
+                  {isAdmin ? 'Admin' : 'User'}
                 </button>
-              )}
+                {!isSelf && (
+                  <button
+                    className={styles.removeBtn}
+                    onClick={() => handleRemove(email)}
+                    disabled={mutationLoading}
+                    aria-label={`Remove ${email}`}
+                  >
+                    ✕
+                  </button>
+                )}
+              </div>
             </div>
           );
         })}

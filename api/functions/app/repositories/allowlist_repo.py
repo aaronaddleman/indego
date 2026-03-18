@@ -52,6 +52,15 @@ def remove_allowed_email(email: str) -> bool:
     return True
 
 
+def set_admin_status(email: str, is_admin: bool) -> dict:
+    """Set the isAdmin flag on an allowed email."""
+    db = firestore.client()
+    email = email.lower()
+    ref = db.collection("allowedEmails").document(email)
+    ref.update({"isAdmin": is_admin})
+    return {"email": email, "isAdmin": is_admin}
+
+
 def count_admins() -> int:
     """Count the number of admin emails."""
     db = firestore.client()

@@ -39,6 +39,7 @@ from app.transport.resolvers.admin import (
     resolve_allowed_emails,
     resolve_add_allowed_email,
     resolve_remove_allowed_email,
+    resolve_set_admin_status,
 )
 
 query = QueryType()
@@ -62,6 +63,7 @@ mutation.set_field("logCompletion", resolve_log_completion)
 mutation.set_field("undoCompletion", resolve_undo_completion)
 mutation.set_field("addAllowedEmail", resolve_add_allowed_email)
 mutation.set_field("removeAllowedEmail", resolve_remove_allowed_email)
+mutation.set_field("setAdminStatus", resolve_set_admin_status)
 
 # Habit field resolvers
 habit_type.set_field("completions", resolve_habit_completions)

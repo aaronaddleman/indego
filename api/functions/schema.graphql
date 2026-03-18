@@ -149,4 +149,7 @@ type Mutation {
 
   """Remove an email from the allowlist (admin only)"""
   removeAllowedEmail(email: String!): Boolean!
+
+  """Set admin status for an email (admin only)"""
+  setAdminStatus(email: String!, isAdmin: Boolean!): AllowedEmail!
 }

@@ -49,3 +49,17 @@ def remove_email(email: str, caller_email: str) -> bool:
         raise AdminError("Cannot remove the last admin")
 
     return allowlist_repo.remove_allowed_email(email)
+
+
+def set_admin_status(email: str, is_admin: bool, caller_email: str) -> dict:
+    """Set admin status for an email with safety checks."""
+    email = email.strip().lower()
+
+    if not allowlist_repo.is_email_allowed(email):
+        raise AdminError(f"{email} is not in the allowlist")
+
+    # Prevent revoking the last admin
+    if not is_admin and allowlist_repo.is_email_admin(email) and allowlist_repo.count_admins() <= 1:
+        raise AdminError("Cannot revoke the last admin")
+
+    return allowlist_repo.set_admin_status(email, is_admin)
