@@ -39,6 +39,14 @@ services:
       - ./src:/app/src
     profiles: ["lint"]
 
+  npm:
+    build: .
+    entrypoint: npm
+    volumes:
+      - ./package.json:/app/package.json
+      - ./package-lock.json:/app/package-lock.json
+    profiles: ["npm"]
+
   test:
     build: .
     command: npm test

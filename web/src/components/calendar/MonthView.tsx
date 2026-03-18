@@ -1,3 +1,4 @@
+import { getLocalDate } from '../../utils/date';
 import { useState } from 'react';
 import {
   startOfMonth,
@@ -42,7 +43,7 @@ export default function MonthView({ habit }: { habit: Habit }) {
   const calEnd = endOfWeek(monthEnd, { weekStartsOn: 1 });
   const days = eachDayOfInterval({ start: calStart, end: calEnd });
 
-  const today = format(new Date(), 'yyyy-MM-dd');
+  const today = getLocalDate();
 
   // Compute min year from completions
   const sortedDates = habit.completions.map(c => c.date).sort();
