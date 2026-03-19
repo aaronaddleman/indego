@@ -9,7 +9,7 @@ from ariadne import (
 )
 
 from app.transport.scalars import datetime_scalar, date_scalar
-from app.transport.resolvers import query, mutation, habit_type
+from app.transport.resolvers import query, mutation, habit_type, frequency_type
 
 
 def create_schema():
@@ -22,6 +22,7 @@ def create_schema():
         query,
         mutation,
         habit_type,
+        frequency_type,
         datetime_scalar,
         date_scalar,
     )

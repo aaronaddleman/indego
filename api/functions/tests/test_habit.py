@@ -7,6 +7,7 @@ import pytest
 
 from app.services import habit_service
 from app.services.habit_service import ValidationError, NotFoundError
+from app.services.frequency_service import ValidationError as FrequencyValidationError
 
 
 class TestCreateHabit:
@@ -34,8 +35,8 @@ class TestCreateHabit:
                 "frequency": {"type": "DAILY"},
             })
 
-    def test_rejects_missing_specific_days_for_custom(self):
-        with pytest.raises(ValidationError, match="specificDays required"):
+    def test_rejects_missing_days_for_custom(self):
+        with pytest.raises(FrequencyValidationError, match="At least one day must be selected"):
             habit_service.create_habit("user-1", {
                 "name": "Exercise",
                 "frequency": {"type": "CUSTOM"},
@@ -68,14 +69,14 @@ class TestCreateHabit:
         assert result["id"] == "h1"
 
     @patch("app.services.habit_service.habit_repo")
-    def test_creates_custom_habit(self, mock_repo):
+    def test_creates_custom_habit_normalized_to_weekly(self, mock_repo):
         input_data = {
             "name": "Yoga",
             "frequency": {"type": "CUSTOM", "specificDays": ["Monday", "Wednesday", "Friday"]},
         }
         mock_repo.create_habit.return_value = {
             "id": "h2", "name": "Yoga",
-            "frequency": {"type": "CUSTOM", "specificDays": ["monday", "wednesday", "friday"]},
+            "frequency": {"type": "WEEKLY", "daysOfWeek": ["monday", "wednesday", "friday"]},
             "reminder": {"enabled": False},
             "longestStreak": 0,
             "completions": {},
@@ -85,6 +86,10 @@ class TestCreateHabit:
 
         result = habit_service.create_habit("user-1", input_data)
         assert result["name"] == "Yoga"
+        # Verify CUSTOM was normalized to WEEKLY with daysOfWeek
+        call_args = mock_repo.create_habit.call_args[0][1]
+        assert call_args["frequency"]["type"] == "WEEKLY"
+        assert call_args["frequency"]["daysOfWeek"] == ["monday", "wednesday", "friday"]
 
 
 class TestUpdateHabit:

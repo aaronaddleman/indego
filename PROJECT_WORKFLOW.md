@@ -289,3 +289,5 @@ Both gates use the **same approval process**:
 | Admin Allowlist UI — Gate 2 (Documentation → Implementation) | 2026-03-18 | Project Lead | Approved | Technical Spec, Deployment Plan, Changelog complete. 14 files total. Pre-deploy: add isAdmin to own email doc. |
 | Timezone Fix — Gate 1 (Iteration → Documentation) | 2026-03-18 | Project Lead | Approved | ARD and PRD approved. Fix UTC date bug in HabitCard, centralize getLocalDate() helper, add unit tests for dates and streaks, CI integration. |
 | Timezone Fix — Gate 2 (Documentation → Implementation) | 2026-03-18 | Project Lead | Approved | Technical Spec, Deployment Plan, Changelog complete. New utils/date.ts, unit tests, CI npm test step. |
+| Frequency Redesign — Gate 1 (Iteration → Documentation) | 2026-03-19 | Project Lead | Approved | Merge WEEKLY+CUSTOM, computed dueDays, shared frequency service, backwards compatible, CUSTOM deprecated. |
+| Frequency Redesign — Gate 2 (Documentation → Implementation) | 2026-03-19 | Project Lead | Approved | Technical Spec, Deployment Plan, Changelog complete. 11 files. Schema additive, no forced migration. |

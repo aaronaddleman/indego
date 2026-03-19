@@ -42,9 +42,12 @@ from app.transport.resolvers.admin import (
     resolve_set_admin_status,
 )
 
+from app.services.frequency_service import compute_due_days
+
 query = QueryType()
 mutation = MutationType()
 habit_type = ObjectType("Habit")
+frequency_type = ObjectType("Frequency")
 
 # Queries
 query.set_field("version", resolve_version)
@@ -67,3 +70,6 @@ mutation.set_field("setAdminStatus", resolve_set_admin_status)
 
 # Habit field resolvers
 habit_type.set_field("completions", resolve_habit_completions)
+
+# Frequency field resolvers
+frequency_type.set_field("dueDays", lambda freq, info: compute_due_days(freq))

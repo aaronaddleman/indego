@@ -4,12 +4,13 @@ import { useMutation } from '@apollo/client';
 import { CREATE_HABIT, UPDATE_HABIT, DELETE_HABIT } from '../../graphql/mutations';
 import { GET_HABITS } from '../../graphql/queries';
 import ConfirmDialog from '../common/ConfirmDialog';
+import { getDayName } from '../../utils/frequency';
 import styles from './HabitForm.module.css';
 
 interface Habit {
   id: string;
   name: string;
-  frequency: { type: string; daysPerWeek?: number; specificDays?: string[] };
+  frequency: { type: string; daysOfWeek?: string[]; daysPerWeek?: number; specificDays?: string[] };
   reminder: { enabled: boolean; time?: string };
 }
 
@@ -37,9 +38,10 @@ export default function HabitForm({ habit, onClose, inline }: Props) {
   const isEdit = !!habit;
   const navigate = useNavigate();
   const [name, setName] = useState(habit?.name || '');
-  const [freqType, setFreqType] = useState(habit?.frequency.type || 'DAILY');
-  const [daysPerWeek, setDaysPerWeek] = useState(habit?.frequency.daysPerWeek || 3);
-  const [specificDays, setSpecificDays] = useState<string[]>(habit?.frequency.specificDays || []);
+  const initFreqType = habit?.frequency.type === 'CUSTOM' ? 'WEEKLY' : (habit?.frequency.type || 'DAILY');
+  const initDaysOfWeek = habit?.frequency.daysOfWeek || habit?.frequency.specificDays || [getDayName(new Date())];
+  const [freqType, setFreqType] = useState(initFreqType);
+  const [daysOfWeek, setDaysOfWeek] = useState<string[]>(initDaysOfWeek);
   const [reminderEnabled, setReminderEnabled] = useState(habit?.reminder.enabled || false);
   const [reminderTime, setReminderTime] = useState(
     habit?.reminder.time ? utcToLocal(habit.reminder.time) : '09:00'
@@ -62,9 +64,14 @@ export default function HabitForm({ habit, onClose, inline }: Props) {
   const allDays = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
 
   const toggleDay = (day: string) => {
-    setSpecificDays(prev =>
-      prev.includes(day) ? prev.filter(d => d !== day) : [...prev, day]
-    );
+    setDaysOfWeek(prev => {
+      if (prev.includes(day)) {
+        // Don't allow deselecting the last day
+        if (prev.length <= 1) return prev;
+        return prev.filter(d => d !== day);
+      }
+      return [...prev, day];
+    });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -72,8 +79,7 @@ export default function HabitForm({ habit, onClose, inline }: Props) {
     setError('');
 
     const frequency: Record<string, unknown> = { type: freqType };
-    if (freqType === 'WEEKLY') frequency.daysPerWeek = daysPerWeek;
-    if (freqType === 'CUSTOM') frequency.specificDays = specificDays;
+    if (freqType === 'WEEKLY') frequency.daysOfWeek = daysOfWeek;
 
     const reminder = {
       enabled: reminderEnabled,
@@ -118,31 +124,16 @@ export default function HabitForm({ habit, onClose, inline }: Props) {
             >
               <option value="DAILY">Daily</option>
               <option value="WEEKLY">Weekly</option>
-              <option value="CUSTOM">Custom Days</option>
             </select>
           </label>
 
           {freqType === 'WEEKLY' && (
-            <label className={styles.label}>
-              Days per week
-              <input
-                type="number"
-                min={1}
-                max={7}
-                value={daysPerWeek}
-                onChange={(e) => setDaysPerWeek(Number(e.target.value))}
-                className={styles.input}
-              />
-            </label>
-          )}
-
-          {freqType === 'CUSTOM' && (
             <div className={styles.daysGrid}>
               {allDays.map((day) => (
                 <button
                   key={day}
                   type="button"
-                  className={`${styles.dayBtn} ${specificDays.includes(day) ? styles.daySelected : ''}`}
+                  className={`${styles.dayBtn} ${daysOfWeek.includes(day) ? styles.daySelected : ''}`}
                   onClick={() => toggleDay(day)}
                 >
                   {day.slice(0, 3)}

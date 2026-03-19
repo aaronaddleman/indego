@@ -6,6 +6,7 @@ from datetime import date, datetime, timedelta, timezone
 from graphql import GraphQLError
 
 from app.repositories import habit_repo
+from app.services.frequency_service import validate_frequency
 
 
 class ValidationError(GraphQLError):
@@ -23,26 +24,8 @@ _DATE_PATTERN = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 
 
 def _validate_frequency(freq: dict) -> dict:
-    """Validate and normalize frequency input."""
-    freq_type = freq["type"]
-    result = {"type": freq_type}
-
-    if freq_type == "WEEKLY":
-        days = freq.get("daysPerWeek")
-        if days is not None and (days < 1 or days > 7):
-            raise ValidationError("daysPerWeek must be between 1 and 7")
-        result["daysPerWeek"] = days
-    elif freq_type == "CUSTOM":
-        days = freq.get("specificDays")
-        if not days:
-            raise ValidationError("specificDays required for CUSTOM frequency")
-        valid_days = {"monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"}
-        for d in days:
-            if d.lower() not in valid_days:
-                raise ValidationError(f"Invalid day: {d}")
-        result["specificDays"] = [d.lower() for d in days]
-
-    return result
+    """Validate and normalize frequency input. Delegates to frequency_service."""
+    return validate_frequency(freq)
 
 
 def _validate_reminder(reminder: dict | None) -> dict:
