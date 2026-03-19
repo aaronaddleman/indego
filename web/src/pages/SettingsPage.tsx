@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import { auth } from '../config/firebase';
@@ -23,6 +24,16 @@ export default function SettingsPage() {
   const { data: versionData } = useQuery(GET_VERSION);
   const { theme, setTheme } = useTheme();
   const isAdmin = useIsAdmin();
+  const [tokenCopied, setTokenCopied] = useState(false);
+
+  const handleCopyToken = async () => {
+    const user = auth.currentUser;
+    if (!user) return;
+    const token = await user.getIdToken();
+    await navigator.clipboard.writeText(token);
+    setTokenCopied(true);
+    setTimeout(() => setTokenCopied(false), 3000);
+  };
 
   const handleSignOut = async () => {
     await auth.signOut();
@@ -96,6 +107,12 @@ export default function SettingsPage() {
       {isAdmin && (
         <button className={styles.adminBtn} onClick={() => navigate('/admin')}>
           Manage Access
+        </button>
+      )}
+
+      {isAdmin && (
+        <button className={styles.clearCacheBtn} onClick={handleCopyToken}>
+          {tokenCopied ? 'Token Copied!' : 'Copy Auth Token'}
         </button>
       )}
 
