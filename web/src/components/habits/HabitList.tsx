@@ -9,7 +9,7 @@ interface Completion {
 interface Habit {
   id: string;
   name: string;
-  frequency: { type: string; daysPerWeek?: number; specificDays?: string[] };
+  frequency: { type: string; daysOfWeek?: string[]; dueDays?: string[]; daysPerWeek?: number; specificDays?: string[] };
   completions: Completion[];
 }
 

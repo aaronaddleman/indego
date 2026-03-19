@@ -15,14 +15,20 @@ import { computeStreaks } from '../hooks/streakCalc';
 import { useAuth } from '../auth/useAuth';
 import styles from './HabitDetailPage.module.css';
 
-function formatFrequency(frequency: { type: string; daysPerWeek?: number; specificDays?: string[] }): string {
+function formatFrequency(frequency: { type: string; daysOfWeek?: string[]; daysPerWeek?: number; specificDays?: string[] }): string {
   switch (frequency.type) {
     case 'DAILY':
       return 'Daily';
     case 'WEEKLY':
-      return `${frequency.daysPerWeek}x per week`;
-    case 'CUSTOM':
-      return frequency.specificDays?.map(d => d.slice(0, 3)).join(', ') || 'Custom';
+    case 'CUSTOM': {
+      const days = frequency.daysOfWeek || frequency.specificDays;
+      if (days && days.length > 0) {
+        if (days.length === 7) return 'Every day';
+        return days.map(d => d.slice(0, 3)).join(', ');
+      }
+      if (frequency.daysPerWeek) return `${frequency.daysPerWeek}x per week`;
+      return 'Weekly';
+    }
     default:
       return frequency.type;
   }
