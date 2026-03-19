@@ -4,7 +4,7 @@ const HABIT_FIELDS = gql`
   fragment HabitFields on Habit {
     id
     name
-    frequency { type daysPerWeek specificDays }
+    frequency { type daysOfWeek dueDays daysPerWeek specificDays }
     reminder { enabled time }
     longestStreak
     completions { date completedAt }

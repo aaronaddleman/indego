@@ -15,8 +15,9 @@ enum FrequencyType {
 
 input FrequencyInput {
   type: FrequencyType!
-  daysPerWeek: Int
-  specificDays: [String!]
+  daysOfWeek: [String!]     # Required for WEEKLY/CUSTOM — days the habit is due
+  daysPerWeek: Int          # Deprecated — use daysOfWeek instead
+  specificDays: [String!]   # Deprecated — use daysOfWeek instead
 }
 
 input ReminderInput {
@@ -52,8 +53,10 @@ type User {
 
 type Frequency {
   type: FrequencyType!
-  daysPerWeek: Int
-  specificDays: [String!]
+  daysOfWeek: [String!]     # Specific days for WEEKLY/CUSTOM
+  dueDays: [String!]!       # Computed: which days of the week this habit is due
+  daysPerWeek: Int          # Deprecated
+  specificDays: [String!]   # Deprecated
 }
 
 type Reminder {

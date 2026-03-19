@@ -18,6 +18,7 @@ interface Completion {
 
 interface Frequency {
   type: string;
+  daysOfWeek?: string[];
   daysPerWeek?: number;
   specificDays?: string[];
 }
@@ -43,16 +44,23 @@ export function computeStreaks(
     return { current: 0, longest: 0 };
   }
 
-  switch (frequency.type) {
-    case 'DAILY':
-      return computeDailyStreaks(completions, today);
-    case 'WEEKLY':
-      return computeWeeklyStreaks(completions, frequency.daysPerWeek ?? 1, today);
-    case 'CUSTOM':
-      return computeCustomStreaks(completions, frequency.specificDays ?? [], today);
-    default:
-      return computeDailyStreaks(completions, today);
+  if (frequency.type === 'DAILY') {
+    return computeDailyStreaks(completions, today);
   }
+
+  // WEEKLY and CUSTOM: prefer daysOfWeek, fall back to specificDays
+  const scheduledDays = frequency.daysOfWeek || frequency.specificDays;
+  if (scheduledDays && scheduledDays.length > 0) {
+    return computeCustomStreaks(completions, scheduledDays, today);
+  }
+
+  // Legacy WEEKLY with daysPerWeek but no specific days
+  if (frequency.daysPerWeek) {
+    return computeWeeklyStreaks(completions, frequency.daysPerWeek, today);
+  }
+
+  // Fallback: treat as daily
+  return computeDailyStreaks(completions, today);
 }
 
 // ─── DAILY ──────────────────────────────────────────────────────────────────
