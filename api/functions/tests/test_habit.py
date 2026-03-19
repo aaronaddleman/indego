@@ -7,6 +7,7 @@ import pytest
 
 from app.services import habit_service
 from app.services.habit_service import ValidationError, NotFoundError
+from app.services.frequency_service import ValidationError as FrequencyValidationError
 
 
 class TestCreateHabit:
@@ -35,7 +36,7 @@ class TestCreateHabit:
             })
 
     def test_rejects_missing_days_for_custom(self):
-        with pytest.raises(ValidationError, match="At least one day must be selected"):
+        with pytest.raises(FrequencyValidationError, match="At least one day must be selected"):
             habit_service.create_habit("user-1", {
                 "name": "Exercise",
                 "frequency": {"type": "CUSTOM"},
