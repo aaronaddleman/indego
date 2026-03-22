@@ -1,0 +1,63 @@
+.card {
+  background: var(--color-surface-container-lowest, #ffffff);
+  border-radius: var(--radius-card-sm);
+  padding: var(--space-5);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: box-shadow var(--transition-fast);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.info {
+  flex: 1;
+  min-width: 0;
+}
+
+.name {
+  font-weight: var(--font-weight-bold);
+  color: var(--color-on-surface, var(--color-neutral-900));
+}
+
+.detail {
+  font-size: var(--font-size-xs);
+  color: var(--color-on-surface-variant, var(--color-neutral-500));
+  font-weight: var(--font-weight-medium);
+  margin-top: var(--space-1);
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.pctCol {
+  text-align: right;
+}
+
+.pct {
+  font-weight: var(--font-weight-bold);
+  color: var(--color-primary, var(--color-primary-600));
+}
+
+.barTrack {
+  width: 6px;
+  height: 48px;
+  background: var(--color-surface-container, #e8f0e9);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.barFill {
+  width: 100%;
+  background: var(--color-primary, #006c49);
+  border-radius: var(--radius-full);
+  transition: height var(--transition-base);
+}

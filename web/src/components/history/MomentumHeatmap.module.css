@@ -1,0 +1,98 @@
+.container {
+  background: var(--color-surface-container-low, #eef6ee);
+  border-radius: var(--radius-card);
+  padding: var(--space-6);
+  position: relative;
+  overflow: hidden;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-6);
+}
+
+.title {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-on-surface, var(--color-neutral-900));
+}
+
+.legend {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.legendLabel {
+  font-size: 10px;
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+  color: var(--color-on-surface-variant, var(--color-neutral-500));
+  opacity: 0.6;
+}
+
+.legendCells {
+  display: flex;
+  gap: var(--space-1);
+}
+
+.legendCell {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+}
+
+.dayLabels {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: var(--space-2);
+  margin-bottom: var(--space-2);
+}
+
+.dayLabel {
+  text-align: center;
+  font-size: 10px;
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+  color: var(--color-on-surface-variant, var(--color-neutral-500));
+  opacity: 0.4;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: var(--space-2);
+}
+
+.cell {
+  aspect-ratio: 1;
+  border-radius: var(--radius-lg);
+  transition: background var(--transition-fast);
+}
+
+.today {
+  outline: 2px solid var(--color-primary, #006c49);
+  outline-offset: 1px;
+}
+
+.level0 {
+  background: var(--color-surface-container-highest, #dde4dd);
+}
+
+.level1 {
+  background: rgba(0, 108, 73, 0.2);
+}
+
+.level2 {
+  background: rgba(0, 108, 73, 0.4);
+}
+
+.level3 {
+  background: rgba(0, 108, 73, 0.6);
+}
+
+.level4 {
+  background: var(--color-primary, #006c49);
+}

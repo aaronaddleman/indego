@@ -1,0 +1,43 @@
+.card {
+  background: var(--color-surface-container-lowest, #ffffff);
+  border-radius: var(--radius-card);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+}
+
+.iconWrap {
+  padding: var(--space-4);
+  border-radius: var(--radius-xl);
+  font-size: 28px;
+}
+
+.primary {
+  background: rgba(0, 108, 73, 0.1);
+  color: var(--color-primary, #006c49);
+}
+
+.tertiary {
+  background: rgba(226, 145, 0, 0.15);
+  color: var(--color-tertiary, #855300);
+}
+
+.value {
+  font-size: var(--font-size-3xl);
+  font-weight: 800;
+  color: var(--color-on-surface, var(--color-neutral-900));
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.label {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-on-surface-variant, var(--color-neutral-500));
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  opacity: 0.6;
+  margin-top: var(--space-1);
+}
