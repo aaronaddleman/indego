@@ -112,7 +112,7 @@ export default function HistoryPage() {
                       name={hs.habitName}
                       completions={hs.totalCompletions}
                       rate={hs.completionRate}
-                      since={since}
+                      since={range === 'all' ? since : undefined}
                     />
                   );
                 })}
