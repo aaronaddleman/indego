@@ -8,12 +8,13 @@ interface Props {
 
 export default function HabitBreakdownCard({ name, completions, rate }: Props) {
   const pct = Math.min(100, Math.round(rate * 100));
+  const expected = rate > 0 ? Math.round(completions / rate) : 0;
 
   return (
     <div className={styles.card}>
       <div className={styles.info}>
         <h4 className={styles.name}>{name}</h4>
-        <p className={styles.detail}>{completions} completions</p>
+        <p className={styles.detail}>{completions}/{expected} due days</p>
       </div>
       <div className={styles.right}>
         <div className={styles.pctCol}>
