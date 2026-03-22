@@ -68,6 +68,9 @@ export default function HistoryPage() {
         <div>
           <span className={styles.eyebrow}>Performance</span>
           <h1 className={styles.pageTitle}>Habit History</h1>
+          {range === 'all' && startDate && (
+            <span className={styles.sinceLabel}>Since {format(parseISO(startDate), 'MMM d, yyyy')}</span>
+          )}
         </div>
         <div className={styles.rangePicker}>
           {([['7d', 'Last 7 days'], ['month', 'This Month'], ['all', 'All Time']] as const).map(([key, label]) => (

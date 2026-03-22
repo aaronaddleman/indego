@@ -21,6 +21,13 @@
   color: var(--color-on-surface-variant, var(--color-neutral-500));
 }
 
+.sinceLabel {
+  font-size: var(--font-size-sm);
+  color: var(--color-on-surface-variant, var(--color-neutral-500));
+  font-weight: var(--font-weight-medium);
+  margin-top: var(--space-1);
+}
+
 .pageTitle {
   font-size: var(--font-size-3xl);
   font-weight: 800;
