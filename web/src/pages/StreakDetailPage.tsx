@@ -16,7 +16,7 @@ export default function StreakDetailPage() {
 
   const habit = data?.habit;
   const streaks = useStreak(habit);
-  const completionDates = useMemo(
+  const completionDates = useMemo<Set<string>>(
     () => new Set((habit?.completions ?? []).map((c: { date: string }) => c.date)),
     [habit?.completions]
   );
