@@ -2,10 +2,9 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: var(--space-4);
+  padding: var(--space-5);
   background: var(--color-surface-container-lowest, #ffffff);
   border-radius: var(--radius-card-sm);
-  box-shadow: var(--shadow-sm);
   cursor: pointer;
   transition: all var(--transition-fast);
 }
@@ -14,9 +13,16 @@
   box-shadow: var(--shadow-md);
 }
 
-.card[data-completed="true"] {
+.card:active {
+  transform: scale(0.98);
+}
+
+.completed {
   background: var(--color-surface-container-low, #eef6ee);
-  opacity: 0.85;
+}
+
+.completed:hover {
+  background: var(--color-surface-container-high, #e3eae3);
 }
 
 .info {
@@ -26,16 +32,22 @@
 
 .name {
   font-size: var(--font-size-base);
-  font-weight: var(--font-weight-semibold);
-  color: var(--color-neutral-900);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-on-surface, var(--color-neutral-900));
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
+.nameCompleted {
+  text-decoration: line-through;
+  opacity: 0.5;
+}
+
 .streak {
   font-size: var(--font-size-xs);
-  color: var(--color-neutral-500);
+  color: var(--color-on-surface-variant, var(--color-neutral-500));
   margin-top: var(--space-1);
   display: block;
+  font-weight: var(--font-weight-medium);
 }

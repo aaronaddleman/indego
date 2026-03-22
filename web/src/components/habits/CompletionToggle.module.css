@@ -1,29 +1,37 @@
 .toggle {
-  width: 36px;
-  height: 36px;
+  width: 40px;
+  height: 40px;
   border-radius: var(--radius-full);
-  border: 2px solid var(--color-outline-variant, var(--color-neutral-300));
+  border: none;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: var(--font-size-lg);
-  color: white;
   transition: all var(--transition-fast);
   flex-shrink: 0;
+  background: var(--color-surface-container-highest, var(--color-neutral-200));
+  color: var(--color-outline-variant, var(--color-neutral-400));
 }
 
 .toggle:hover {
-  border-color: var(--color-primary-500);
+  background: rgba(0, 108, 73, 0.15);
+  color: var(--color-primary, var(--color-primary-600));
 }
 
 .completed {
-  background: var(--color-success);
-  border-color: var(--color-success);
+  background: linear-gradient(135deg, var(--color-primary, #006c49), var(--color-primary-container, #10b981));
+  color: white;
+  box-shadow: var(--shadow-md);
 }
 
 .completed:hover {
-  background: #059669;
-  border-color: #059669;
+  opacity: 0.9;
+  background: linear-gradient(135deg, var(--color-primary, #006c49), var(--color-primary-container, #10b981));
+  color: white;
+}
+
+.checkIcon {
+  font-size: 20px;
+  font-weight: bold;
 }
 
 .toggle:disabled {

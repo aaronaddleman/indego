@@ -25,12 +25,13 @@ export default function HabitCard({ habit }: { habit: Habit }) {
 
   return (
     <div
-      className={styles.card}
-      data-completed={isCompletedToday}
+      className={`${styles.card} ${isCompletedToday ? styles.completed : ''}`}
       onClick={() => navigate(`/habit/${habit.id}`)}
     >
       <div className={styles.info}>
-        <h3 className={styles.name}>{habit.name}</h3>
+        <h3 className={`${styles.name} ${isCompletedToday ? styles.nameCompleted : ''}`}>
+          {habit.name}
+        </h3>
         <span className={styles.streak}>
           {streaks.current > 0 ? `${streaks.current} ${streakUnit} streak` : 'No streak'}
         </span>

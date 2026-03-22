@@ -1,32 +1,80 @@
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.dateHeader {
   margin-bottom: var(--space-6);
 }
 
-.title {
-  font-size: var(--font-size-2xl);
+.dateTitle {
+  font-size: var(--font-size-lg);
   font-weight: var(--font-weight-bold);
-  color: var(--color-neutral-900);
+  color: var(--color-primary, var(--color-primary-600));
+  letter-spacing: -0.01em;
 }
 
-.addBtn {
-  padding: var(--space-2) var(--space-4);
-  background: var(--color-primary-600);
-  color: white;
+.heroGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+  margin-bottom: var(--space-8);
+}
+
+@media (max-width: 480px) {
+  .heroGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: var(--space-4);
+  padding: 0 var(--space-1);
+}
+
+.sectionTitle {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-on-surface, var(--color-neutral-900));
+}
+
+.sectionHint {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-on-surface-variant, var(--color-neutral-500));
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.fab {
+  position: fixed;
+  right: var(--space-6);
+  bottom: 100px;
+  z-index: 50;
+  width: 56px;
+  height: 56px;
   border-radius: var(--radius-full);
-  font-weight: var(--font-weight-medium);
-  font-size: var(--font-size-sm);
-  transition: background var(--transition-fast);
+  background: linear-gradient(135deg, var(--color-primary, #006c49), var(--color-primary-container, #10b981));
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-lg);
+  transition: transform var(--transition-fast);
 }
 
-.addBtn:hover {
-  background: var(--color-primary-700);
+.fab:hover {
+  transform: scale(1.05);
+}
+
+.fab:active {
+  transform: scale(0.95);
+}
+
+.fab .material-symbols-outlined {
+  font-size: 28px;
 }
 
 .status {
-  color: var(--color-neutral-500);
+  color: var(--color-on-surface-variant, var(--color-neutral-500));
   text-align: center;
   padding: var(--space-8);
 }
