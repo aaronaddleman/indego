@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { useQuery } from '@apollo/client';
-import { format, subDays, subMonths } from 'date-fns';
+import { format, subDays, subMonths, differenceInDays, parseISO } from 'date-fns';
 import { GET_HABITS, GET_STATS } from '../graphql/queries';
 import { getLocalDate } from '../utils/date';
 import PageShell from '../components/layout/PageShell';
@@ -11,27 +11,44 @@ import styles from './HistoryPage.module.css';
 
 type TimeRange = '7d' | 'month' | 'all';
 
-const RANGE_CONFIG: Record<TimeRange, { label: string; days: number; getStart: () => string }> = {
-  '7d': { label: 'Last 7 days', days: 7, getStart: () => format(subDays(new Date(), 6), 'yyyy-MM-dd') },
-  'month': { label: 'This Month', days: 30, getStart: () => format(subMonths(new Date(), 1), 'yyyy-MM-dd') },
-  'all': { label: 'All Time', days: 90, getStart: () => '2020-01-01' },
-};
+interface Habit {
+  id: string;
+  createdAt: string;
+  completions: { date: string; completedAt: string }[];
+}
 
 export default function HistoryPage() {
   const [range, setRange] = useState<TimeRange>('7d');
-  const config = RANGE_CONFIG[range];
-
-  const dateRange = useMemo(() => ({
-    startDate: config.getStart(),
-    endDate: getLocalDate(),
-  }), [config]);
 
   const { data: habitsData } = useQuery(GET_HABITS);
+  const habits: Habit[] = habitsData?.habits ?? [];
+
+  const { startDate, days } = useMemo(() => {
+    const today = new Date();
+    if (range === '7d') {
+      return { startDate: format(subDays(today, 6), 'yyyy-MM-dd'), days: 7 };
+    }
+    if (range === 'month') {
+      return { startDate: format(subMonths(today, 1), 'yyyy-MM-dd'), days: 30 };
+    }
+    // All Time: earliest habit createdAt, heatmap capped at 365
+    const earliest = habits.reduce((min, h) => {
+      const d = h.createdAt?.split('T')[0];
+      return d && d < min ? d : min;
+    }, getLocalDate());
+    const totalDays = differenceInDays(today, parseISO(earliest)) + 1;
+    return { startDate: earliest, days: Math.min(totalDays, 365) };
+  }, [range, habits]);
+
+  const dateRange = useMemo(() => ({
+    startDate,
+    endDate: getLocalDate(),
+  }), [startDate]);
+
   const { data: statsData, loading, error } = useQuery(GET_STATS, {
     variables: { dateRange },
   });
 
-  const habits = habitsData?.habits ?? [];
   const stats = statsData?.stats;
 
   const peakStreak = useMemo(() => {
@@ -53,13 +70,13 @@ export default function HistoryPage() {
           <h1 className={styles.pageTitle}>Habit History</h1>
         </div>
         <div className={styles.rangePicker}>
-          {(Object.entries(RANGE_CONFIG) as [TimeRange, typeof config][]).map(([key, cfg]) => (
+          {([['7d', 'Last 7 days'], ['month', 'This Month'], ['all', 'All Time']] as const).map(([key, label]) => (
             <button
               key={key}
               className={`${styles.rangeBtn} ${range === key ? styles.rangeBtnActive : ''}`}
-              onClick={() => setRange(key)}
+              onClick={() => setRange(key as TimeRange)}
             >
-              {cfg.label}
+              {label}
             </button>
           ))}
         </div>
@@ -70,7 +87,7 @@ export default function HistoryPage() {
 
       {!loading && habits.length > 0 && (
         <>
-          <MomentumHeatmap habits={habits} days={config.days} />
+          <MomentumHeatmap habits={habits} days={days} />
 
           <div className={styles.statGrid}>
             <StatCard icon="local_fire_department" value={peakStreak} label="Day Peak Streak" color="tertiary" />
