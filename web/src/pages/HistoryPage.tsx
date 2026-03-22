@@ -88,7 +88,6 @@ export default function HistoryPage() {
                     key={hs.habitId}
                     name={hs.habitName}
                     completions={hs.totalCompletions}
-                    total={config.days}
                     rate={hs.completionRate}
                   />
                 ))}
