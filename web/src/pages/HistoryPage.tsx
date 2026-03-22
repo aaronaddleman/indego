@@ -103,14 +103,19 @@ export default function HistoryPage() {
                 <h2 className={styles.sectionTitle}>Habit Breakdown</h2>
               </div>
               <div className={styles.breakdownList}>
-                {stats.habitStats.map((hs: { habitId: string; habitName: string; totalCompletions: number; completionRate: number }) => (
-                  <HabitBreakdownCard
-                    key={hs.habitId}
-                    name={hs.habitName}
-                    completions={hs.totalCompletions}
-                    rate={hs.completionRate}
-                  />
-                ))}
+                {stats.habitStats.map((hs: { habitId: string; habitName: string; totalCompletions: number; completionRate: number }) => {
+                  const habit = habits.find(h => h.id === hs.habitId);
+                  const since = habit?.createdAt?.split('T')[0];
+                  return (
+                    <HabitBreakdownCard
+                      key={hs.habitId}
+                      name={hs.habitName}
+                      completions={hs.totalCompletions}
+                      rate={hs.completionRate}
+                      since={since}
+                    />
+                  );
+                })}
               </div>
             </section>
           )}
