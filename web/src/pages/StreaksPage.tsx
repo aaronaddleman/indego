@@ -1,9 +1,8 @@
-import { useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import { GET_HABITS } from '../graphql/queries';
 import { useStreak } from '../hooks/useStreak';
 import PageShell from '../components/layout/PageShell';
-import MiniChain from '../components/streaks/MiniChain';
 import styles from './StreaksPage.module.css';
 
 interface Completion {
@@ -19,36 +18,34 @@ interface Habit {
   longestStreak?: number;
 }
 
-function HabitStreakCard({ habit }: { habit: Habit }) {
+function HabitStreakRow({ habit }: { habit: Habit }) {
+  const navigate = useNavigate();
   const streaks = useStreak(habit);
-  const completionDates = useMemo(() => new Set(habit.completions.map(c => c.date)), [habit.completions]);
   const best = Math.max(streaks.longest, habit.longestStreak ?? 0);
 
   return (
-    <div className={styles.card}>
-      <div className={styles.top}>
-        <div className={styles.info}>
-          <h3 className={styles.habitName}>{habit.name}</h3>
-          {streaks.current > 0 && (
-            <div className={styles.activeBadge}>
-              <span className={`material-symbols-outlined ${styles.fireIcon}`}>local_fire_department</span>
-              {streaks.current} day streak
-            </div>
-          )}
+    <button className={styles.card} onClick={() => navigate(`/streaks/${habit.id}`)}>
+      <div className={styles.info}>
+        <h3 className={styles.habitName}>{habit.name}</h3>
+        {streaks.current > 0 && (
+          <div className={styles.activeBadge}>
+            <span className={`material-symbols-outlined ${styles.fireIcon}`}>local_fire_department</span>
+            {streaks.current} day streak
+          </div>
+        )}
+      </div>
+      <div className={styles.numbers}>
+        <div className={styles.stat}>
+          <span className={styles.statNumber}>{streaks.current}</span>
+          <span className={styles.statLabel}>Current</span>
         </div>
-        <div className={styles.numbers}>
-          <div className={styles.stat}>
-            <span className={styles.statNumber}>{streaks.current}</span>
-            <span className={styles.statLabel}>Current</span>
-          </div>
-          <div className={styles.stat}>
-            <span className={styles.statNumber}>{best}</span>
-            <span className={styles.statLabel}>Best</span>
-          </div>
+        <div className={styles.stat}>
+          <span className={styles.statNumber}>{best}</span>
+          <span className={styles.statLabel}>Best</span>
         </div>
       </div>
-      <MiniChain completionDates={completionDates} />
-    </div>
+      <span className={`material-symbols-outlined ${styles.chevron}`}>chevron_right</span>
+    </button>
   );
 }
 
@@ -72,7 +69,7 @@ export default function StreaksPage() {
 
       <div className={styles.habitList}>
         {habits.map(habit => (
-          <HabitStreakCard key={habit.id} habit={habit} />
+          <HabitStreakRow key={habit.id} habit={habit} />
         ))}
       </div>
     </PageShell>

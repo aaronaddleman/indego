@@ -26,7 +26,7 @@ export default function HabitCard({ habit }: { habit: Habit }) {
   return (
     <div
       className={`${styles.card} ${isCompletedToday ? styles.completed : ''}`}
-      onClick={() => navigate(`/habit/${habit.id}`)}
+      onClick={() => navigate(`/streaks/${habit.id}`)}
     >
       <div className={styles.info}>
         <h3 className={`${styles.name} ${isCompletedToday ? styles.nameCompleted : ''}`}>

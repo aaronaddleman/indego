@@ -1,0 +1,109 @@
+.backBtn {
+  padding: var(--space-2);
+  border-radius: var(--radius-lg);
+  color: var(--color-on-surface-variant, var(--color-neutral-500));
+  margin-bottom: var(--space-4);
+  min-width: 44px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.backBtn:hover {
+  background: var(--color-surface-container, #e8f0e9);
+}
+
+.header {
+  margin-bottom: var(--space-6);
+}
+
+.eyebrow {
+  font-size: 10px;
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--color-primary, #006c49);
+}
+
+.habitName {
+  font-size: var(--font-size-3xl);
+  font-weight: 800;
+  color: var(--color-on-surface, var(--color-neutral-900));
+  letter-spacing: -0.02em;
+  margin-top: var(--space-1);
+}
+
+.heroGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+}
+
+.heroCard {
+  background: var(--color-surface-container-lowest, #ffffff);
+  border-radius: var(--radius-card);
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  aspect-ratio: 1;
+  box-shadow: var(--shadow-sm);
+}
+
+.heroCardAlt {
+  background: var(--color-surface-container-low, #eef6ee);
+  box-shadow: none;
+}
+
+.heroCardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.heroBadge {
+  font-size: 10px;
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-lg);
+}
+
+.heroBadge[data-color="tertiary"] {
+  background: rgba(226, 145, 0, 0.15);
+  color: var(--color-tertiary, #855300);
+}
+
+.heroBadge[data-color="primary"] {
+  background: rgba(0, 108, 73, 0.15);
+  color: var(--color-primary, #006c49);
+}
+
+.heroCardBody {
+  display: flex;
+  flex-direction: column;
+}
+
+.heroNumber {
+  font-size: 3rem;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  color: var(--color-on-surface, var(--color-neutral-900));
+  line-height: 1;
+}
+
+.heroLabel {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-on-surface-variant, var(--color-neutral-500));
+  margin-top: var(--space-1);
+}
+
+.status {
+  color: var(--color-on-surface-variant, var(--color-neutral-500));
+  text-align: center;
+  padding: var(--space-8);
+}

@@ -25,16 +25,23 @@
 }
 
 .card {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-5);
   background: var(--color-surface-container-lowest, #ffffff);
   border-radius: var(--radius-card-sm);
-  padding: var(--space-5);
+  text-align: left;
+  transition: all var(--transition-fast);
 }
 
-.top {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: var(--space-4);
+.card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.card:active {
+  transform: scale(0.98);
 }
 
 .info {
@@ -94,6 +101,10 @@
   letter-spacing: 0.05em;
   color: var(--color-on-surface-variant, var(--color-neutral-500));
   margin-top: 2px;
+}
+
+.chevron {
+  color: var(--color-on-surface-variant, var(--color-neutral-500));
 }
 
 .status {
