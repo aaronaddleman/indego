@@ -1,0 +1,87 @@
+.card {
+  background: var(--color-surface-container-low, #eef6ee);
+  border-radius: var(--radius-card);
+  padding: var(--space-8);
+}
+
+.header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: var(--space-8);
+}
+
+.title {
+  font-size: var(--font-size-2xl);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  color: var(--color-on-surface, var(--color-neutral-900));
+}
+
+.period {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-primary, #006c49);
+}
+
+.rateRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-8);
+}
+
+.label {
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-on-surface-variant, var(--color-neutral-500));
+  margin-bottom: var(--space-1);
+}
+
+.rateValue {
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-on-surface, var(--color-neutral-900));
+}
+
+.miniRing {
+  position: relative;
+  width: 64px;
+  height: 64px;
+}
+
+.ringSvg {
+  width: 100%;
+  height: 100%;
+}
+
+.miniRingLabel {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 800;
+  color: var(--color-on-surface, var(--color-neutral-900));
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-8);
+  padding-top: var(--space-8);
+}
+
+.statValue {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-on-surface, var(--color-neutral-900));
+}
+
+.missed {
+  color: var(--color-tertiary, #855300);
+}

@@ -32,7 +32,9 @@ export default function CompletionToggle({ habitId, date, completed }: Props) {
       disabled={loading}
       aria-label={completed ? 'Undo completion' : 'Mark as complete'}
     >
-      {completed ? '✓' : ''}
+      {completed && (
+        <span className={`material-symbols-outlined ${styles.checkIcon}`}>check</span>
+      )}
     </button>
   );
 }

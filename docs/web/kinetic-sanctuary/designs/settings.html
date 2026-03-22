@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Settings - Kinetic Sanctuary</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "tertiary": "#855300",
+              "primary": "#006c49",
+              "on-secondary-fixed": "#001a42",
+              "on-tertiary-fixed-variant": "#653e00",
+              "outline-variant": "#bbcabf",
+              "surface-container-highest": "#dde4dd",
+              "on-surface-variant": "#3c4a42",
+              "surface-container-high": "#e3eae3",
+              "on-primary-fixed": "#002113",
+              "on-primary-fixed-variant": "#005236",
+              "on-surface": "#161d19",
+              "on-background": "#161d19",
+              "secondary-fixed": "#d8e2ff",
+              "on-tertiary": "#ffffff",
+              "surface-dim": "#d4dcd5",
+              "on-tertiary-container": "#523200",
+              "surface-container-lowest": "#ffffff",
+              "on-primary-container": "#00422b",
+              "inverse-on-surface": "#ebf3eb",
+              "surface-tint": "#006c49",
+              "on-tertiary-fixed": "#2a1700",
+              "primary-container": "#10b981",
+              "secondary": "#0058be",
+              "surface-container-low": "#eef6ee",
+              "inverse-primary": "#4edea3",
+              "tertiary-container": "#e29100",
+              "outline": "#6c7a71",
+              "error-container": "#ffdad6",
+              "on-secondary-container": "#fefcff",
+              "inverse-surface": "#2b322d",
+              "primary-fixed": "#6ffbbe",
+              "tertiary-fixed": "#ffddb8",
+              "tertiary-fixed-dim": "#ffb95f",
+              "secondary-container": "#2170e4",
+              "surface-container": "#e8f0e9",
+              "background": "#f4fbf4",
+              "on-secondary-fixed-variant": "#004395",
+              "on-error-container": "#93000a",
+              "surface": "#f4fbf4",
+              "surface-bright": "#f4fbf4",
+              "on-error": "#ffffff",
+              "secondary-fixed-dim": "#adc6ff",
+              "surface-variant": "#dde4dd",
+              "on-secondary": "#ffffff",
+              "primary-fixed-dim": "#4edea3",
+              "error": "#ba1a1a",
+              "on-primary": "#ffffff"
+            },
+            fontFamily: {
+              "headline": ["Plus Jakarta Sans"],
+              "body": ["Plus Jakarta Sans"],
+              "label": ["Plus Jakarta Sans"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "3xl": "1.5rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      body { font-family: 'Plus Jakarta Sans', sans-serif; }
+      .hide-scrollbar::-webkit-scrollbar { display: none; }
+      .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen pb-32">
+<!-- TopAppBar -->
+<header class="w-full top-0 sticky z-50 bg-[#f4fbf4] dark:bg-slate-950 flex justify-between items-center px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest overflow-hidden">
+<img alt="User Profile Photo" data-alt="Close up portrait of a smiling user" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC87T3j5JNvHLv7EgAUIWcqJnyBFMvfldHx7_ivEBwg4KqId5Tn3CMcg8QJhgQlnsvEwUKBg2lzjqCzC4W2W3WMZPmuuucTdROJatAgw28Z8-dOu-D-VIchXDkIx613xCHlHUWn7mjvohBiJ2BFA-sTn7_VbxGXeU1M-1HQcWD4Wk141h7QZ5VFJyvUBchvEwpSW-6EJ9gY68wjLlWqcKdh5eozLAiGaEmAImncChtwSaDOMFIy7Dfx-dava8BrIE0X8WwRVl5sgFY"/>
+</div>
+<span class="font-['Plus_Jakarta_Sans'] tracking-tight font-bold text-lg text-[#006c49] dark:text-[#10b981]">Settings</span>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 rounded-full hover:bg-[#eef6ee]/50 dark:hover:bg-slate-800 transition-colors active:scale-95 duration-200">
+<span class="material-symbols-outlined text-[#006c49] dark:text-[#10b981]">calendar_today</span>
+</button>
+</div>
+</header>
+<main class="px-6 mt-4 max-w-2xl mx-auto space-y-12">
+<!-- Reminders Hero Section -->
+<section class="space-y-6">
+<div class="flex justify-between items-end">
+<h2 class="text-3xl font-extrabold tracking-tight text-on-surface">Notifications</h2>
+<span class="bg-secondary-fixed text-on-secondary-fixed px-3 py-1 rounded-md text-[10px] font-bold uppercase tracking-widest">Active</span>
+</div>
+<!-- Bento Grid Settings -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<!-- Daily Reminders -->
+<div class="bg-surface-container-lowest p-6 rounded-3xl shadow-sm border border-outline-variant/10 space-y-4">
+<div class="flex justify-between items-start">
+<div class="w-12 h-12 rounded-2xl bg-primary-container/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">event_repeat</span>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<div>
+<h3 class="text-lg font-bold text-on-surface">Daily Reminders</h3>
+<p class="text-sm text-on-surface-variant leading-relaxed">Keep the momentum alive with daily habit nudges.</p>
+</div>
+</div>
+<!-- Weekly Digest -->
+<div class="bg-surface-container p-6 rounded-3xl space-y-4">
+<div class="flex justify-between items-start">
+<div class="w-12 h-12 rounded-2xl bg-tertiary-container/10 flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined">analytics</span>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<div>
+<h3 class="text-lg font-bold text-on-surface">Weekly Digest</h3>
+<p class="text-sm text-on-surface-variant leading-relaxed">A sanctuary for your weekly progress summary.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Schedule Section -->
+<section class="space-y-6">
+<h2 class="text-xl font-bold tracking-tight text-on-surface px-1">Scheduled Reflections</h2>
+<div class="space-y-3">
+<!-- Morning Reflection -->
+<div class="flex items-center justify-between p-5 bg-surface-container-low rounded-3xl">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-white flex items-center justify-center text-tertiary shadow-sm">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">light_mode</span>
+</div>
+<div>
+<p class="text-xs font-bold text-tertiary uppercase tracking-wider">Morning Reflection</p>
+<p class="text-xl font-extrabold text-on-surface">07:30 AM</p>
+</div>
+</div>
+<button class="bg-surface-container-highest/50 p-2 rounded-xl text-on-surface-variant hover:bg-white transition-colors">
+<span class="material-symbols-outlined">schedule</span>
+</button>
+</div>
+<!-- Evening Review -->
+<div class="flex items-center justify-between p-5 bg-surface-container-low rounded-3xl">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-white flex items-center justify-center text-secondary shadow-sm">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dark_mode</span>
+</div>
+<div>
+<p class="text-xs font-bold text-secondary uppercase tracking-wider">Evening Review</p>
+<p class="text-xl font-extrabold text-on-surface">09:15 PM</p>
+</div>
+</div>
+<button class="bg-surface-container-highest/50 p-2 rounded-xl text-on-surface-variant hover:bg-white transition-colors">
+<span class="material-symbols-outlined">schedule</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Sound & Haptics -->
+<section class="space-y-6">
+<h2 class="text-xl font-bold tracking-tight text-on-surface px-1">Auditory &amp; Haptics</h2>
+<div class="bg-surface-container-low rounded-3xl overflow-hidden">
+<div class="p-5 flex items-center justify-between border-b border-outline-variant/10">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-outline">volume_up</span>
+<span class="font-medium">Notification Sound</span>
+</div>
+<span class="text-primary font-bold text-sm">Ethereal</span>
+</div>
+<div class="p-5 flex items-center justify-between">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-outline">vibration</span>
+<span class="font-medium">Haptic Feedback</span>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+</div>
+</section>
+<!-- Data & Integrations -->
+<section class="space-y-6">
+<h2 class="text-xl font-bold tracking-tight text-on-surface px-1">Integrations</h2>
+<div class="grid grid-cols-1 gap-3">
+<button class="w-full flex items-center justify-between p-5 bg-white rounded-3xl border border-outline-variant/10 shadow-sm hover:bg-surface-container-low transition-colors group">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-secondary-container/10 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined">sync</span>
+</div>
+<div class="text-left">
+<p class="font-bold">Sync with Calendar</p>
+<p class="text-xs text-on-surface-variant">Google, iCloud, or Outlook</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline group-hover:translate-x-1 transition-transform">chevron_right</span>
+</button>
+<button class="w-full flex items-center justify-between p-5 bg-white rounded-3xl border border-outline-variant/10 shadow-sm hover:bg-surface-container-low transition-colors group">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined">file_export</span>
+</div>
+<div class="text-left">
+<p class="font-bold">Export Data</p>
+<p class="text-xs text-on-surface-variant">Download your journey as CSV/JSON</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline group-hover:translate-x-1 transition-transform">chevron_right</span>
+</button>
+</div>
+</section>
+<!-- Delete Account (Danger Zone) -->
+<div class="pt-8 pb-12 flex justify-center">
+<button class="text-error font-bold text-sm tracking-wide flex items-center gap-2 opacity-60 hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-lg">delete</span>
+                Delete Account
+            </button>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-end px-4 pb-6 pt-2 bg-[#f4fbf4]/80 dark:bg-slate-950/80 backdrop-blur-xl shadow-[0_-8px_24px_rgba(0,108,73,0.06)] rounded-t-[2rem] border-t border-[#bbcabf]/20">
+<a class="flex flex-col items-center justify-center text-slate-500 dark:text-slate-400 p-2 hover:text-[#006c49] dark:hover:text-[#10b981] active:scale-90 transition-transform duration-300 ease-out" href="#">
+<span class="material-symbols-outlined">today</span>
+<span class="font-['Plus_Jakarta_Sans'] text-[11px] font-semibold uppercase tracking-wider mt-1">Today</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-500 dark:text-slate-400 p-2 hover:text-[#006c49] dark:hover:text-[#10b981] active:scale-90 transition-transform duration-300 ease-out" href="#">
+<span class="material-symbols-outlined">history</span>
+<span class="font-['Plus_Jakarta_Sans'] text-[11px] font-semibold uppercase tracking-wider mt-1">History</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-500 dark:text-slate-400 p-2 hover:text-[#006c49] dark:hover:text-[#10b981] active:scale-90 transition-transform duration-300 ease-out" href="#">
+<span class="material-symbols-outlined">local_fire_department</span>
+<span class="font-['Plus_Jakarta_Sans'] text-[11px] font-semibold uppercase tracking-wider mt-1">Streaks</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-gradient-to-tr from-[#006c49] to-[#10b981] text-white rounded-full p-3 mb-1 scale-110 shadow-lg active:scale-90 transition-transform duration-300 ease-out" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="hidden">Settings</span>
+</a>
+</nav>
+</body></html>

@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import NavBar from './NavBar';
+import BottomNav from './BottomNav';
 import styles from './PageShell.module.css';
 
 interface Props {
@@ -10,10 +10,10 @@ interface Props {
 export default function PageShell({ children }: Props) {
   return (
     <div className={styles.shell}>
-      <NavBar />
       <main className={styles.main}>
         {children}
       </main>
+      <BottomNav />
     </div>
   );
 }
