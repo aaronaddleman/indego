@@ -9,7 +9,7 @@
 
 .card {
   background: var(--color-surface);
-  border-radius: var(--radius-xl);
+  border-radius: var(--radius-card);
   padding: var(--space-8);
   width: 100%;
   max-width: 400px;
@@ -33,16 +33,16 @@
 .googleBtn {
   width: 100%;
   padding: var(--space-3) var(--space-4);
-  border: 1px solid var(--color-neutral-300);
-  border-radius: var(--radius-md);
-  background: var(--color-surface);
+  border: none;
+  border-radius: var(--radius-full);
+  background: var(--color-surface-container, var(--color-neutral-200));
   font-weight: var(--font-weight-medium);
   color: var(--color-neutral-700);
   transition: background var(--transition-fast);
 }
 
 .googleBtn:hover {
-  background: var(--color-neutral-50);
+  background: var(--color-surface-container-high, var(--color-neutral-300));
 }
 
 .divider {
@@ -74,15 +74,16 @@
 .input {
   width: 100%;
   padding: var(--space-3) var(--space-4);
-  border: 1px solid var(--color-neutral-300);
-  border-radius: var(--radius-md);
-  transition: border-color var(--transition-fast);
+  border: none;
+  border-radius: var(--radius-lg);
+  background: var(--color-surface-container-highest, var(--color-neutral-200));
+  transition: background var(--transition-fast);
 }
 
 .input:focus {
   outline: none;
-  border-color: var(--color-primary-500);
-  box-shadow: 0 0 0 3px var(--color-primary-100);
+  background: var(--color-surface-container-lowest, #ffffff);
+  box-shadow: 0 0 0 2px rgba(187, 202, 191, 0.2);
 }
 
 .error {
@@ -95,7 +96,7 @@
   padding: var(--space-3) var(--space-4);
   background: var(--color-primary-600);
   color: white;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-full);
   font-weight: var(--font-weight-semibold);
   transition: background var(--transition-fast);
 }

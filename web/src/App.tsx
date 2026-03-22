@@ -12,6 +12,8 @@ const LoginPage = lazy(() => import('./pages/LoginPage'));
 const RestrictedPage = lazy(() => import('./pages/RestrictedPage'));
 const DashboardPage = lazy(() => import('./pages/DashboardPage'));
 const HabitDetailPage = lazy(() => import('./pages/HabitDetailPage'));
+const HistoryPage = lazy(() => import('./pages/HistoryPage'));
+const StreaksPage = lazy(() => import('./pages/StreaksPage'));
 const StatsPage = lazy(() => import('./pages/StatsPage'));
 const SettingsPage = lazy(() => import('./pages/SettingsPage'));
 const AdminPage = lazy(() => import('./pages/AdminPage'));
@@ -34,6 +36,8 @@ export default function App() {
               <Route path="/restricted" element={<RestrictedPage />} />
               <Route path="/" element={<AuthGuard><DashboardPage /></AuthGuard>} />
               <Route path="/habit/:id" element={<AuthGuard><HabitDetailPage /></AuthGuard>} />
+              <Route path="/history" element={<AuthGuard><HistoryPage /></AuthGuard>} />
+              <Route path="/streaks" element={<AuthGuard><StreaksPage /></AuthGuard>} />
               <Route path="/stats" element={<AuthGuard><StatsPage /></AuthGuard>} />
               <Route path="/settings" element={<AuthGuard><SettingsPage /></AuthGuard>} />
               <Route path="/admin" element={<AdminGuard><AdminPage /></AdminGuard>} />

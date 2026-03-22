@@ -11,7 +11,7 @@
 
 .dialog {
   background: var(--color-surface);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-card-sm, var(--radius-lg));
   padding: var(--space-6);
   width: 100%;
   max-width: 360px;
@@ -38,19 +38,20 @@
 
 .cancelBtn {
   padding: var(--space-2) var(--space-4);
-  border: 1px solid var(--color-neutral-300);
-  border-radius: var(--radius-md);
+  border: none;
+  border-radius: var(--radius-lg);
   color: var(--color-neutral-700);
+  background: var(--color-surface-container, var(--color-neutral-200));
 }
 
 .confirmBtn {
   padding: var(--space-2) var(--space-4);
   background: var(--color-error);
   color: white;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-full);
   font-weight: var(--font-weight-medium);
 }
 
 .confirmBtn:hover {
-  background: #dc2626;
+  opacity: 0.9;
 }

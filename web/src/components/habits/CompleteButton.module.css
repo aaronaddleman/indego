@@ -4,8 +4,8 @@
   font-size: var(--font-size-lg);
   font-weight: var(--font-weight-semibold);
   border-radius: var(--radius-lg);
-  border: 2px solid var(--color-primary-500);
-  background: var(--color-primary-500);
+  border: none;
+  background: linear-gradient(135deg, var(--color-primary-600), var(--color-primary-500));
   color: white;
   cursor: pointer;
   transition: all var(--transition-fast);
@@ -13,17 +13,14 @@
 
 .button:hover:not(:disabled) {
   background: var(--color-primary-600);
-  border-color: var(--color-primary-600);
 }
 
 .button[data-completed] {
   background: var(--color-success);
-  border-color: var(--color-success);
 }
 
 .button[data-completed]:hover:not(:disabled) {
   background: var(--color-success);
-  border-color: var(--color-success);
   opacity: 0.9;
 }
 

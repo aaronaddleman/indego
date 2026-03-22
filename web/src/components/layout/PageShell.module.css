@@ -1,6 +1,6 @@
 .shell {
   min-height: 100dvh;
-  padding-bottom: 60px; /* Space for bottom nav on mobile */
+  padding-bottom: 80px;
 }
 
 .main {
@@ -11,7 +11,7 @@
 
 @media (min-width: 768px) {
   .shell {
-    padding-bottom: 0;
+    padding-bottom: 100px;
   }
 
   .main {

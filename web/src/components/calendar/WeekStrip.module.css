@@ -13,8 +13,8 @@
   padding: var(--space-2) var(--space-3);
   min-width: 44px;
   min-height: 44px;
-  border: 2px solid transparent;
-  border-radius: var(--radius-md);
+  border: none;
+  border-radius: var(--radius-lg);
   background: none;
   cursor: pointer;
   transition: all var(--transition-fast);
@@ -26,8 +26,8 @@
 }
 
 .day[data-today] {
-  background: var(--color-primary-50);
-  border-color: var(--color-primary-400);
+  background: var(--color-surface-container-lowest, #ffffff);
+  box-shadow: var(--shadow-sm);
 }
 
 .day[data-future] {

@@ -15,7 +15,7 @@
   padding: var(--space-2) var(--space-4);
   background: var(--color-primary-600);
   color: white;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-full);
   font-weight: var(--font-weight-medium);
   font-size: var(--font-size-sm);
   transition: background var(--transition-fast);
