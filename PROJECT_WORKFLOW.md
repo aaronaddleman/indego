@@ -291,3 +291,5 @@ Both gates use the **same approval process**:
 | Timezone Fix — Gate 2 (Documentation → Implementation) | 2026-03-18 | Project Lead | Approved | Technical Spec, Deployment Plan, Changelog complete. New utils/date.ts, unit tests, CI npm test step. |
 | Frequency Redesign — Gate 1 (Iteration → Documentation) | 2026-03-19 | Project Lead | Approved | Merge WEEKLY+CUSTOM, computed dueDays, shared frequency service, backwards compatible, CUSTOM deprecated. |
 | Frequency Redesign — Gate 2 (Documentation → Implementation) | 2026-03-19 | Project Lead | Approved | Technical Spec, Deployment Plan, Changelog complete. 11 files. Schema additive, no forced migration. |
+| Kinetic Sanctuary Redesign — Gate 1 (Iteration → Documentation) | 2026-03-22 | Project Lead | Approved | Full UI redesign. 5 phases: A (foundation), B (today), C (history), D (streaks), E (settings). Green palette, Plus Jakarta Sans, bottom nav, tonal layering. |
+| Kinetic Sanctuary Redesign — Gate 2 (Documentation → Implementation) | 2026-03-22 | Project Lead | Approved | Technical Spec, Deployment Plan, Changelog complete. Phase A ready for implementation. |
