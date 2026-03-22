@@ -24,32 +24,20 @@
   gap: var(--space-4);
 }
 
-.habitSection {
-  border-radius: var(--radius-card-sm);
-  overflow: hidden;
-}
-
-.habitRow {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  gap: var(--space-4);
-  padding: var(--space-5);
+.card {
   background: var(--color-surface-container-lowest, #ffffff);
   border-radius: var(--radius-card-sm);
-  text-align: left;
-  transition: all var(--transition-fast);
+  padding: var(--space-5);
 }
 
-.habitRow:hover {
-  box-shadow: var(--shadow-md);
+.top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
 }
 
-.habitRowActive {
-  border-radius: var(--radius-card-sm) var(--radius-card-sm) 0 0;
-}
-
-.habitInfo {
+.info {
   flex: 1;
   min-width: 0;
 }
@@ -57,124 +45,55 @@
 .habitName {
   font-weight: var(--font-weight-bold);
   color: var(--color-on-surface, var(--color-neutral-900));
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.habitMeta {
+.activeBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  margin-top: var(--space-1);
   font-size: var(--font-size-xs);
-  color: var(--color-on-surface-variant, var(--color-neutral-500));
-  font-weight: var(--font-weight-medium);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-tertiary, #855300);
+  background: rgba(226, 145, 0, 0.1);
+  padding: 2px var(--space-2);
+  border-radius: var(--radius-full);
 }
 
-.streakStats {
+.fireIcon {
+  font-size: 14px;
+  font-variation-settings: 'FILL' 1;
+}
+
+.numbers {
   display: flex;
   gap: var(--space-6);
+  flex-shrink: 0;
 }
 
-.streakStat {
+.stat {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.streakNumber {
+.statNumber {
   font-size: var(--font-size-xl);
   font-weight: 800;
-  color: var(--color-on-surface, var(--color-neutral-900));
-}
-
-.streakLabel {
-  font-size: 10px;
-  font-weight: var(--font-weight-bold);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--color-on-surface-variant, var(--color-neutral-500));
-}
-
-.chevron {
-  color: var(--color-on-surface-variant, var(--color-neutral-500));
-  transition: transform var(--transition-fast);
-}
-
-.chevronOpen {
-  transform: rotate(180deg);
-}
-
-.detail {
-  padding: var(--space-6);
-  background: var(--color-surface-container-low, #eef6ee);
-  border-radius: 0 0 var(--radius-card-sm) var(--radius-card-sm);
-}
-
-.heroGrid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--space-4);
-  margin-bottom: var(--space-6);
-}
-
-.heroCard {
-  background: var(--color-surface-container-lowest, #ffffff);
-  border-radius: var(--radius-card);
-  padding: var(--space-6);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  aspect-ratio: 1;
-  box-shadow: var(--shadow-sm);
-}
-
-.heroCardAlt {
-  background: var(--color-surface-container, #e8f0e9);
-  box-shadow: none;
-}
-
-.heroCardHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-}
-
-.heroCardHeader .material-symbols-outlined {
-  font-size: 28px;
-}
-
-.heroBadge {
-  font-size: 10px;
-  font-weight: var(--font-weight-bold);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  padding: var(--space-1) var(--space-2);
-  border-radius: var(--radius-lg);
-}
-
-.heroBadge[data-color="tertiary"] {
-  background: rgba(226, 145, 0, 0.15);
-  color: var(--color-tertiary, #855300);
-}
-
-.heroBadge[data-color="primary"] {
-  background: rgba(0, 108, 73, 0.15);
-  color: var(--color-primary, #006c49);
-}
-
-.heroCardBody {
-  display: flex;
-  flex-direction: column;
-}
-
-.heroNumber {
-  font-size: 3rem;
-  font-weight: 900;
-  letter-spacing: -0.03em;
   color: var(--color-on-surface, var(--color-neutral-900));
   line-height: 1;
 }
 
-.heroLabel {
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-medium);
+.statLabel {
+  font-size: 10px;
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
   color: var(--color-on-surface-variant, var(--color-neutral-500));
-  margin-top: var(--space-1);
+  margin-top: 2px;
 }
 
 .status {
