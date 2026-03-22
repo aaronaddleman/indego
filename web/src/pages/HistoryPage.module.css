@@ -22,6 +22,7 @@
 }
 
 .sinceLabel {
+  display: block;
   font-size: var(--font-size-sm);
   color: var(--color-on-surface-variant, var(--color-neutral-500));
   font-weight: var(--font-weight-medium);

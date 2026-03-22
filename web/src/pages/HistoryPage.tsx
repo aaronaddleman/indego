@@ -68,7 +68,7 @@ export default function HistoryPage() {
         <div>
           <span className={styles.eyebrow}>Performance</span>
           <h1 className={styles.pageTitle}>Habit History</h1>
-          {range === 'all' && startDate && (
+          {range === 'all' && habits.length > 0 && (
             <span className={styles.sinceLabel}>Since {format(parseISO(startDate), 'MMM d, yyyy')}</span>
           )}
         </div>
