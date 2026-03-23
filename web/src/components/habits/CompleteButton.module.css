@@ -3,7 +3,7 @@
   min-height: 56px;
   font-size: var(--font-size-lg);
   font-weight: var(--font-weight-semibold);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-full);
   border: none;
   background: linear-gradient(135deg, var(--color-primary-600), var(--color-primary-500));
   color: white;
@@ -12,7 +12,11 @@
 }
 
 .button:hover:not(:disabled) {
-  background: var(--color-primary-600);
+  transform: scale(1.02);
+}
+
+.button:active:not(:disabled) {
+  transform: scale(0.98);
 }
 
 .button[data-completed] {
@@ -22,6 +26,7 @@
 .button[data-completed]:hover:not(:disabled) {
   background: var(--color-success);
   opacity: 0.9;
+  transform: scale(1.02);
 }
 
 .button:disabled {

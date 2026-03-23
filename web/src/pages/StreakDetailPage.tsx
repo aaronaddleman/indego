@@ -1,9 +1,12 @@
 import { useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
+import { useQuery, useMutation } from '@apollo/client';
 import { GET_HABIT } from '../graphql/queries';
+import { LOG_COMPLETION, UNDO_COMPLETION } from '../graphql/mutations';
 import { useStreak } from '../hooks/useStreak';
+import { getLocalDate } from '../utils/date';
 import PageShell from '../components/layout/PageShell';
+import CompleteButton from '../components/habits/CompleteButton';
 import StreakChain from '../components/streaks/StreakChain';
 import MotivationalBanner from '../components/streaks/MotivationalBanner';
 import StreakInsights from '../components/streaks/StreakInsights';
@@ -16,11 +19,26 @@ export default function StreakDetailPage() {
 
   const habit = data?.habit;
   const streaks = useStreak(habit);
+  const today = getLocalDate();
   const completionDates = useMemo<Set<string>>(
     () => new Set((habit?.completions ?? []).map((c: { date: string }) => c.date)),
     [habit?.completions]
   );
+  const isCompletedToday = completionDates.has(today);
   const best = Math.max(streaks.longest, habit?.longestStreak ?? 0);
+
+  const [logCompletion, { loading: logging }] = useMutation(LOG_COMPLETION);
+  const [undoCompletion, { loading: undoing }] = useMutation(UNDO_COMPLETION);
+  const toggling = logging || undoing;
+
+  const handleToggle = async () => {
+    if (toggling || !id) return;
+    if (isCompletedToday) {
+      await undoCompletion({ variables: { habitId: id, date: today } });
+    } else {
+      await logCompletion({ variables: { habitId: id, date: today } });
+    }
+  };
 
   return (
     <PageShell title="Streak">
@@ -36,6 +54,9 @@ export default function StreakDetailPage() {
           <div className={styles.header}>
             <span className={styles.eyebrow}>Current Focus</span>
             <h1 className={styles.habitName}>{habit.name}</h1>
+            <div className={styles.completeAction}>
+              <CompleteButton completed={isCompletedToday} onToggle={handleToggle} loading={toggling} />
+            </div>
           </div>
 
           <div className={styles.heroGrid}>

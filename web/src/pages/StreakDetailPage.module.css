@@ -34,6 +34,10 @@
   margin-top: var(--space-1);
 }
 
+.completeAction {
+  margin-top: var(--space-4);
+}
+
 .heroGrid {
   display: grid;
   grid-template-columns: 1fr 1fr;
