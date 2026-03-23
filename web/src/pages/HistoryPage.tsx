@@ -21,7 +21,7 @@ export default function HistoryPage() {
   const [range, setRange] = useState<TimeRange>('7d');
 
   const { data: habitsData } = useQuery(GET_HABITS);
-  const habits: Habit[] = habitsData?.habits ?? [];
+  const habits = useMemo<Habit[]>(() => habitsData?.habits ?? [], [habitsData?.habits]);
 
   const { startDate, days } = useMemo(() => {
     const today = new Date();

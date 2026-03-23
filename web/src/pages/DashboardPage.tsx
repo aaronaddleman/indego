@@ -62,7 +62,7 @@ export default function DashboardPage() {
   const [showForm, setShowForm] = useState(false);
 
   const today = getLocalDate();
-  const habits: Habit[] = data?.habits ?? [];
+  const habits = useMemo<Habit[]>(() => data?.habits ?? [], [data?.habits]);
 
   const completedCount = useMemo(
     () => habits.filter(h => h.completions.some(c => c.date === today)).length,
