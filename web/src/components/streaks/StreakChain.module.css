@@ -1,0 +1,124 @@
+.section {
+  margin-bottom: var(--space-8);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-6);
+}
+
+.title {
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-lg);
+  color: var(--color-on-surface, var(--color-neutral-900));
+}
+
+.badge {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-on-surface-variant, var(--color-neutral-500));
+  background: var(--color-surface-container, #e8f0e9);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-full);
+}
+
+.chain {
+  display: flex;
+  flex-direction: column;
+}
+
+.link {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+  padding-bottom: var(--space-6);
+  position: relative;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  border-radius: var(--radius-lg);
+  transition: opacity var(--transition-fast);
+}
+
+.link:active {
+  opacity: 0.7;
+}
+
+.linked::after {
+  content: '';
+  position: absolute;
+  left: 28px;
+  top: 56px;
+  width: 4px;
+  height: calc(var(--space-6));
+  background: linear-gradient(to bottom, var(--color-primary-container, #10b981), var(--color-primary, #006c49));
+  transform: translateX(-50%);
+}
+
+.icon {
+  position: relative;
+  z-index: 1;
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-xl);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.icon .material-symbols-outlined {
+  font-size: 28px;
+}
+
+.iconToday {
+  background: linear-gradient(135deg, var(--color-primary, #006c49), var(--color-primary-container, #10b981));
+  color: white;
+  box-shadow: 0 4px 16px rgba(0, 108, 73, 0.2);
+  transform: scale(1.1);
+}
+
+.iconCompleted {
+  background: var(--color-surface-container-highest, #dde4dd);
+  color: var(--color-primary, #006c49);
+}
+
+.iconMissed {
+  background: var(--color-surface-container, #e8f0e9);
+  color: var(--color-outline, #6c7a71);
+  opacity: 0.4;
+}
+
+.info {
+  flex: 1;
+}
+
+.dayRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.dayLabel {
+  font-weight: var(--font-weight-bold);
+  color: var(--color-on-surface, var(--color-neutral-900));
+}
+
+.chip {
+  font-size: 9px;
+  font-weight: 800;
+  text-transform: uppercase;
+  padding: 2px var(--space-2);
+  border-radius: var(--radius-sm);
+  background: var(--color-tertiary-container, #e29100);
+  color: var(--color-on-surface, #161d19);
+}
+
+.dateLabel {
+  font-size: var(--font-size-sm);
+  color: var(--color-on-surface-variant, var(--color-neutral-500));
+}

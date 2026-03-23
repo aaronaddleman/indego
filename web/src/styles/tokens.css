@@ -1,39 +1,66 @@
 :root {
-  /* Primary — Indigo */
-  --color-primary-50: #eef2ff;
-  --color-primary-100: #e0e7ff;
-  --color-primary-200: #c7d2fe;
-  --color-primary-300: #a5b4fc;
-  --color-primary-400: #818cf8;
-  --color-primary-500: #6366f1;
-  --color-primary-600: #4f46e5;
-  --color-primary-700: #4338ca;
-  --color-primary-800: #3730a3;
-  --color-primary-900: #312e81;
+  /* Primary — Emerald Green */
+  --color-primary: #006c49;
+  --color-primary-container: #10b981;
+  --color-primary-fixed: #6ffbbe;
+  --color-primary-fixed-dim: #4edea3;
 
-  /* Neutral */
-  --color-neutral-50: #f9fafb;
-  --color-neutral-100: #f3f4f6;
-  --color-neutral-200: #e5e7eb;
-  --color-neutral-300: #d1d5db;
-  --color-neutral-400: #9ca3af;
-  --color-neutral-500: #6b7280;
-  --color-neutral-600: #4b5563;
-  --color-neutral-700: #374151;
-  --color-neutral-800: #1f2937;
-  --color-neutral-900: #111827;
+  /* Secondary — Blue */
+  --color-secondary: #0058be;
+  --color-secondary-container: #2170e4;
+
+  /* Tertiary — Orange (energy/streaks) */
+  --color-tertiary: #855300;
+  --color-tertiary-container: #e29100;
+
+  /* Surfaces (tonal layering) */
+  --color-bg: #f4fbf4;
+  --color-surface: #f4fbf4;
+  --color-surface-hover: #e8f0e9;
+  --color-surface-container: #e8f0e9;
+  --color-surface-container-low: #eef6ee;
+  --color-surface-container-high: #e3eae3;
+  --color-surface-container-highest: #dde4dd;
+  --color-surface-container-lowest: #ffffff;
+
+  /* On-surface (text) */
+  --color-on-surface: #161d19;
+  --color-on-surface-variant: #3c4a42;
+
+  /* Outline */
+  --color-outline: #6c7a71;
+  --color-outline-variant: #bbcabf;
 
   /* Semantic */
-  --color-success: #10b981;
+  --color-success: #4edea3;
   --color-success-light: #d1fae5;
-  --color-warning: #f59e0b;
-  --color-error: #ef4444;
-  --color-error-light: #fee2e2;
+  --color-error: #ba1a1a;
+  --color-error-light: #ffdad6;
+  --color-error-container: #ffdad6;
+  --color-warning: #e29100;
 
-  /* Surface & Background */
-  --color-bg: var(--color-neutral-50);
-  --color-surface: #ffffff;
-  --color-surface-hover: var(--color-neutral-100);
+  /* Backward-compat mapped names (used by existing components) */
+  --color-primary-50: #eef6ee;
+  --color-primary-100: #d1fae5;
+  --color-primary-200: #a7f3d0;
+  --color-primary-300: #6ffbbe;
+  --color-primary-400: #4edea3;
+  --color-primary-500: #10b981;
+  --color-primary-600: #006c49;
+  --color-primary-700: #005236;
+  --color-primary-800: #00422b;
+  --color-primary-900: #002113;
+
+  --color-neutral-50: #f4fbf4;
+  --color-neutral-100: #eef6ee;
+  --color-neutral-200: #e3eae3;
+  --color-neutral-300: #dde4dd;
+  --color-neutral-400: #bbcabf;
+  --color-neutral-500: #6c7a71;
+  --color-neutral-600: #3c4a42;
+  --color-neutral-700: #2b322d;
+  --color-neutral-800: #161d19;
+  --color-neutral-900: #0d1210;
 
   /* Spacing */
   --space-1: 0.25rem;
@@ -47,7 +74,7 @@
   --space-12: 3rem;
 
   /* Typography */
-  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
   --font-size-xs: 0.75rem;
   --font-size-sm: 0.875rem;
   --font-size-base: 1rem;
@@ -65,12 +92,14 @@
   --radius-md: 0.5rem;
   --radius-lg: 0.75rem;
   --radius-xl: 1rem;
+  --radius-card: 2rem;
+  --radius-card-sm: 1.5rem;
   --radius-full: 9999px;
 
-  /* Shadows */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  /* Shadows — ambient, tinted green, never harsh */
+  --shadow-sm: 0 2px 8px rgba(0, 108, 73, 0.04);
+  --shadow-md: 0 4px 16px rgba(0, 108, 73, 0.06);
+  --shadow-lg: 0 8px 24px rgba(0, 108, 73, 0.08);
 
   /* Transitions */
   --transition-fast: 150ms ease;
@@ -80,35 +109,38 @@
 /* ─── Dark Theme ─────────────────────────────────────────────────────────── */
 
 [data-theme="dark"] {
-  /* Backgrounds */
-  --color-bg: #111827;
-  --color-surface: #1f2937;
-  --color-surface-hover: #374151;
+  --color-bg: #0d1210;
+  --color-surface: #161d19;
+  --color-surface-hover: #1e2a22;
+  --color-surface-container: #1e2a22;
+  --color-surface-container-low: #1a2420;
+  --color-surface-container-high: #2b322d;
+  --color-surface-container-highest: #3c4a42;
+  --color-surface-container-lowest: #0d1210;
 
-  /* Neutral (inverted for dark backgrounds) */
-  --color-neutral-50: #111827;
-  --color-neutral-100: #1f2937;
-  --color-neutral-200: #374151;
-  --color-neutral-300: #4b5563;
-  --color-neutral-400: #9ca3af;
-  --color-neutral-500: #9ca3af;
-  --color-neutral-600: #d1d5db;
-  --color-neutral-700: #e5e7eb;
-  --color-neutral-800: #f3f4f6;
-  --color-neutral-900: #f9fafb;
+  --color-on-surface: #e3eae3;
+  --color-on-surface-variant: #bbcabf;
 
-  /* Primary — slightly brighter for dark backgrounds */
-  --color-primary-50: #1e1b4b;
-  --color-primary-100: #312e81;
+  --color-neutral-50: #0d1210;
+  --color-neutral-100: #161d19;
+  --color-neutral-200: #1e2a22;
+  --color-neutral-300: #2b322d;
+  --color-neutral-400: #3c4a42;
+  --color-neutral-500: #6c7a71;
+  --color-neutral-600: #bbcabf;
+  --color-neutral-700: #dde4dd;
+  --color-neutral-800: #e3eae3;
+  --color-neutral-900: #f4fbf4;
 
-  /* Semantic adjustments for dark backgrounds */
+  --color-primary-50: #002113;
+  --color-primary-100: #00422b;
+
   --color-success-light: #064e3b;
   --color-error-light: #7f1d1d;
 
-  /* Shadows (more visible on dark) */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.4);
 }
 
 /* ─── Dracula ────────────────────────────────────────────────────────────── */

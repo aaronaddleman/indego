@@ -1,0 +1,56 @@
+.chain {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-top: var(--space-3);
+}
+
+.dayCol {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  flex: 1;
+}
+
+.dayInitial {
+  font-size: 9px;
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+  color: var(--color-on-surface-variant, var(--color-neutral-500));
+  opacity: 0.5;
+  margin-bottom: var(--space-1);
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: var(--radius-full);
+  background: var(--color-surface-container-highest, #dde4dd);
+  position: relative;
+  z-index: 1;
+  transition: all var(--transition-fast);
+}
+
+.filled {
+  background: var(--color-primary, #006c49);
+}
+
+.today {
+  outline: 2px solid var(--color-primary, #006c49);
+  outline-offset: 2px;
+}
+
+.connector {
+  position: absolute;
+  top: calc(9px + var(--space-1) + 5px);
+  left: calc(50% + 6px);
+  width: calc(100% - 12px);
+  height: 2px;
+  background: var(--color-surface-container-highest, #dde4dd);
+  z-index: 0;
+}
+
+.connectorActive {
+  background: linear-gradient(90deg, var(--color-primary, #006c49), var(--color-primary-container, #10b981));
+}

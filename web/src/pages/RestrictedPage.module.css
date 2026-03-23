@@ -30,9 +30,9 @@
 
 .button {
   padding: var(--space-2) var(--space-6);
-  border: 1px solid var(--color-neutral-300);
-  border-radius: var(--radius-md);
-  background: none;
+  border: none;
+  border-radius: var(--radius-full);
+  background: var(--color-surface-container, var(--color-neutral-200));
   color: var(--color-neutral-700);
   font-size: var(--font-size-base);
   font-weight: var(--font-weight-medium);
@@ -41,5 +41,5 @@
 }
 
 .button:hover {
-  background: var(--color-neutral-100);
+  background: var(--color-surface-container-high, var(--color-neutral-300));
 }
