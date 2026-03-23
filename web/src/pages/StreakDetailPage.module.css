@@ -1,8 +1,15 @@
-.backBtn {
+.topBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-4);
+}
+
+.backBtn,
+.editBtn {
   padding: var(--space-2);
   border-radius: var(--radius-lg);
   color: var(--color-on-surface-variant, var(--color-neutral-500));
-  margin-bottom: var(--space-4);
   min-width: 44px;
   min-height: 44px;
   display: flex;
@@ -10,7 +17,8 @@
   justify-content: center;
 }
 
-.backBtn:hover {
+.backBtn:hover,
+.editBtn:hover {
   background: var(--color-surface-container, #e8f0e9);
 }
 

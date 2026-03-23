@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/client';
 import { GET_HABIT } from '../graphql/queries';
@@ -7,6 +7,7 @@ import { useStreak } from '../hooks/useStreak';
 import { getLocalDate } from '../utils/date';
 import PageShell from '../components/layout/PageShell';
 import CompleteButton from '../components/habits/CompleteButton';
+import HabitForm from '../components/habits/HabitForm';
 import StreakChain from '../components/streaks/StreakChain';
 import MotivationalBanner from '../components/streaks/MotivationalBanner';
 import StreakInsights from '../components/streaks/StreakInsights';
@@ -15,6 +16,7 @@ import styles from './StreakDetailPage.module.css';
 export default function StreakDetailPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const [showEdit, setShowEdit] = useState(false);
   const { data, loading, error } = useQuery(GET_HABIT, { variables: { id } });
 
   const habit = data?.habit;
@@ -42,9 +44,16 @@ export default function StreakDetailPage() {
 
   return (
     <PageShell title="Streak">
-      <button className={styles.backBtn} onClick={() => navigate(-1)}>
-        <span className="material-symbols-outlined">arrow_back</span>
-      </button>
+      <div className={styles.topBar}>
+        <button className={styles.backBtn} onClick={() => navigate(-1)}>
+          <span className="material-symbols-outlined">arrow_back</span>
+        </button>
+        {habit && (
+          <button className={styles.editBtn} onClick={() => setShowEdit(true)}>
+            <span className="material-symbols-outlined">edit</span>
+          </button>
+        )}
+      </div>
 
       {loading && <p className={styles.status}>Loading...</p>}
       {error && <p className={styles.status}>Failed to load habit.</p>}
@@ -92,6 +101,10 @@ export default function StreakDetailPage() {
 
           <StreakInsights completions={habit.completions} frequency={habit.frequency} />
         </>
+      )}
+
+      {showEdit && habit && (
+        <HabitForm habit={habit} onClose={() => setShowEdit(false)} />
       )}
     </PageShell>
   );
