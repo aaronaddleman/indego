@@ -1,11 +1,17 @@
 import { format, subDays } from 'date-fns';
+import { useMutation } from '@apollo/client';
+import { LOG_COMPLETION, UNDO_COMPLETION } from '../../graphql/mutations';
 import styles from './StreakChain.module.css';
 
 interface Props {
+  habitId: string;
   completionDates: Set<string>;
 }
 
-export default function StreakChain({ completionDates }: Props) {
+export default function StreakChain({ habitId, completionDates }: Props) {
+  const [logCompletion] = useMutation(LOG_COMPLETION);
+  const [undoCompletion] = useMutation(UNDO_COMPLETION);
+
   const today = new Date();
   const days = Array.from({ length: 7 }, (_, i) => {
     const date = subDays(today, i);
@@ -17,6 +23,14 @@ export default function StreakChain({ completionDates }: Props) {
     return { dateStr, isToday, completed, dayLabel, dateLabel };
   });
 
+  const handleToggle = async (dateStr: string, completed: boolean) => {
+    if (completed) {
+      await undoCompletion({ variables: { habitId, date: dateStr } });
+    } else {
+      await logCompletion({ variables: { habitId, date: dateStr } });
+    }
+  };
+
   return (
     <section className={styles.section}>
       <div className={styles.header}>
@@ -25,7 +39,11 @@ export default function StreakChain({ completionDates }: Props) {
       </div>
       <div className={styles.chain}>
         {days.map((day, i) => (
-          <div key={day.dateStr} className={`${styles.link} ${i < days.length - 1 && day.completed ? styles.linked : ''}`}>
+          <button
+            key={day.dateStr}
+            className={`${styles.link} ${i < days.length - 1 && day.completed ? styles.linked : ''}`}
+            onClick={() => handleToggle(day.dateStr, day.completed)}
+          >
             <div className={`${styles.icon} ${day.completed ? (day.isToday ? styles.iconToday : styles.iconCompleted) : styles.iconMissed}`}>
               <span className="material-symbols-outlined" style={day.completed ? { fontVariationSettings: "'FILL' 1" } : undefined}>
                 {day.completed ? (day.isToday ? 'check_circle' : 'link') : 'link_off'}
@@ -40,7 +58,7 @@ export default function StreakChain({ completionDates }: Props) {
               </div>
               <p className={styles.dateLabel}>{day.dateLabel}</p>
             </div>
-          </div>
+          </button>
         ))}
       </div>
     </section>

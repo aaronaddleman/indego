@@ -88,7 +88,7 @@ export default function StreakDetailPage() {
 
           {streaks.current > 0 && <MotivationalBanner currentStreak={streaks.current} />}
 
-          <StreakChain completionDates={completionDates} />
+          <StreakChain habitId={id!} completionDates={completionDates} />
 
           <StreakInsights completions={habit.completions} frequency={habit.frequency} />
         </>

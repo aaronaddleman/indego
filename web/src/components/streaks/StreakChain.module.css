@@ -37,6 +37,15 @@
   gap: var(--space-6);
   padding-bottom: var(--space-6);
   position: relative;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  border-radius: var(--radius-lg);
+  transition: opacity var(--transition-fast);
+}
+
+.link:active {
+  opacity: 0.7;
 }
 
 .linked::after {
