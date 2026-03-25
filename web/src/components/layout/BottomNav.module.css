@@ -44,7 +44,7 @@
 }
 
 .active {
-  color: var(--color-surface-lowest);
+  color: var(--color-accent-on);
   background: linear-gradient(135deg, var(--color-accent), var(--color-accent-light));
   border-radius: var(--radius-full);
 }
