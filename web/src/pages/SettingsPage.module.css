@@ -25,9 +25,9 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: var(--space-2);
-  background: var(--color-surface-lowest);
+  background: var(--color-surface);
   border-radius: var(--radius-card-sm);
-  padding: var(--space-2);
+  padding: var(--space-3);
 }
 
 .themeBtn {
@@ -43,13 +43,14 @@
 }
 
 .themeBtn:hover {
+  background: var(--color-surface-high);
   color: var(--color-on-surface);
 }
 
 .themeBtnActive {
-  background: var(--color-surface-lowest);
-  color: var(--color-accent);
-  box-shadow: var(--shadow-sm);
+  background: linear-gradient(135deg, var(--color-accent), var(--color-accent-light));
+  color: var(--color-accent-on);
+  box-shadow: var(--shadow-md);
 }
 
 /* Account info rows */
