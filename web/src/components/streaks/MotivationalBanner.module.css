@@ -1,5 +1,5 @@
 .banner {
-  background: linear-gradient(135deg, var(--color-primary, #006c49), var(--color-primary-container, #10b981));
+  background: linear-gradient(135deg, var(--color-accent), var(--color-accent-light));
   border-radius: var(--radius-card);
   padding: var(--space-6);
   color: white;

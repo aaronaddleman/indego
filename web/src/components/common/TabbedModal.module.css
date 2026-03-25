@@ -10,7 +10,7 @@
 }
 
 .modal {
-  background: var(--color-surface);
+  background: var(--color-surface-lowest);
   border-radius: var(--radius-card);
   width: 100%;
   max-width: 480px;
@@ -38,19 +38,19 @@
   background: none;
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-medium);
-  color: var(--color-neutral-500);
+  color: var(--color-on-surface-muted);
   cursor: pointer;
   margin-bottom: 0;
   transition: all var(--transition-fast);
 }
 
 .tab:hover {
-  color: var(--color-neutral-700);
+  color: var(--color-on-surface);
 }
 
 .activeTab {
-  color: var(--color-primary-600);
-  background: var(--color-surface-container-lowest, #ffffff);
+  color: var(--color-accent);
+  background: var(--color-surface-lowest);
   border-radius: var(--radius-lg);
 }
 
@@ -59,7 +59,7 @@
   border: none;
   background: none;
   font-size: var(--font-size-xl);
-  color: var(--color-neutral-400);
+  color: var(--color-outline-muted);
   cursor: pointer;
   min-width: 44px;
   min-height: 44px;
@@ -70,8 +70,8 @@
 }
 
 .closeBtn:hover {
-  background: var(--color-neutral-100);
-  color: var(--color-neutral-600);
+  background: var(--color-surface-low);
+  color: var(--color-on-surface-muted);
 }
 
 .content {

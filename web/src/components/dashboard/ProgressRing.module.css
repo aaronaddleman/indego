@@ -1,5 +1,5 @@
 .card {
-  background: var(--color-surface-container-lowest, #ffffff);
+  background: var(--color-surface-lowest);
   border-radius: var(--radius-card);
   padding: var(--space-6);
   box-shadow: var(--shadow-sm);
@@ -24,7 +24,7 @@
 
 .track {
   fill: none;
-  stroke: var(--color-surface-container, #e8f0e9);
+  stroke: var(--color-surface);
   stroke-width: 3;
   stroke-dasharray: 100, 100;
 }
@@ -48,7 +48,7 @@
 .pct {
   font-size: 2rem;
   font-weight: 800;
-  color: var(--color-on-surface, var(--color-neutral-900));
+  color: var(--color-on-surface);
   line-height: 1;
 }
 
@@ -56,7 +56,7 @@
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-semibold);
   opacity: 0.5;
-  color: var(--color-on-surface, var(--color-neutral-900));
+  color: var(--color-on-surface);
 }
 
 .caption {
@@ -68,10 +68,10 @@
   font-weight: var(--font-weight-semibold);
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: var(--color-on-surface-variant, var(--color-neutral-500));
+  color: var(--color-on-surface-muted);
 }
 
 .captionDetail {
   font-weight: var(--font-weight-bold);
-  color: var(--color-primary, var(--color-primary-600));
+  color: var(--color-accent);
 }

@@ -22,11 +22,11 @@
 }
 
 .day:hover:not(:disabled) {
-  background: var(--color-neutral-100);
+  background: var(--color-surface-low);
 }
 
 .day[data-today] {
-  background: var(--color-surface-container-lowest, #ffffff);
+  background: var(--color-surface-lowest);
   box-shadow: var(--shadow-sm);
 }
 
@@ -43,7 +43,7 @@
 
 .dayName {
   font-size: var(--font-size-xs);
-  color: var(--color-neutral-500);
+  color: var(--color-on-surface-muted);
   text-transform: uppercase;
   font-weight: var(--font-weight-medium);
 }
@@ -51,10 +51,10 @@
 .dateNum {
   font-size: var(--font-size-lg);
   font-weight: var(--font-weight-semibold);
-  color: var(--color-neutral-800);
+  color: var(--color-on-surface);
 }
 
 .indicator {
   font-size: var(--font-size-base);
-  color: var(--color-neutral-300);
+  color: var(--color-surface-high);
 }

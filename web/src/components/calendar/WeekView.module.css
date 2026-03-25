@@ -13,12 +13,12 @@
 .navBtn {
   padding: var(--space-1) var(--space-2);
   border-radius: var(--radius-sm);
-  color: var(--color-neutral-600);
+  color: var(--color-on-surface-muted);
   font-size: var(--font-size-lg);
 }
 
 .navBtn:hover {
-  background: var(--color-neutral-100);
+  background: var(--color-surface-low);
 }
 
 .days {
@@ -38,17 +38,17 @@
 }
 
 .today {
-  background: var(--color-primary-50);
+  background: var(--color-accent-surface);
 }
 
 .dayName {
   font-size: var(--font-size-xs);
-  color: var(--color-neutral-500);
+  color: var(--color-on-surface-muted);
   font-weight: var(--font-weight-medium);
 }
 
 .dayNum {
   font-size: var(--font-size-lg);
   font-weight: var(--font-weight-semibold);
-  color: var(--color-neutral-700);
+  color: var(--color-on-surface);
 }

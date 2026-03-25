@@ -1,0 +1,49 @@
+/* ─── Dark (Emerald Green on Dark) ────────────────────────────────────── */
+
+[data-theme="dark"] {
+  --color-bg: #0d1210;
+  --color-surface-lowest: #161d19;
+  --color-surface-low: #1a2420;
+  --color-surface: #1e2a22;
+  --color-surface-high: #2b322d;
+  --color-surface-highest: #3c4a42;
+
+  --color-on-surface: #e3eae3;
+  --color-on-surface-muted: #bbcabf;
+  --color-outline: #6c7a71;
+  --color-outline-muted: #3c4a42;
+
+  --color-accent: #10b981;
+  --color-accent-light: #4edea3;
+  --color-accent-surface: #002113;
+  --color-accent-on: #ffffff;
+
+  --color-energy: #e29100;
+  --color-energy-light: #ffb95f;
+  --color-energy-surface: rgba(226, 145, 0, 0.15);
+
+  --color-success: #4edea3;
+  --color-success-surface: #064e3b;
+
+  --color-danger: #ff5555;
+  --color-danger-surface: #7f1d1d;
+
+  --color-warning: #e29100;
+
+  --color-secondary: #adc6ff;
+  --color-secondary-surface: rgba(0, 88, 190, 0.15);
+
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.4);
+
+  --color-nav-bg: rgba(22, 29, 25, 0.8);
+
+  --color-heat-0: #3c4a42;
+  --color-heat-1: rgba(16, 185, 129, 0.2);
+  --color-heat-2: rgba(16, 185, 129, 0.4);
+  --color-heat-3: rgba(16, 185, 129, 0.6);
+  --color-heat-4: #10b981;
+
+  --color-focus-ring: rgba(78, 222, 163, 0.15);
+}

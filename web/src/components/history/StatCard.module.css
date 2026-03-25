@@ -1,5 +1,5 @@
 .card {
-  background: var(--color-surface-container-lowest, #ffffff);
+  background: var(--color-surface-lowest);
   border-radius: var(--radius-card);
   padding: var(--space-6);
   box-shadow: var(--shadow-sm);
@@ -16,18 +16,18 @@
 
 .primary {
   background: rgba(0, 108, 73, 0.1);
-  color: var(--color-primary, #006c49);
+  color: var(--color-accent);
 }
 
 .tertiary {
   background: rgba(226, 145, 0, 0.15);
-  color: var(--color-tertiary, #855300);
+  color: var(--color-energy);
 }
 
 .value {
   font-size: var(--font-size-3xl);
   font-weight: 800;
-  color: var(--color-on-surface, var(--color-neutral-900));
+  color: var(--color-on-surface);
   letter-spacing: -0.02em;
   line-height: 1;
 }
@@ -35,7 +35,7 @@
 .label {
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-bold);
-  color: var(--color-on-surface-variant, var(--color-neutral-500));
+  color: var(--color-on-surface-muted);
   text-transform: uppercase;
   letter-spacing: 0.08em;
   opacity: 0.6;

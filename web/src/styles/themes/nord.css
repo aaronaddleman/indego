@@ -1,0 +1,49 @@
+/* ─── Nord ────────────────────────────────────────────────────────────── */
+
+[data-theme="nord"] {
+  --color-bg: #2e3440;
+  --color-surface-lowest: #3b4252;
+  --color-surface-low: #353c4a;
+  --color-surface: #434c5e;
+  --color-surface-high: #4c566a;
+  --color-surface-highest: #4c566a;
+
+  --color-on-surface: #eceff4;
+  --color-on-surface-muted: #d8dee9;
+  --color-outline: #4c566a;
+  --color-outline-muted: #434c5e;
+
+  --color-accent: #88c0d0;
+  --color-accent-light: #8fbcbb;
+  --color-accent-surface: #2e3440;
+  --color-accent-on: #2e3440;
+
+  --color-energy: #ebcb8b;
+  --color-energy-light: #f0d8a8;
+  --color-energy-surface: rgba(235, 203, 139, 0.12);
+
+  --color-success: #a3be8c;
+  --color-success-surface: #2e3b2e;
+
+  --color-danger: #bf616a;
+  --color-danger-surface: #3b2e2e;
+
+  --color-warning: #ebcb8b;
+
+  --color-secondary: #5e81ac;
+  --color-secondary-surface: rgba(94, 129, 172, 0.12);
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.4);
+
+  --color-nav-bg: rgba(46, 52, 64, 0.85);
+
+  --color-heat-0: #4c566a;
+  --color-heat-1: rgba(136, 192, 208, 0.2);
+  --color-heat-2: rgba(136, 192, 208, 0.4);
+  --color-heat-3: rgba(136, 192, 208, 0.6);
+  --color-heat-4: #88c0d0;
+
+  --color-focus-ring: rgba(136, 192, 208, 0.2);
+}

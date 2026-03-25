@@ -19,7 +19,7 @@
   border: none;
   background: none;
   font-size: var(--font-size-xl);
-  color: var(--color-neutral-600);
+  color: var(--color-on-surface-muted);
   cursor: pointer;
   border-radius: var(--radius-md);
   min-width: 44px;
@@ -30,7 +30,7 @@
 }
 
 .backBtn:hover {
-  background: var(--color-neutral-100);
+  background: var(--color-surface-low);
 }
 
 .title {
@@ -56,19 +56,19 @@
   border: none;
   border-radius: var(--radius-lg);
   font-size: var(--font-size-base);
-  background: var(--color-surface-container-highest, var(--color-neutral-200));
-  color: var(--color-neutral-900);
+  background: var(--color-surface-highest);
+  color: var(--color-on-surface);
 }
 
 .input:focus {
   outline: none;
-  background: var(--color-surface-container-lowest, #ffffff);
-  box-shadow: 0 0 0 2px rgba(187, 202, 191, 0.2);
+  background: var(--color-surface-lowest);
+  box-shadow: 0 0 0 2px var(--color-focus-ring);
 }
 
 .addBtn {
   padding: var(--space-2) var(--space-4);
-  background: var(--color-primary-600);
+  background: var(--color-accent);
   color: white;
   border-radius: var(--radius-md);
   font-weight: var(--font-weight-medium);
@@ -76,7 +76,7 @@
 }
 
 .addBtn:hover:not(:disabled) {
-  background: var(--color-primary-700);
+  background: var(--color-accent);
 }
 
 .addBtn:disabled {
@@ -85,7 +85,7 @@
 }
 
 .formError {
-  color: var(--color-error);
+  color: var(--color-danger);
   font-size: var(--font-size-sm);
   margin-bottom: var(--space-4);
 }
@@ -101,7 +101,7 @@
   justify-content: space-between;
   align-items: center;
   padding: var(--space-3) var(--space-4);
-  background: var(--color-surface);
+  background: var(--color-surface-lowest);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-sm);
 }
@@ -116,7 +116,7 @@
 
 .email {
   font-size: var(--font-size-sm);
-  color: var(--color-neutral-800);
+  color: var(--color-on-surface);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -125,8 +125,8 @@
 .adminBadge {
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-semibold);
-  color: var(--color-primary-600);
-  background: var(--color-primary-50);
+  color: var(--color-accent);
+  background: var(--color-accent-surface);
   padding: var(--space-1) var(--space-2);
   border-radius: var(--radius-full);
   white-space: nowrap;
@@ -144,20 +144,20 @@
   font-weight: var(--font-weight-medium);
   border: none;
   border-radius: var(--radius-full);
-  background: var(--color-surface-container, var(--color-neutral-200));
-  color: var(--color-neutral-500);
+  background: var(--color-surface-lowest);
+  color: var(--color-on-surface-muted);
   cursor: pointer;
   white-space: nowrap;
   transition: all var(--transition-fast);
 }
 
 .adminToggle:hover:not(:disabled) {
-  background: var(--color-surface-container-high, var(--color-neutral-300));
-  color: var(--color-primary-600);
+  background: var(--color-surface-high);
+  color: var(--color-accent);
 }
 
 .adminActive {
-  background: linear-gradient(135deg, var(--color-primary-600), var(--color-primary-500));
+  background: linear-gradient(135deg, var(--color-accent), var(--color-accent-light));
   color: white;
   font-weight: var(--font-weight-semibold);
 }
@@ -169,7 +169,7 @@
 
 .selfBadge {
   font-size: var(--font-size-xs);
-  color: var(--color-neutral-400);
+  color: var(--color-outline-muted);
   white-space: nowrap;
 }
 
@@ -177,7 +177,7 @@
   padding: var(--space-1) var(--space-2);
   border: none;
   background: none;
-  color: var(--color-neutral-400);
+  color: var(--color-outline-muted);
   font-size: var(--font-size-base);
   cursor: pointer;
   border-radius: var(--radius-md);
@@ -190,8 +190,8 @@
 }
 
 .removeBtn:hover:not(:disabled) {
-  color: var(--color-error);
-  background: var(--color-error-light);
+  color: var(--color-danger);
+  background: var(--color-danger-surface);
 }
 
 .removeBtn:disabled {
@@ -202,11 +202,11 @@
 .loading {
   text-align: center;
   padding: var(--space-8);
-  color: var(--color-neutral-500);
+  color: var(--color-on-surface-muted);
 }
 
 .error {
   text-align: center;
   padding: var(--space-8);
-  color: var(--color-error);
+  color: var(--color-danger);
 }

@@ -53,8 +53,8 @@ export default function StreakInsights({ completions, frequency }: Props) {
         </div>
         <div className={styles.miniRing}>
           <svg viewBox="0 0 64 64" className={styles.ringSvg}>
-            <circle cx="32" cy="32" r="28" fill="none" stroke="var(--color-surface-container-highest, #dde4dd)" strokeWidth="6" />
-            <circle cx="32" cy="32" r="28" fill="none" stroke="var(--color-primary, #006c49)" strokeWidth="6"
+            <circle cx="32" cy="32" r="28" fill="none" stroke="var(--color-surface-highest)" strokeWidth="6" />
+            <circle cx="32" cy="32" r="28" fill="none" stroke="var(--color-accent)" strokeWidth="6"
               strokeDasharray={`${pct * 1.76} ${176 - pct * 1.76}`}
               strokeLinecap="round"
               transform="rotate(-90 32 32)" />

@@ -71,7 +71,7 @@ export default function StreakDetailPage() {
           <div className={styles.heroGrid}>
             <div className={styles.heroCard}>
               <div className={styles.heroCardHeader}>
-                <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1", color: 'var(--color-tertiary, #855300)', fontSize: '28px' }}>
+                <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1", color: 'var(--color-energy)', fontSize: '28px' }}>
                   local_fire_department
                 </span>
                 <span className={styles.heroBadge} data-color="tertiary">Active</span>
@@ -83,7 +83,7 @@ export default function StreakDetailPage() {
             </div>
             <div className={`${styles.heroCard} ${styles.heroCardAlt}`}>
               <div className={styles.heroCardHeader}>
-                <span className="material-symbols-outlined" style={{ color: 'var(--color-primary, #006c49)', fontSize: '28px' }}>
+                <span className="material-symbols-outlined" style={{ color: 'var(--color-accent)', fontSize: '28px' }}>
                   workspace_premium
                 </span>
                 <span className={styles.heroBadge} data-color="primary">Record</span>

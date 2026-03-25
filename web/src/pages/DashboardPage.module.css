@@ -5,7 +5,7 @@
 .dateTitle {
   font-size: var(--font-size-lg);
   font-weight: var(--font-weight-bold);
-  color: var(--color-primary, var(--color-primary-600));
+  color: var(--color-accent);
   letter-spacing: -0.01em;
 }
 
@@ -33,13 +33,13 @@
 .sectionTitle {
   font-size: var(--font-size-xl);
   font-weight: var(--font-weight-bold);
-  color: var(--color-on-surface, var(--color-neutral-900));
+  color: var(--color-on-surface);
 }
 
 .sectionHint {
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-bold);
-  color: var(--color-on-surface-variant, var(--color-neutral-500));
+  color: var(--color-on-surface-muted);
   text-transform: uppercase;
   letter-spacing: 0.08em;
 }
@@ -52,7 +52,7 @@
   width: 56px;
   height: 56px;
   border-radius: var(--radius-full);
-  background: linear-gradient(135deg, var(--color-primary, #006c49), var(--color-primary-container, #10b981));
+  background: linear-gradient(135deg, var(--color-accent), var(--color-accent-light));
   color: white;
   display: flex;
   align-items: center;
@@ -74,13 +74,13 @@
 }
 
 .status {
-  color: var(--color-on-surface-variant, var(--color-neutral-500));
+  color: var(--color-on-surface-muted);
   text-align: center;
   padding: var(--space-8);
 }
 
 .error {
-  color: var(--color-error);
+  color: var(--color-danger);
   text-align: center;
   padding: var(--space-8);
 }

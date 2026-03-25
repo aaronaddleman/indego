@@ -1,0 +1,49 @@
+/* ─── Solarized Dark ──────────────────────────────────────────────────── */
+
+[data-theme="solarized"] {
+  --color-bg: #002b36;
+  --color-surface-lowest: #073642;
+  --color-surface-low: #05303a;
+  --color-surface: #0a3f4c;
+  --color-surface-high: #586e75;
+  --color-surface-highest: #657b83;
+
+  --color-on-surface: #fdf6e3;
+  --color-on-surface-muted: #93a1a1;
+  --color-outline: #586e75;
+  --color-outline-muted: #0a3f4c;
+
+  --color-accent: #268bd2;
+  --color-accent-light: #2aa198;
+  --color-accent-surface: #002b36;
+  --color-accent-on: #fdf6e3;
+
+  --color-energy: #b58900;
+  --color-energy-light: #d4a017;
+  --color-energy-surface: rgba(181, 137, 0, 0.12);
+
+  --color-success: #859900;
+  --color-success-surface: #1a2600;
+
+  --color-danger: #dc322f;
+  --color-danger-surface: #3b1a1a;
+
+  --color-warning: #b58900;
+
+  --color-secondary: #6c71c4;
+  --color-secondary-surface: rgba(108, 113, 196, 0.12);
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.5);
+
+  --color-nav-bg: rgba(0, 43, 54, 0.85);
+
+  --color-heat-0: #586e75;
+  --color-heat-1: rgba(38, 139, 210, 0.2);
+  --color-heat-2: rgba(38, 139, 210, 0.4);
+  --color-heat-3: rgba(38, 139, 210, 0.6);
+  --color-heat-4: #268bd2;
+
+  --color-focus-ring: rgba(38, 139, 210, 0.2);
+}

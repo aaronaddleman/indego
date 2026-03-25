@@ -1,5 +1,5 @@
 .card {
-  background: var(--color-surface-container-lowest, #ffffff);
+  background: var(--color-surface-lowest);
   border-radius: var(--radius-card-sm);
   padding: var(--space-5);
   display: flex;
@@ -19,12 +19,12 @@
 
 .name {
   font-weight: var(--font-weight-bold);
-  color: var(--color-on-surface, var(--color-neutral-900));
+  color: var(--color-on-surface);
 }
 
 .detail {
   font-size: var(--font-size-xs);
-  color: var(--color-on-surface-variant, var(--color-neutral-500));
+  color: var(--color-on-surface-muted);
   font-weight: var(--font-weight-medium);
   margin-top: var(--space-1);
 }
@@ -41,13 +41,13 @@
 
 .pct {
   font-weight: var(--font-weight-bold);
-  color: var(--color-primary, var(--color-primary-600));
+  color: var(--color-accent);
 }
 
 .barTrack {
   width: 6px;
   height: 48px;
-  background: var(--color-surface-container, #e8f0e9);
+  background: var(--color-surface);
   border-radius: var(--radius-full);
   overflow: hidden;
   display: flex;
@@ -57,7 +57,7 @@
 
 .barFill {
   width: 100%;
-  background: var(--color-primary, #006c49);
+  background: var(--color-accent);
   border-radius: var(--radius-full);
   transition: height var(--transition-base);
 }
