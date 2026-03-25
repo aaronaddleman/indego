@@ -54,11 +54,12 @@ export default function SettingsPage() {
 
   return (
     <PageShell title="Settings">
-      <h1 className={styles.title}>Settings</h1>
+      <h1 className={styles.pageTitle}>Settings</h1>
 
-      <div className={styles.section}>
+      {/* Appearance */}
+      <section className={styles.section}>
         <h2 className={styles.sectionTitle}>Appearance</h2>
-        <div className={styles.themeSelector}>
+        <div className={styles.themeGrid}>
           {THEME_OPTIONS.map(opt => (
             <button
               key={opt.value}
@@ -70,59 +71,106 @@ export default function SettingsPage() {
             </button>
           ))}
         </div>
-      </div>
+      </section>
 
-      <div className={styles.section}>
+      {/* Account */}
+      <section className={styles.section}>
         <h2 className={styles.sectionTitle}>Account</h2>
-        <div className={styles.info}>
-          <span className={styles.label}>Email</span>
-          <span>{meData?.me?.email || auth.currentUser?.email || '—'}</span>
+        <div className={styles.infoRow}>
+          <div className={styles.infoIcon}>
+            <span className="material-symbols-outlined">mail</span>
+          </div>
+          <div className={styles.infoContent}>
+            <span className={styles.infoLabel}>Email</span>
+            <span className={styles.infoValue}>{meData?.me?.email || auth.currentUser?.email || '—'}</span>
+          </div>
         </div>
-        <div className={styles.info}>
-          <span className={styles.label}>Display Name</span>
-          <span>{meData?.me?.displayName || '—'}</span>
+        <div className={styles.infoRow}>
+          <div className={styles.infoIcon}>
+            <span className="material-symbols-outlined">person</span>
+          </div>
+          <div className={styles.infoContent}>
+            <span className={styles.infoLabel}>Display Name</span>
+            <span className={styles.infoValue}>{meData?.me?.displayName || '—'}</span>
+          </div>
         </div>
-      </div>
+      </section>
 
-      <div className={styles.section}>
+      {/* Integrations (placeholders) */}
+      <section className={styles.section}>
+        <h2 className={styles.sectionTitle}>Integrations</h2>
+        <button className={styles.integrationBtn} disabled>
+          <div className={styles.integrationLeft}>
+            <div className={`${styles.integrationIcon} ${styles.iconSecondary}`}>
+              <span className="material-symbols-outlined">sync</span>
+            </div>
+            <div>
+              <p className={styles.integrationName}>Sync with Calendar</p>
+              <p className={styles.integrationDesc}>Google, iCloud, or Outlook</p>
+            </div>
+          </div>
+          <span className={styles.comingSoon}>Soon</span>
+        </button>
+        <button className={styles.integrationBtn} disabled>
+          <div className={styles.integrationLeft}>
+            <div className={styles.integrationIcon}>
+              <span className="material-symbols-outlined">download</span>
+            </div>
+            <div>
+              <p className={styles.integrationName}>Export Data</p>
+              <p className={styles.integrationDesc}>Download your journey as CSV/JSON</p>
+            </div>
+          </div>
+          <span className={styles.comingSoon}>Soon</span>
+        </button>
+      </section>
+
+      {/* Version Info */}
+      <section className={styles.section}>
         <h2 className={styles.sectionTitle}>Version Info</h2>
-        <div className={styles.info}>
-          <span className={styles.label}>API Version</span>
-          <span>{versionData?.version?.commit || 'unknown'}</span>
+        <div className={styles.versionGrid}>
+          <div className={styles.versionItem}>
+            <span className={styles.versionLabel}>API</span>
+            <span className={styles.versionValue}>{versionData?.version?.commit?.slice(0, 7) || '—'}</span>
+          </div>
+          <div className={styles.versionItem}>
+            <span className={styles.versionLabel}>Web</span>
+            <span className={styles.versionValue}>{__APP_COMMIT__.slice(0, 7)}</span>
+          </div>
+          <div className={styles.versionItem}>
+            <span className={styles.versionLabel}>Branch</span>
+            <span className={styles.versionValue}>{__APP_BRANCH__}</span>
+          </div>
+          <div className={styles.versionItem}>
+            <span className={styles.versionLabel}>Deployed</span>
+            <span className={styles.versionValue}>{versionData?.version?.deployedAt?.split('T')[0] || '—'}</span>
+          </div>
         </div>
-        <div className={styles.info}>
-          <span className={styles.label}>API Deployed</span>
-          <span>{versionData?.version?.deployedAt || 'unknown'}</span>
-        </div>
-        <div className={styles.info}>
-          <span className={styles.label}>Web Version</span>
-          <span>{__APP_COMMIT__.slice(0, 7)}</span>
-        </div>
-        <div className={styles.info}>
-          <span className={styles.label}>Web Branch</span>
-          <span>{__APP_BRANCH__}</span>
-        </div>
+      </section>
+
+      {/* Actions */}
+      <div className={styles.actions}>
+        {isAdmin && (
+          <button className={styles.actionBtn} onClick={() => navigate('/admin')}>
+            <span className="material-symbols-outlined">admin_panel_settings</span>
+            Manage Access
+          </button>
+        )}
+        {isAdmin && (
+          <button className={styles.actionBtn} onClick={handleCopyToken}>
+            <span className="material-symbols-outlined">key</span>
+            {tokenCopied ? 'Token Copied!' : 'Copy Auth Token'}
+          </button>
+        )}
+        <button className={styles.actionBtn} onClick={handleClearCache}>
+          <span className="material-symbols-outlined">cached</span>
+          Clear Cache & Reload
+        </button>
+        <button className={styles.signOutBtn} onClick={handleSignOut}>
+          <span className="material-symbols-outlined">logout</span>
+          Sign Out
+        </button>
       </div>
-
-      {isAdmin && (
-        <button className={styles.adminBtn} onClick={() => navigate('/admin')}>
-          Manage Access
-        </button>
-      )}
-
-      {isAdmin && (
-        <button className={styles.clearCacheBtn} onClick={handleCopyToken}>
-          {tokenCopied ? 'Token Copied!' : 'Copy Auth Token'}
-        </button>
-      )}
-
-      <button className={styles.clearCacheBtn} onClick={handleClearCache}>
-        Clear Cache & Reload
-      </button>
-
-      <button className={styles.signOutBtn} onClick={handleSignOut}>
-        Sign Out
-      </button>
     </PageShell>
   );
 }
