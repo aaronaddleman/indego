@@ -23,8 +23,19 @@
   border-radius: var(--radius-card-sm);
   text-decoration: none;
   color: var(--color-on-surface-muted);
-  transition: color var(--transition-base), background var(--transition-base);
+  transition: transform var(--transition-fast);
   -webkit-tap-highlight-color: transparent;
+}
+
+.tab:hover {
+  text-decoration: none;
+}
+
+/* Subtle lift on mouse devices only */
+@media (pointer: fine) {
+  .tab:hover:not(.active) {
+    transform: translateY(-2px);
+  }
 }
 
 .icon {
