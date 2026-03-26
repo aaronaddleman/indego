@@ -27,14 +27,6 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-/* Only apply hover on devices that support it (mouse/trackpad) */
-@media (hover: hover) {
-  .tab:hover {
-    color: var(--color-accent);
-    background: var(--color-surface);
-  }
-}
-
 .icon {
   font-size: 24px;
   transition: font-variation-settings var(--transition-fast);
@@ -50,14 +42,6 @@
   color: var(--color-accent-on);
   background: linear-gradient(135deg, var(--color-accent), var(--color-accent-light));
   border-radius: var(--radius-card-sm);
-}
-
-/* Override hover for active tab */
-@media (hover: hover) {
-  .active:hover {
-    color: var(--color-accent-on);
-    background: linear-gradient(135deg, var(--color-accent), var(--color-accent-light));
-  }
 }
 
 .active .icon {
