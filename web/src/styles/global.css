@@ -1,4 +1,10 @@
 @import './tokens.css';
+@import './themes/light.css';
+@import './themes/dark.css';
+@import './themes/dracula.css';
+@import './themes/nord.css';
+@import './themes/solarized.css';
+@import './themes/monokai.css';
 
 *,
 *::before,
@@ -11,7 +17,7 @@
 html {
   font-family: var(--font-sans);
   font-size: 16px;
-  color: var(--color-on-surface, var(--color-neutral-900));
+  color: var(--color-on-surface);
   background: var(--color-bg);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -28,7 +34,7 @@ body {
 }
 
 a {
-  color: var(--color-primary-600);
+  color: var(--color-accent);
   text-decoration: none;
 }
 

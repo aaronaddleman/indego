@@ -1,5 +1,5 @@
 .container {
-  background: var(--color-surface-container-low, #eef6ee);
+  background: var(--color-surface-low);
   border-radius: var(--radius-card);
   padding: var(--space-6);
   position: relative;
@@ -16,7 +16,7 @@
 .title {
   font-size: var(--font-size-xl);
   font-weight: var(--font-weight-bold);
-  color: var(--color-on-surface, var(--color-neutral-900));
+  color: var(--color-on-surface);
 }
 
 .legend {
@@ -29,7 +29,7 @@
   font-size: 10px;
   font-weight: var(--font-weight-bold);
   text-transform: uppercase;
-  color: var(--color-on-surface-variant, var(--color-neutral-500));
+  color: var(--color-on-surface-muted);
   opacity: 0.6;
 }
 
@@ -56,7 +56,7 @@
   font-size: 10px;
   font-weight: var(--font-weight-bold);
   text-transform: uppercase;
-  color: var(--color-on-surface-variant, var(--color-neutral-500));
+  color: var(--color-on-surface-muted);
   opacity: 0.4;
 }
 
@@ -73,26 +73,26 @@
 }
 
 .today {
-  outline: 2px solid var(--color-primary, #006c49);
+  outline: 2px solid var(--color-accent);
   outline-offset: 1px;
 }
 
 .level0 {
-  background: var(--color-surface-container-highest, #dde4dd);
+  background: var(--color-heat-0);
 }
 
 .level1 {
-  background: rgba(0, 108, 73, 0.2);
+  background: var(--color-heat-1);
 }
 
 .level2 {
-  background: rgba(0, 108, 73, 0.4);
+  background: var(--color-heat-2);
 }
 
 .level3 {
-  background: rgba(0, 108, 73, 0.6);
+  background: var(--color-heat-3);
 }
 
 .level4 {
-  background: var(--color-primary, #006c49);
+  background: var(--color-heat-4);
 }

@@ -9,7 +9,7 @@
 .editBtn {
   padding: var(--space-2);
   border-radius: var(--radius-lg);
-  color: var(--color-on-surface-variant, var(--color-neutral-500));
+  color: var(--color-on-surface-muted);
   min-width: 44px;
   min-height: 44px;
   display: flex;
@@ -19,7 +19,7 @@
 
 .backBtn:hover,
 .editBtn:hover {
-  background: var(--color-surface-container, #e8f0e9);
+  background: var(--color-surface-lowest);
 }
 
 .header {
@@ -31,13 +31,13 @@
   font-weight: var(--font-weight-bold);
   text-transform: uppercase;
   letter-spacing: 0.15em;
-  color: var(--color-primary, #006c49);
+  color: var(--color-accent);
 }
 
 .habitName {
   font-size: var(--font-size-3xl);
   font-weight: 800;
-  color: var(--color-on-surface, var(--color-neutral-900));
+  color: var(--color-on-surface);
   letter-spacing: -0.02em;
   margin-top: var(--space-1);
 }
@@ -54,7 +54,7 @@
 }
 
 .heroCard {
-  background: var(--color-surface-container-lowest, #ffffff);
+  background: var(--color-surface-lowest);
   border-radius: var(--radius-card);
   padding: var(--space-6);
   display: flex;
@@ -65,7 +65,7 @@
 }
 
 .heroCardAlt {
-  background: var(--color-surface-container-low, #eef6ee);
+  background: var(--color-surface-low);
   box-shadow: none;
 }
 
@@ -86,12 +86,12 @@
 
 .heroBadge[data-color="tertiary"] {
   background: rgba(226, 145, 0, 0.15);
-  color: var(--color-tertiary, #855300);
+  color: var(--color-energy);
 }
 
 .heroBadge[data-color="primary"] {
   background: rgba(0, 108, 73, 0.15);
-  color: var(--color-primary, #006c49);
+  color: var(--color-accent);
 }
 
 .heroCardBody {
@@ -103,19 +103,19 @@
   font-size: 3rem;
   font-weight: 900;
   letter-spacing: -0.03em;
-  color: var(--color-on-surface, var(--color-neutral-900));
+  color: var(--color-on-surface);
   line-height: 1;
 }
 
 .heroLabel {
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-medium);
-  color: var(--color-on-surface-variant, var(--color-neutral-500));
+  color: var(--color-on-surface-muted);
   margin-top: var(--space-1);
 }
 
 .status {
-  color: var(--color-on-surface-variant, var(--color-neutral-500));
+  color: var(--color-on-surface-muted);
   text-align: center;
   padding: var(--space-8);
 }

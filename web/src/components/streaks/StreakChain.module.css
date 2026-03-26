@@ -12,7 +12,7 @@
 .title {
   font-weight: var(--font-weight-bold);
   font-size: var(--font-size-lg);
-  color: var(--color-on-surface, var(--color-neutral-900));
+  color: var(--color-on-surface);
 }
 
 .badge {
@@ -20,8 +20,8 @@
   font-weight: var(--font-weight-semibold);
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  color: var(--color-on-surface-variant, var(--color-neutral-500));
-  background: var(--color-surface-container, #e8f0e9);
+  color: var(--color-on-surface-muted);
+  background: var(--color-surface);
   padding: var(--space-1) var(--space-3);
   border-radius: var(--radius-full);
 }
@@ -55,7 +55,7 @@
   top: 56px;
   width: 4px;
   height: calc(var(--space-6));
-  background: linear-gradient(to bottom, var(--color-primary-container, #10b981), var(--color-primary, #006c49));
+  background: linear-gradient(to bottom, var(--color-accent-light), var(--color-accent));
   transform: translateX(-50%);
 }
 
@@ -76,20 +76,20 @@
 }
 
 .iconToday {
-  background: linear-gradient(135deg, var(--color-primary, #006c49), var(--color-primary-container, #10b981));
+  background: linear-gradient(135deg, var(--color-accent), var(--color-accent-light));
   color: white;
   box-shadow: 0 4px 16px rgba(0, 108, 73, 0.2);
   transform: scale(1.1);
 }
 
 .iconCompleted {
-  background: var(--color-surface-container-highest, #dde4dd);
-  color: var(--color-primary, #006c49);
+  background: var(--color-surface-highest);
+  color: var(--color-accent);
 }
 
 .iconMissed {
-  background: var(--color-surface-container, #e8f0e9);
-  color: var(--color-outline, #6c7a71);
+  background: var(--color-surface);
+  color: var(--color-outline);
   opacity: 0.4;
 }
 
@@ -105,7 +105,7 @@
 
 .dayLabel {
   font-weight: var(--font-weight-bold);
-  color: var(--color-on-surface, var(--color-neutral-900));
+  color: var(--color-on-surface);
 }
 
 .chip {
@@ -114,11 +114,11 @@
   text-transform: uppercase;
   padding: 2px var(--space-2);
   border-radius: var(--radius-sm);
-  background: var(--color-tertiary-container, #e29100);
-  color: var(--color-on-surface, #161d19);
+  background: var(--color-energy-light);
+  color: var(--color-on-surface);
 }
 
 .dateLabel {
   font-size: var(--font-size-sm);
-  color: var(--color-on-surface-variant, var(--color-neutral-500));
+  color: var(--color-on-surface-muted);
 }

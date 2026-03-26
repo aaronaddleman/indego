@@ -4,14 +4,14 @@
 }
 
 .message {
-  color: var(--color-neutral-500);
+  color: var(--color-on-surface-muted);
   font-size: var(--font-size-lg);
   margin-bottom: var(--space-4);
 }
 
 .btn {
   padding: var(--space-3) var(--space-6);
-  background: var(--color-primary-600);
+  background: var(--color-accent);
   color: white;
   border-radius: var(--radius-full);
   font-weight: var(--font-weight-medium);
@@ -19,5 +19,5 @@
 }
 
 .btn:hover {
-  background: var(--color-primary-700);
+  background: var(--color-accent);
 }

@@ -23,8 +23,8 @@ export default function ProgressRing({ completed, total }: Props) {
           />
           <defs>
             <linearGradient id="ring-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="var(--color-primary, #006c49)" />
-              <stop offset="100%" stopColor="var(--color-primary-container, #10b981)" />
+              <stop offset="0%" stopColor="var(--color-accent)" />
+              <stop offset="100%" stopColor="var(--color-accent-light)" />
             </linearGradient>
           </defs>
         </svg>

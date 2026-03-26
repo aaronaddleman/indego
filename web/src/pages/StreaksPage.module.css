@@ -7,13 +7,13 @@
   font-weight: var(--font-weight-semibold);
   text-transform: uppercase;
   letter-spacing: 0.2em;
-  color: var(--color-on-surface-variant, var(--color-neutral-500));
+  color: var(--color-on-surface-muted);
 }
 
 .pageTitle {
   font-size: var(--font-size-3xl);
   font-weight: 800;
-  color: var(--color-on-surface, var(--color-neutral-900));
+  color: var(--color-on-surface);
   letter-spacing: -0.02em;
   margin-top: var(--space-1);
 }
@@ -30,7 +30,7 @@
   align-items: center;
   gap: var(--space-4);
   padding: var(--space-5);
-  background: var(--color-surface-container-lowest, #ffffff);
+  background: var(--color-surface-lowest);
   border-radius: var(--radius-card-sm);
   text-align: left;
   transition: all var(--transition-fast);
@@ -51,7 +51,7 @@
 
 .habitName {
   font-weight: var(--font-weight-bold);
-  color: var(--color-on-surface, var(--color-neutral-900));
+  color: var(--color-on-surface);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -64,7 +64,7 @@
   margin-top: var(--space-1);
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-bold);
-  color: var(--color-tertiary, #855300);
+  color: var(--color-energy);
   background: rgba(226, 145, 0, 0.1);
   padding: 2px var(--space-2);
   border-radius: var(--radius-full);
@@ -90,7 +90,7 @@
 .statNumber {
   font-size: var(--font-size-xl);
   font-weight: 800;
-  color: var(--color-on-surface, var(--color-neutral-900));
+  color: var(--color-on-surface);
   line-height: 1;
 }
 
@@ -99,16 +99,16 @@
   font-weight: var(--font-weight-bold);
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: var(--color-on-surface-variant, var(--color-neutral-500));
+  color: var(--color-on-surface-muted);
   margin-top: 2px;
 }
 
 .chevron {
-  color: var(--color-on-surface-variant, var(--color-neutral-500));
+  color: var(--color-on-surface-muted);
 }
 
 .status {
-  color: var(--color-on-surface-variant, var(--color-neutral-500));
+  color: var(--color-on-surface-muted);
   text-align: center;
   padding: var(--space-8);
 }

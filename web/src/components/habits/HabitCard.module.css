@@ -3,7 +3,7 @@
   justify-content: space-between;
   align-items: center;
   padding: var(--space-5);
-  background: var(--color-surface-container-lowest, #ffffff);
+  background: var(--color-surface-lowest);
   border-radius: var(--radius-card-sm);
   cursor: pointer;
   transition: all var(--transition-fast);
@@ -18,11 +18,11 @@
 }
 
 .completed {
-  background: var(--color-surface-container-low, #eef6ee);
+  background: var(--color-surface-low);
 }
 
 .completed:hover {
-  background: var(--color-surface-container-high, #e3eae3);
+  background: var(--color-surface-high);
 }
 
 .info {
@@ -33,7 +33,7 @@
 .name {
   font-size: var(--font-size-base);
   font-weight: var(--font-weight-bold);
-  color: var(--color-on-surface, var(--color-neutral-900));
+  color: var(--color-on-surface);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -46,7 +46,7 @@
 
 .streak {
   font-size: var(--font-size-xs);
-  color: var(--color-on-surface-variant, var(--color-neutral-500));
+  color: var(--color-on-surface-muted);
   margin-top: var(--space-1);
   display: block;
   font-weight: var(--font-weight-medium);

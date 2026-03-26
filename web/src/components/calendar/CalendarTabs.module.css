@@ -2,7 +2,7 @@
   display: flex;
   gap: var(--space-1);
   margin-bottom: var(--space-4);
-  background: var(--color-neutral-100);
+  background: var(--color-surface-low);
   border-radius: var(--radius-md);
   padding: var(--space-1);
 }
@@ -13,12 +13,12 @@
   border-radius: var(--radius-sm);
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-medium);
-  color: var(--color-neutral-600);
+  color: var(--color-on-surface-muted);
   transition: all var(--transition-fast);
 }
 
 .active {
-  background: var(--color-surface);
-  color: var(--color-primary-600);
+  background: var(--color-surface-lowest);
+  color: var(--color-accent);
   box-shadow: var(--shadow-sm);
 }

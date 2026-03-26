@@ -5,7 +5,7 @@
   align-items: center;
   justify-content: center;
   padding: var(--space-4);
-  background: var(--color-neutral-50);
+  background: var(--color-bg);
 }
 
 .card {
@@ -18,13 +18,13 @@
 .title {
   font-size: var(--font-size-2xl);
   font-weight: var(--font-weight-bold);
-  color: var(--color-neutral-900);
+  color: var(--color-on-surface);
   margin-bottom: var(--space-4);
 }
 
 .message {
   font-size: var(--font-size-base);
-  color: var(--color-neutral-500);
+  color: var(--color-on-surface-muted);
   margin-bottom: var(--space-8);
 }
 
@@ -32,8 +32,8 @@
   padding: var(--space-2) var(--space-6);
   border: none;
   border-radius: var(--radius-full);
-  background: var(--color-surface-container, var(--color-neutral-200));
-  color: var(--color-neutral-700);
+  background: var(--color-surface-lowest);
+  color: var(--color-on-surface);
   font-size: var(--font-size-base);
   font-weight: var(--font-weight-medium);
   cursor: pointer;
@@ -41,5 +41,5 @@
 }
 
 .button:hover {
-  background: var(--color-surface-container-high, var(--color-neutral-300));
+  background: var(--color-surface-high);
 }

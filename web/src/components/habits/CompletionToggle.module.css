@@ -8,24 +8,24 @@
   justify-content: center;
   transition: all var(--transition-fast);
   flex-shrink: 0;
-  background: var(--color-surface-container-highest, var(--color-neutral-200));
-  color: var(--color-outline-variant, var(--color-neutral-400));
+  background: var(--color-surface-highest);
+  color: var(--color-outline-muted);
 }
 
 .toggle:hover {
-  background: rgba(0, 108, 73, 0.15);
-  color: var(--color-primary, var(--color-primary-600));
+  background: var(--color-accent-surface);
+  color: var(--color-accent);
 }
 
 .completed {
-  background: linear-gradient(135deg, var(--color-primary, #006c49), var(--color-primary-container, #10b981));
+  background: linear-gradient(135deg, var(--color-accent), var(--color-accent-light));
   color: white;
   box-shadow: var(--shadow-md);
 }
 
 .completed:hover {
   opacity: 0.9;
-  background: linear-gradient(135deg, var(--color-primary, #006c49), var(--color-primary-container, #10b981));
+  background: linear-gradient(135deg, var(--color-accent), var(--color-accent-light));
   color: white;
 }
 

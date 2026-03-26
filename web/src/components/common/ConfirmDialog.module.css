@@ -10,7 +10,7 @@
 }
 
 .dialog {
-  background: var(--color-surface);
+  background: var(--color-surface-lowest);
   border-radius: var(--radius-card-sm, var(--radius-lg));
   padding: var(--space-6);
   width: 100%;
@@ -25,7 +25,7 @@
 }
 
 .message {
-  color: var(--color-neutral-600);
+  color: var(--color-on-surface-muted);
   font-size: var(--font-size-sm);
   margin-bottom: var(--space-6);
 }
@@ -40,13 +40,13 @@
   padding: var(--space-2) var(--space-4);
   border: none;
   border-radius: var(--radius-lg);
-  color: var(--color-neutral-700);
-  background: var(--color-surface-container, var(--color-neutral-200));
+  color: var(--color-on-surface);
+  background: var(--color-surface-lowest);
 }
 
 .confirmBtn {
   padding: var(--space-2) var(--space-4);
-  background: var(--color-error);
+  background: var(--color-danger);
   color: white;
   border-radius: var(--radius-full);
   font-weight: var(--font-weight-medium);

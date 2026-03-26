@@ -18,13 +18,13 @@
   font-weight: var(--font-weight-semibold);
   text-transform: uppercase;
   letter-spacing: 0.2em;
-  color: var(--color-on-surface-variant, var(--color-neutral-500));
+  color: var(--color-on-surface-muted);
 }
 
 .sinceLabel {
   display: block;
   font-size: var(--font-size-sm);
-  color: var(--color-on-surface-variant, var(--color-neutral-500));
+  color: var(--color-on-surface-muted);
   font-weight: var(--font-weight-medium);
   margin-top: var(--space-1);
 }
@@ -32,7 +32,7 @@
 .pageTitle {
   font-size: var(--font-size-3xl);
   font-weight: 800;
-  color: var(--color-on-surface, var(--color-neutral-900));
+  color: var(--color-on-surface);
   letter-spacing: -0.02em;
   margin-top: var(--space-1);
 }
@@ -40,7 +40,7 @@
 .rangePicker {
   display: flex;
   padding: var(--space-1);
-  background: var(--color-surface-container, #e8f0e9);
+  background: var(--color-surface-lowest);
   border-radius: var(--radius-full);
   width: fit-content;
 }
@@ -49,18 +49,18 @@
   padding: var(--space-2) var(--space-4);
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-bold);
-  color: var(--color-on-surface-variant, var(--color-neutral-500));
+  color: var(--color-on-surface-muted);
   border-radius: var(--radius-full);
   transition: all var(--transition-fast);
 }
 
 .rangeBtn:hover {
-  color: var(--color-primary, var(--color-primary-600));
+  color: var(--color-accent);
 }
 
 .rangeBtnActive {
-  background: var(--color-surface-container-lowest, #ffffff);
-  color: var(--color-primary, var(--color-primary-600));
+  background: var(--color-surface-lowest);
+  color: var(--color-accent);
   box-shadow: var(--shadow-sm);
 }
 
@@ -88,7 +88,7 @@
 .sectionTitle {
   font-size: var(--font-size-2xl);
   font-weight: var(--font-weight-bold);
-  color: var(--color-on-surface, var(--color-neutral-900));
+  color: var(--color-on-surface);
 }
 
 .breakdownList {
@@ -98,7 +98,7 @@
 }
 
 .status {
-  color: var(--color-on-surface-variant, var(--color-neutral-500));
+  color: var(--color-on-surface-muted);
   text-align: center;
   padding: var(--space-8);
 }

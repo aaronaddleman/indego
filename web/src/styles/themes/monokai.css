@@ -1,0 +1,49 @@
+/* ─── Monokai ─────────────────────────────────────────────────────────── */
+
+[data-theme="monokai"] {
+  --color-bg: #272822;
+  --color-surface-lowest: #3e3d32;
+  --color-surface-low: #383830;
+  --color-surface: #49483e;
+  --color-surface-high: #75715e;
+  --color-surface-highest: #75715e;
+
+  --color-on-surface: #f8f8f2;
+  --color-on-surface-muted: #a6a28c;
+  --color-outline: #75715e;
+  --color-outline-muted: #49483e;
+
+  --color-accent: #a6e22e;
+  --color-accent-light: #c4f042;
+  --color-accent-surface: #2a3a12;
+  --color-accent-on: #ffffff;
+
+  --color-energy: #e6db74;
+  --color-energy-light: #f0e88e;
+  --color-energy-surface: rgba(230, 219, 116, 0.12);
+
+  --color-success: #a6e22e;
+  --color-success-surface: #2a3a12;
+
+  --color-danger: #f92672;
+  --color-danger-surface: #3b1a2a;
+
+  --color-warning: #e6db74;
+
+  --color-secondary: #ae81ff;
+  --color-secondary-surface: rgba(174, 129, 255, 0.1);
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.5);
+
+  --color-nav-bg: rgba(39, 40, 34, 0.85);
+
+  --color-heat-0: #49483e;
+  --color-heat-1: rgba(166, 226, 46, 0.2);
+  --color-heat-2: rgba(166, 226, 46, 0.4);
+  --color-heat-3: rgba(166, 226, 46, 0.6);
+  --color-heat-4: #a6e22e;
+
+  --color-focus-ring: rgba(166, 226, 46, 0.2);
+}

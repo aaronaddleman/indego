@@ -1,0 +1,49 @@
+/* ─── Dracula ─────────────────────────────────────────────────────────── */
+
+[data-theme="dracula"] {
+  --color-bg: #282a36;
+  --color-surface-lowest: #44475a;
+  --color-surface-low: #3a3c4e;
+  --color-surface: #4e5168;
+  --color-surface-high: #6272a4;
+  --color-surface-highest: #6272a4;
+
+  --color-on-surface: #f8f8f2;
+  --color-on-surface-muted: #bd93f9;
+  --color-outline: #6272a4;
+  --color-outline-muted: #4e5168;
+
+  --color-accent: #bd93f9;
+  --color-accent-light: #caa8fb;
+  --color-accent-surface: #3b2d5e;
+  --color-accent-on: #ffffff;
+
+  --color-energy: #ffb86c;
+  --color-energy-light: #ffcc95;
+  --color-energy-surface: rgba(255, 184, 108, 0.15);
+
+  --color-success: #50fa7b;
+  --color-success-surface: #1a3a2a;
+
+  --color-danger: #ff5555;
+  --color-danger-surface: #4a1a1a;
+
+  --color-warning: #f1fa8c;
+
+  --color-secondary: #8be9fd;
+  --color-secondary-surface: rgba(139, 233, 253, 0.1);
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.5);
+
+  --color-nav-bg: rgba(40, 42, 54, 0.85);
+
+  --color-heat-0: #4e5168;
+  --color-heat-1: rgba(189, 147, 249, 0.2);
+  --color-heat-2: rgba(189, 147, 249, 0.4);
+  --color-heat-3: rgba(189, 147, 249, 0.6);
+  --color-heat-4: #bd93f9;
+
+  --color-focus-ring: rgba(189, 147, 249, 0.2);
+}

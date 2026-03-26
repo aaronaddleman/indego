@@ -1,0 +1,61 @@
+/* ─── Light (Default — Emerald Green) ─────────────────────────────────── */
+
+:root {
+  /* Surfaces */
+  --color-bg: #f4fbf4;
+  --color-surface-lowest: #ffffff;
+  --color-surface-low: #eef6ee;
+  --color-surface: #e8f0e9;
+  --color-surface-high: #e3eae3;
+  --color-surface-highest: #dde4dd;
+
+  /* Content */
+  --color-on-surface: #161d19;
+  --color-on-surface-muted: #3c4a42;
+  --color-outline: #6c7a71;
+  --color-outline-muted: #bbcabf;
+
+  /* Accent (primary actions) */
+  --color-accent: #006c49;
+  --color-accent-light: #10b981;
+  --color-accent-surface: #eef6ee;
+  --color-accent-on: #ffffff;
+
+  /* Energy (streaks, fire) */
+  --color-energy: #855300;
+  --color-energy-light: #e29100;
+  --color-energy-surface: rgba(226, 145, 0, 0.1);
+
+  /* Success */
+  --color-success: #4edea3;
+  --color-success-surface: #d1fae5;
+
+  /* Danger */
+  --color-danger: #ba1a1a;
+  --color-danger-surface: #ffdad6;
+
+  /* Warning */
+  --color-warning: #e29100;
+
+  /* Secondary */
+  --color-secondary: #0058be;
+  --color-secondary-surface: rgba(0, 88, 190, 0.1);
+
+  /* Shadows — ambient, tinted green */
+  --shadow-sm: 0 2px 8px rgba(0, 108, 73, 0.04);
+  --shadow-md: 0 4px 16px rgba(0, 108, 73, 0.06);
+  --shadow-lg: 0 8px 24px rgba(0, 108, 73, 0.08);
+
+  /* Glassmorphism nav */
+  --color-nav-bg: rgba(244, 251, 244, 0.8);
+
+  /* Heatmap intensity levels */
+  --color-heat-0: #dde4dd;
+  --color-heat-1: rgba(0, 108, 73, 0.2);
+  --color-heat-2: rgba(0, 108, 73, 0.4);
+  --color-heat-3: rgba(0, 108, 73, 0.6);
+  --color-heat-4: #006c49;
+
+  /* Focus ring */
+  --color-focus-ring: rgba(187, 202, 191, 0.2);
+}
