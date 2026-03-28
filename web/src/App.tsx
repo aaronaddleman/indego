@@ -6,6 +6,7 @@ import { AuthProvider } from './auth/AuthProvider';
 import { useAuth } from './auth/useAuth';
 import { AuthGuard } from './auth/AuthGuard';
 import { AdminGuard } from './auth/AdminGuard';
+import { useReminderScheduler } from './hooks/useReminderScheduler';
 import './styles/global.css';
 
 const LoginPage = lazy(() => import('./pages/LoginPage'));
@@ -16,6 +17,11 @@ const StreaksPage = lazy(() => import('./pages/StreaksPage'));
 const StreakDetailPage = lazy(() => import('./pages/StreakDetailPage'));
 const SettingsPage = lazy(() => import('./pages/SettingsPage'));
 const AdminPage = lazy(() => import('./pages/AdminPage'));
+
+function ReminderScheduler() {
+  useReminderScheduler();
+  return null;
+}
 
 function LoginRoute() {
   const { user, loading } = useAuth();
@@ -29,6 +35,7 @@ export default function App() {
     <ApolloProvider client={client}>
       <AuthProvider>
         <BrowserRouter>
+          <ReminderScheduler />
           <Suspense fallback={<div style={{ textAlign: 'center', padding: '2rem' }}>Loading...</div>}>
             <Routes>
               <Route path="/login" element={<LoginRoute />} />

@@ -1,0 +1,21 @@
+.warning {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-energy-surface);
+  border-radius: var(--radius-lg);
+  margin-top: var(--space-2);
+}
+
+.icon {
+  font-size: 20px;
+  color: var(--color-energy);
+  flex-shrink: 0;
+}
+
+.text {
+  font-size: var(--font-size-xs);
+  color: var(--color-on-surface-muted);
+  line-height: 1.4;
+}

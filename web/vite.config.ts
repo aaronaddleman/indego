@@ -10,14 +10,14 @@ export default defineConfig({
   plugins: [
     react(),
     VitePWA({
-      registerType: 'prompt',
+      registerType: 'autoUpdate',
       includeAssets: ['favicon.ico', 'apple-touch-icon.png'],
       manifest: {
         name: 'Indago',
         short_name: 'Indago',
         description: 'Track your habits',
-        theme_color: '#4f46e5',
-        background_color: '#ffffff',
+        theme_color: '#006c49',
+        background_color: '#f4fbf4',
         display: 'standalone',
         start_url: '/',
         icons: [
@@ -28,6 +28,8 @@ export default defineConfig({
       },
       workbox: {
         globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}'],
+        // Import our custom notification handler into the generated SW
+        importScripts: ['/sw-notifications.js'],
         runtimeCaching: [
           {
             urlPattern: /^https:\/\/us-central1-indego-bc76b\.cloudfunctions\.net\//,
