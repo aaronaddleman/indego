@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { useQuery } from '@apollo/client';
 import { GET_HABITS } from '../graphql/queries';
 import { getLocalDate } from '../utils/date';
@@ -38,7 +38,7 @@ function postToServiceWorker(message: unknown) {
 
 export function useReminderScheduler() {
   const { data } = useQuery(GET_HABITS);
-  const habits: Habit[] = data?.habits ?? [];
+  const habits = useMemo<Habit[]>(() => data?.habits ?? [], [data?.habits]);
   const lastScheduleRef = useRef<string>('');
 
   useEffect(() => {
