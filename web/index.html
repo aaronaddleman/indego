@@ -13,6 +13,26 @@
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
     <script>
       (function() {
+        // One-time SW migration: clear old Workbox-generated SW and caches
+        if (!localStorage.getItem('sw-migrated') && 'serviceWorker' in navigator) {
+          navigator.serviceWorker.getRegistrations().then(function(regs) {
+            var hadOldSW = regs.length > 0;
+            Promise.all(regs.map(function(r) { return r.unregister(); })).then(function() {
+              if ('caches' in window) {
+                caches.keys().then(function(names) {
+                  return Promise.all(names.map(function(n) { return caches.delete(n); }));
+                }).then(function() {
+                  localStorage.setItem('sw-migrated', '1');
+                  if (hadOldSW) location.reload();
+                });
+              } else {
+                localStorage.setItem('sw-migrated', '1');
+                if (hadOldSW) location.reload();
+              }
+            });
+          });
+        }
+
         var t = localStorage.getItem('theme') || 'system';
         var resolved = t;
         if (t === 'system') {
