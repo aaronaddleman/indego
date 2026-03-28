@@ -1,8 +1,16 @@
 /// <reference lib="webworker" />
 
-import { precacheAndRoute } from 'workbox-precaching';
+import { clientsClaim } from 'workbox-core';
+import { precacheAndRoute, cleanupOutdatedCaches } from 'workbox-precaching';
 
 declare const self: ServiceWorkerGlobalScope;
+
+// Take over from old SW immediately — no waiting for tabs to close
+self.skipWaiting();
+clientsClaim();
+
+// Clean up caches from the previous Workbox-generated SW
+cleanupOutdatedCaches();
 
 // Workbox precaching — auto-injected by vite-plugin-pwa
 precacheAndRoute(self.__WB_MANIFEST);
