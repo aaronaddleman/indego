@@ -32,7 +32,9 @@ export default function LoginPage() {
 
   const handleGoogle = async () => {
     try {
-      const result = await signInWithPopup(auth, new GoogleAuthProvider());
+      const provider = new GoogleAuthProvider();
+      provider.setCustomParameters({ prompt: 'select_account' });
+      const result = await signInWithPopup(auth, provider);
       const userEmail = result.user.email || '';
 
       // Check allowlist before upsertUser
