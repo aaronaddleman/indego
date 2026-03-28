@@ -169,6 +169,10 @@ export default function HabitForm({ habit, onClose, inline }: Props) {
             Enable reminder
           </label>
 
+          {typeof Notification === 'undefined' && reminderEnabled && (
+            <PermissionWarning message="Add Indago to your homescreen to enable reminders on this device." />
+          )}
+
           {notifDenied && (
             <PermissionWarning message="Notifications are blocked. Enable them in your browser settings to receive reminders." />
           )}
