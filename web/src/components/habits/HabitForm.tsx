@@ -4,6 +4,7 @@ import { useMutation } from '@apollo/client';
 import { CREATE_HABIT, UPDATE_HABIT, DELETE_HABIT } from '../../graphql/mutations';
 import { GET_HABITS } from '../../graphql/queries';
 import ConfirmDialog from '../common/ConfirmDialog';
+import PermissionWarning from '../common/PermissionWarning';
 import { getDayName } from '../../utils/frequency';
 import styles from './HabitForm.module.css';
 
@@ -48,6 +49,9 @@ export default function HabitForm({ habit, onClose, inline }: Props) {
   );
   const [error, setError] = useState('');
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [notifDenied, setNotifDenied] = useState(
+    typeof Notification !== 'undefined' && Notification.permission === 'denied'
+  );
 
   const [createHabit, { loading: creating }] = useMutation(CREATE_HABIT, {
     refetchQueries: [{ query: GET_HABITS }],
@@ -146,10 +150,28 @@ export default function HabitForm({ habit, onClose, inline }: Props) {
             <input
               type="checkbox"
               checked={reminderEnabled}
-              onChange={(e) => setReminderEnabled(e.target.checked)}
+              onChange={async (e) => {
+                if (e.target.checked && typeof Notification !== 'undefined') {
+                  if (Notification.permission === 'default') {
+                    const result = await Notification.requestPermission();
+                    if (result === 'denied') {
+                      setNotifDenied(true);
+                      return;
+                    }
+                  } else if (Notification.permission === 'denied') {
+                    setNotifDenied(true);
+                    return;
+                  }
+                }
+                setReminderEnabled(e.target.checked);
+              }}
             />
             Enable reminder
           </label>
+
+          {notifDenied && (
+            <PermissionWarning message="Notifications are blocked. Enable them in your browser settings to receive reminders." />
+          )}
 
           {reminderEnabled && (
             <label className={styles.label}>
