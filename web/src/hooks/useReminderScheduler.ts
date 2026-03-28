@@ -42,7 +42,7 @@ export function useReminderScheduler() {
   const lastScheduleRef = useRef<string>('');
 
   useEffect(() => {
-    if (Notification.permission !== 'granted') return;
+    if (typeof Notification === 'undefined' || Notification.permission !== 'granted') return;
     if (habits.length === 0) return;
 
     const today = getLocalDate();
