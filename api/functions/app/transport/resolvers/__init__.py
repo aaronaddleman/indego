@@ -41,6 +41,22 @@ from app.transport.resolvers.admin import (
     resolve_remove_allowed_email,
     resolve_set_admin_status,
 )
+from app.transport.resolvers.task import (
+    resolve_tasks,
+    resolve_task,
+    resolve_create_task,
+    resolve_update_task,
+    resolve_delete_task,
+    resolve_complete_task,
+    resolve_uncomplete_task,
+    resolve_reorder_task,
+)
+from app.transport.resolvers.list import (
+    resolve_task_lists,
+    resolve_create_task_list,
+    resolve_update_task_list,
+    resolve_delete_task_list,
+)
 
 from app.services.frequency_service import compute_due_days
 
@@ -55,6 +71,9 @@ query.set_field("me", resolve_me)
 query.set_field("habits", resolve_habits)
 query.set_field("habit", resolve_habit)
 query.set_field("stats", resolve_stats)
+query.set_field("tasks", resolve_tasks)
+query.set_field("task", resolve_task)
+query.set_field("taskLists", resolve_task_lists)
 query.set_field("allowedEmails", resolve_allowed_emails)
 
 # Mutations
@@ -64,6 +83,15 @@ mutation.set_field("updateHabit", resolve_update_habit)
 mutation.set_field("deleteHabit", resolve_delete_habit)
 mutation.set_field("logCompletion", resolve_log_completion)
 mutation.set_field("undoCompletion", resolve_undo_completion)
+mutation.set_field("createTask", resolve_create_task)
+mutation.set_field("updateTask", resolve_update_task)
+mutation.set_field("deleteTask", resolve_delete_task)
+mutation.set_field("completeTask", resolve_complete_task)
+mutation.set_field("uncompleteTask", resolve_uncomplete_task)
+mutation.set_field("reorderTask", resolve_reorder_task)
+mutation.set_field("createTaskList", resolve_create_task_list)
+mutation.set_field("updateTaskList", resolve_update_task_list)
+mutation.set_field("deleteTaskList", resolve_delete_task_list)
 mutation.set_field("addAllowedEmail", resolve_add_allowed_email)
 mutation.set_field("removeAllowedEmail", resolve_remove_allowed_email)
 mutation.set_field("setAdminStatus", resolve_set_admin_status)

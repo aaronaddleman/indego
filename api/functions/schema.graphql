@@ -11,6 +11,20 @@ enum FrequencyType {
   CUSTOM
 }
 
+enum TaskPriority {
+  P1
+  P2
+  P3
+  P4
+}
+
+enum SortPreference {
+  MANUAL
+  DUE_DATE
+  PRIORITY
+  CREATED_AT
+}
+
 # ─── Input Types ───
 
 input FrequencyInput {
@@ -35,6 +49,24 @@ input UpdateHabitInput {
   name: String
   frequency: FrequencyInput
   reminder: ReminderInput
+}
+
+input CreateTaskInput {
+  title: String!
+  description: String
+  listId: ID
+  parentId: ID
+  priority: TaskPriority
+  dueDate: Date
+}
+
+input UpdateTaskInput {
+  title: String
+  description: String
+  listId: ID
+  parentId: ID
+  priority: TaskPriority
+  dueDate: Date
 }
 
 input DateRangeInput {
@@ -80,6 +112,30 @@ type Habit {
   updatedAt: DateTime!
 }
 
+type Task {
+  id: ID!
+  title: String!
+  description: String
+  listId: ID!
+  parentId: ID
+  priority: TaskPriority!
+  dueDate: Date
+  completed: Boolean!
+  completedAt: DateTime
+  sortOrder: Float!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type TaskList {
+  id: ID!
+  name: String!
+  isInbox: Boolean!
+  sortPreference: SortPreference!
+  taskCount: Int!
+  createdAt: DateTime!
+}
+
 type HabitStats {
   habitId: ID!
   habitName: String!
@@ -122,6 +178,15 @@ type Query {
   """Get stats for the authenticated user"""
   stats(dateRange: DateRangeInput!): UserStats!
 
+  """Get all tasks, optionally filtered by list and completion status"""
+  tasks(listId: ID, completed: Boolean): [Task!]!
+
+  """Get a single task by ID"""
+  task(id: ID!): Task
+
+  """Get all lists for the authenticated user"""
+  taskLists: [TaskList!]!
+
   """List all allowed emails (admin only)"""
   allowedEmails: [AllowedEmail!]!
 }
@@ -146,6 +211,33 @@ type Mutation {
 
   """Remove a completion for a habit on a given date (removes map key)"""
   undoCompletion(habitId: ID!, date: Date!): Habit!
+
+  """Create a new task"""
+  createTask(input: CreateTaskInput!): Task!
+
+  """Update an existing task"""
+  updateTask(id: ID!, input: UpdateTaskInput!): Task!
+
+  """Delete a task and all its subtasks"""
+  deleteTask(id: ID!): Boolean!
+
+  """Complete a task and all its subtasks. Returns all affected tasks."""
+  completeTask(id: ID!): [Task!]!
+
+  """Uncomplete a single task (does not affect subtasks)"""
+  uncompleteTask(id: ID!): Task!
+
+  """Reorder a task within its list"""
+  reorderTask(id: ID!, sortOrder: Float!): Task!
+
+  """Create a new list"""
+  createTaskList(name: String!): TaskList!
+
+  """Update a list's name or sort preference"""
+  updateTaskList(id: ID!, name: String, sortPreference: SortPreference): TaskList!
+
+  """Delete a list — orphaned tasks move to Inbox"""
+  deleteTaskList(id: ID!): Boolean!
 
   """Add an email to the allowlist (admin only)"""
   addAllowedEmail(email: String!): AllowedEmail!

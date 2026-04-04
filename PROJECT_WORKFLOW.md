@@ -293,3 +293,7 @@ Both gates use the **same approval process**:
 | Frequency Redesign — Gate 2 (Documentation → Implementation) | 2026-03-19 | Project Lead | Approved | Technical Spec, Deployment Plan, Changelog complete. 11 files. Schema additive, no forced migration. |
 | Kinetic Sanctuary Redesign — Gate 1 (Iteration → Documentation) | 2026-03-22 | Project Lead | Approved | Full UI redesign. 5 phases: A (foundation), B (today), C (history), D (streaks), E (settings). Green palette, Plus Jakarta Sans, bottom nav, tonal layering. |
 | Kinetic Sanctuary Redesign — Gate 2 (Documentation → Implementation) | 2026-03-22 | Project Lead | Approved | Technical Spec, Deployment Plan, Changelog complete. Phase A ready for implementation. |
+| Reminders v1 — Gate 1 (Iteration → Documentation) | 2026-03-28 | Project Lead | Approved | Client-side only via Service Worker. No server cost. Re-schedule on app load. Permission on first toggle. |
+| Reminders v1 — Gate 2 (Documentation → Implementation) | 2026-03-28 | Project Lead | Approved | Technical Spec complete. SW notifications via importScripts, useReminderScheduler hook, PermissionWarning. |
+| Tasks & Lists — Gate 1 (Iteration → Documentation) | 2026-03-28 | Project Lead | Approved | ARD and PRD approved. Flat parentId model, GQL-friendly schema, P1-P4 priority, Inbox + custom lists, markdown descriptions. |
+| Tasks & Lists — Gate 2 (Documentation → Implementation) | 2026-03-28 | Project Lead | Approved | Technical Spec, Deployment Plan, Changelog complete. 4 phases: API, nav restructure, task views, subtasks. |
