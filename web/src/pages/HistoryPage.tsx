@@ -4,6 +4,7 @@ import { format, subDays, subMonths, differenceInDays, parseISO } from 'date-fns
 import { GET_HABITS, GET_STATS } from '../graphql/queries';
 import { getLocalDate } from '../utils/date';
 import PageShell from '../components/layout/PageShell';
+import HabitSubNav from '../components/layout/HabitSubNav';
 import MomentumHeatmap from '../components/history/MomentumHeatmap';
 import StatCard from '../components/history/StatCard';
 import HabitBreakdownCard from '../components/history/HabitBreakdownCard';
@@ -63,7 +64,7 @@ export default function HistoryPage() {
   }, [stats]);
 
   return (
-    <PageShell title="History">
+    <PageShell title="History" subNav={<HabitSubNav />}>
       <div className={styles.headerSection}>
         <div>
           <span className={styles.eyebrow}>Performance</span>

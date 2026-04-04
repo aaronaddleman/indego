@@ -63,7 +63,7 @@ self.addEventListener('notificationclick', function (event) {
   event.notification.close();
 
   var habitId = event.notification.data && event.notification.data.habitId;
-  var url = habitId ? '/streaks/' + habitId : '/';
+  var url = habitId ? '/habits/streaks/' + habitId : '/habits';
 
   event.waitUntil(
     self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then(function (clients) {

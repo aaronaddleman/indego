@@ -8,6 +8,7 @@ import HabitForm from '../components/habits/HabitForm';
 import ProgressRing from '../components/dashboard/ProgressRing';
 import StreakBanner from '../components/dashboard/StreakBanner';
 import PageShell from '../components/layout/PageShell';
+import HabitSubNav from '../components/layout/HabitSubNav';
 import EmptyState from '../components/common/EmptyState';
 import styles from './DashboardPage.module.css';
 
@@ -72,7 +73,7 @@ export default function DashboardPage() {
   const streakInfo = useBestStreak(habits);
 
   return (
-    <PageShell title="Today">
+    <PageShell title="Today" subNav={<HabitSubNav />}>
       <header className={styles.dateHeader}>
         <h1 className={styles.dateTitle}>{format(new Date(), 'MMM d, yyyy')}</h1>
       </header>

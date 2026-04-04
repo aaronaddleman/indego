@@ -3,6 +3,7 @@ import { useQuery } from '@apollo/client';
 import { GET_HABITS } from '../graphql/queries';
 import { useStreak } from '../hooks/useStreak';
 import PageShell from '../components/layout/PageShell';
+import HabitSubNav from '../components/layout/HabitSubNav';
 import styles from './StreaksPage.module.css';
 
 interface Completion {
@@ -24,7 +25,7 @@ function HabitStreakRow({ habit }: { habit: Habit }) {
   const best = Math.max(streaks.longest, habit.longestStreak ?? 0);
 
   return (
-    <button className={styles.card} onClick={() => navigate(`/streaks/${habit.id}`)}>
+    <button className={styles.card} onClick={() => navigate(`/habits/streaks/${habit.id}`)}>
       <div className={styles.info}>
         <h3 className={styles.habitName}>{habit.name}</h3>
         {streaks.current > 0 && (
@@ -54,7 +55,7 @@ export default function StreaksPage() {
   const habits: Habit[] = data?.habits ?? [];
 
   return (
-    <PageShell title="Streaks">
+    <PageShell title="Streaks" subNav={<HabitSubNav />}>
       <div className={styles.headerSection}>
         <span className={styles.eyebrow}>Consistency</span>
         <h1 className={styles.pageTitle}>Streaks</h1>
