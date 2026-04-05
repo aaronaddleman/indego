@@ -6,6 +6,8 @@ import { GET_VERSION, GET_ME } from '../graphql/queries';
 import PageShell from '../components/layout/PageShell';
 import { useTheme, type ThemeOption } from '../hooks/useTheme';
 import { useIsAdmin } from '../hooks/useIsAdmin';
+import { useCanManageApiKeys } from '../hooks/useCanManageApiKeys';
+import ApiKeysSection from '../components/settings/ApiKeysSection';
 import styles from './SettingsPage.module.css';
 
 const THEME_OPTIONS: { value: ThemeOption; label: string }[] = [
@@ -24,6 +26,7 @@ export default function SettingsPage() {
   const { data: versionData } = useQuery(GET_VERSION);
   const { theme, setTheme } = useTheme();
   const isAdmin = useIsAdmin();
+  const canManageApiKeys = useCanManageApiKeys();
   const [tokenCopied, setTokenCopied] = useState(false);
 
   const handleCopyToken = async () => {
@@ -95,6 +98,9 @@ export default function SettingsPage() {
           </div>
         </div>
       </section>
+
+      {/* API Keys (permission-gated) */}
+      {canManageApiKeys && <ApiKeysSection />}
 
       {/* Integrations (placeholders) */}
       <section className={styles.section}>

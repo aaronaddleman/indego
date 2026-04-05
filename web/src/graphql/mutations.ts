@@ -79,6 +79,32 @@ export const SET_ADMIN_STATUS = gql`
   }
 `;
 
+// ─── API Keys ────────────────────────────────────────────────────────────
+
+export const CREATE_API_KEY = gql`
+  mutation CreateApiKey($input: CreateApiKeyInput!) {
+    createApiKey(input: $input) {
+      key
+      apiKey {
+        id
+        name
+        keyPrefix
+        expiresAt
+        createdAt
+      }
+    }
+  }
+`;
+
+export const REVOKE_API_KEY = gql`
+  mutation RevokeApiKey($id: ID!) {
+    revokeApiKey(id: $id) {
+      id
+      revokedAt
+    }
+  }
+`;
+
 // ─── Tasks ────────────────────────────────────────────────────────────────
 
 const TASK_FIELDS = gql`

@@ -99,11 +99,25 @@ export const GET_TASK_LISTS = gql`
   }
 `;
 
+export const GET_API_KEYS = gql`
+  query GetApiKeys {
+    apiKeys {
+      id
+      name
+      keyPrefix
+      expiresAt
+      revokedAt
+      createdAt
+    }
+  }
+`;
+
 export const GET_ALLOWED_EMAILS = gql`
   query GetAllowedEmails {
     allowedEmails {
       email
       isAdmin
+      canManageApiKeys
     }
   }
 `;
