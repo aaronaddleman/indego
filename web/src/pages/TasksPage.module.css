@@ -44,6 +44,34 @@
   }
 }
 
+.addRow {
+  display: flex;
+  gap: var(--space-2);
+  align-items: stretch;
+  margin-bottom: var(--space-4);
+}
+
+.addRow > *:first-child {
+  flex: 1;
+  margin-bottom: 0;
+}
+
+.fullFormBtn {
+  padding: var(--space-3);
+  border-radius: var(--radius-card-sm);
+  background: var(--color-surface-lowest);
+  color: var(--color-on-surface-muted);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color var(--transition-fast);
+}
+
+.fullFormBtn:hover {
+  color: var(--color-accent);
+}
+
 .taskList {
   display: flex;
   flex-direction: column;

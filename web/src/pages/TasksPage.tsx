@@ -4,6 +4,7 @@ import { GET_TASKS, GET_TASK_LISTS } from '../graphql/queries';
 import PageShell from '../components/layout/PageShell';
 import ListSelector from '../components/tasks/ListSelector';
 import TaskCard from '../components/tasks/TaskCard';
+import TaskForm from '../components/tasks/TaskForm';
 import QuickAdd from '../components/tasks/QuickAdd';
 import styles from './TasksPage.module.css';
 
@@ -71,6 +72,7 @@ export default function TasksPage() {
   const activeListId = selectedListId ?? inboxId;
 
   const [showCompleted, setShowCompleted] = useState(false);
+  const [showForm, setShowForm] = useState(false);
 
   const { data: tasksData, loading } = useQuery(GET_TASKS, {
     variables: activeListId ? { listId: activeListId } : {},
@@ -100,7 +102,12 @@ export default function TasksPage() {
         <div className={styles.content}>
           {activeListId && (
             <>
-              <QuickAdd listId={activeListId} />
+              <div className={styles.addRow}>
+                <QuickAdd listId={activeListId} />
+                <button className={styles.fullFormBtn} onClick={() => setShowForm(true)} aria-label="New task with details">
+                  <span className="material-symbols-outlined">tune</span>
+                </button>
+              </div>
 
               {loading && <p className={styles.status}>Loading tasks...</p>}
 
@@ -131,6 +138,10 @@ export default function TasksPage() {
           )}
         </div>
       </div>
+
+      {showForm && activeListId && (
+        <TaskForm listId={activeListId} onClose={() => setShowForm(false)} />
+      )}
     </PageShell>
   );
 }
