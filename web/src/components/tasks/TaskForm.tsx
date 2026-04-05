@@ -68,7 +68,8 @@ export default function TaskForm({ task, listId, parentId, onClose }: Props) {
       }
       onClose();
     } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : 'Something went wrong');
+      const gqlErr = (err as { graphQLErrors?: { message: string }[] })?.graphQLErrors?.[0];
+      setError(gqlErr?.message ?? (err instanceof Error ? err.message : 'Something went wrong'));
     }
   };
 

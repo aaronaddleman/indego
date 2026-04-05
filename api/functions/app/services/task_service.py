@@ -1,9 +1,20 @@
 """Business logic for Task operations."""
 
+from datetime import date
+
 from graphql import GraphQLError
 
 from app.repositories import task_repo
 from app.services.list_service import ensure_inbox
+
+
+def _serialize_date(value) -> str | None:
+    """Convert date objects to ISO string for Firestore storage."""
+    if value is None:
+        return None
+    if isinstance(value, date):
+        return value.isoformat()
+    return str(value)
 
 
 class ValidationError(GraphQLError):
@@ -47,7 +58,7 @@ def create_task(user_id: str, input_data: dict) -> dict:
         "listId": list_id,
         "parentId": input_data.get("parentId"),
         "priority": priority,
-        "dueDate": input_data.get("dueDate"),
+        "dueDate": _serialize_date(input_data.get("dueDate")),
     })
 
 
@@ -75,7 +86,7 @@ def update_task(user_id: str, task_id: str, input_data: dict) -> dict:
         update["priority"] = input_data["priority"]
 
     if "dueDate" in input_data:
-        update["dueDate"] = input_data["dueDate"]
+        update["dueDate"] = _serialize_date(input_data["dueDate"])
 
     if not update:
         raise ValidationError("No fields to update")
