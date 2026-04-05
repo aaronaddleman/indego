@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useMutation } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import { CREATE_TASK, UPDATE_TASK, DELETE_TASK } from '../../graphql/mutations';
+import { GET_TASK_LISTS } from '../../graphql/queries';
 import ConfirmDialog from '../common/ConfirmDialog';
 import styles from './TaskForm.module.css';
 
@@ -35,8 +36,12 @@ export default function TaskForm({ task, listId, parentId, onClose }: Props) {
   const [description, setDescription] = useState(task?.description ?? '');
   const [priority, setPriority] = useState(task?.priority ?? 'P4');
   const [dueDate, setDueDate] = useState(task?.dueDate ?? '');
+  const [selectedListId, setSelectedListId] = useState(task?.listId ?? listId ?? '');
   const [error, setError] = useState('');
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+
+  const { data: listsData } = useQuery(GET_TASK_LISTS);
+  const lists = listsData?.taskLists ?? [];
 
   const refetchQueries = ['GetTasks', 'GetTaskLists', 'GetTask'];
   const [createTask, { loading: creating }] = useMutation(CREATE_TASK, { refetchQueries });
@@ -58,11 +63,12 @@ export default function TaskForm({ task, listId, parentId, onClose }: Props) {
       dueDate: dueDate || null,
     };
 
+    if (selectedListId) input.listId = selectedListId;
+
     try {
       if (isEdit) {
         await updateTask({ variables: { id: task.id, input } });
       } else {
-        if (listId) input.listId = listId;
         if (parentId) input.parentId = parentId;
         await createTask({ variables: { input } });
       }
@@ -123,6 +129,21 @@ export default function TaskForm({ task, listId, parentId, onClose }: Props) {
               className={styles.input}
             />
           </label>
+
+          {lists.length > 0 && !parentId && (
+            <label className={styles.label}>
+              List
+              <select
+                value={selectedListId}
+                onChange={(e) => setSelectedListId(e.target.value)}
+                className={styles.input}
+              >
+                {lists.map((l: { id: string; name: string }) => (
+                  <option key={l.id} value={l.id}>{l.name}</option>
+                ))}
+              </select>
+            </label>
+          )}
 
           {error && <p className={styles.error}>{error}</p>}
 

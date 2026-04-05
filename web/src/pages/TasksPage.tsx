@@ -6,6 +6,7 @@ import ListSelector from '../components/tasks/ListSelector';
 import TaskCard from '../components/tasks/TaskCard';
 import TaskForm from '../components/tasks/TaskForm';
 import QuickAdd from '../components/tasks/QuickAdd';
+import SortControl from '../components/tasks/SortControl';
 import styles from './TasksPage.module.css';
 
 interface Task {
@@ -18,6 +19,7 @@ interface Task {
   dueDate?: string | null;
   completed: boolean;
   sortOrder: number;
+  createdAt?: string;
 }
 
 interface TaskNode extends Task {
@@ -46,6 +48,22 @@ function buildTree(tasks: Task[]): TaskNode[] {
     }));
   }
   return build(null);
+}
+
+function sortTasks(tasks: TaskNode[], pref: string): TaskNode[] {
+  const sorted = [...tasks];
+  switch (pref) {
+    case 'DUE_DATE':
+      return sorted.sort((a, b) => (a.dueDate ?? '9999') > (b.dueDate ?? '9999') ? 1 : -1);
+    case 'PRIORITY': {
+      const order: Record<string, number> = { P1: 1, P2: 2, P3: 3, P4: 4 };
+      return sorted.sort((a, b) => (order[a.priority] ?? 4) - (order[b.priority] ?? 4));
+    }
+    case 'CREATED_AT':
+      return sorted.sort((a, b) => (a.createdAt ?? '') > (b.createdAt ?? '') ? 1 : -1);
+    default: // MANUAL
+      return sorted.sort((a, b) => a.sortOrder - b.sortOrder);
+  }
 }
 
 function countSubtasks(allTasks: Task[], parentId: string): { total: number; completed: number } {
@@ -118,8 +136,11 @@ export default function TasksPage() {
   });
 
   const tasks: Task[] = tasksData?.tasks ?? [];
+  const activeList = lists.find(l => l.id === activeListId);
+  const sortPref = activeList?.sortPreference ?? 'MANUAL';
   const fullTree = useMemo(() => buildTree(tasks), [tasks]);
-  const tree = showCompleted ? fullTree : fullTree.filter(t => !t.completed);
+  const sortedTree = useMemo(() => sortTasks(fullTree, sortPref), [fullTree, sortPref]);
+  const tree = showCompleted ? sortedTree : sortedTree.filter(t => !t.completed);
   const completedCount = tasks.filter(t => t.completed && !t.parentId).length;
 
   return (
@@ -140,11 +161,14 @@ export default function TasksPage() {
         <div className={styles.content}>
           {activeListId && (
             <>
-              <div className={styles.addRow}>
-                <QuickAdd listId={activeListId} />
-                <button className={styles.fullFormBtn} onClick={() => setShowForm(true)} aria-label="New task with details">
-                  <span className="material-symbols-outlined">tune</span>
-                </button>
+              <div className={styles.toolbar}>
+                <div className={styles.addRow}>
+                  <QuickAdd listId={activeListId} />
+                  <button className={styles.fullFormBtn} onClick={() => setShowForm(true)} aria-label="New task with details">
+                    <span className="material-symbols-outlined">tune</span>
+                  </button>
+                </div>
+                <SortControl listId={activeListId} current={sortPref} />
               </div>
 
               {loading && <p className={styles.status}>Loading tasks...</p>}
