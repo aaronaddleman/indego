@@ -118,9 +118,9 @@ export default function TasksPage() {
   });
 
   const tasks: Task[] = tasksData?.tasks ?? [];
-  const filtered = showCompleted ? tasks : tasks.filter(t => !t.completed);
-  const tree = useMemo(() => buildTree(filtered), [filtered]);
-  const completedCount = tasks.filter(t => t.completed).length;
+  const fullTree = useMemo(() => buildTree(tasks), [tasks]);
+  const tree = showCompleted ? fullTree : fullTree.filter(t => !t.completed);
+  const completedCount = tasks.filter(t => t.completed && !t.parentId).length;
 
   return (
     <PageShell title="Tasks">
