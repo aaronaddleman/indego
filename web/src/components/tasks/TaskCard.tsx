@@ -16,9 +16,10 @@ interface Task {
 interface Props {
   task: Task;
   depth?: number;
+  subtaskCount?: number;
 }
 
-export default function TaskCard({ task, depth = 0 }: Props) {
+export default function TaskCard({ task, depth = 0, subtaskCount = 0 }: Props) {
   const navigate = useNavigate();
   const [completeTask] = useMutation(COMPLETE_TASK, { refetchQueries: ['GetTasks', 'GetTaskLists'] });
   const [uncompleteTask] = useMutation(UNCOMPLETE_TASK, { refetchQueries: ['GetTasks', 'GetTaskLists'] });
@@ -55,6 +56,12 @@ export default function TaskCard({ task, depth = 0 }: Props) {
         </span>
         <div className={styles.meta}>
           <PriorityBadge priority={task.priority} />
+          {subtaskCount > 0 && (
+            <span className={styles.subtaskCount}>
+              <span className="material-symbols-outlined" style={{ fontSize: 14 }}>account_tree</span>
+              {subtaskCount}
+            </span>
+          )}
           {task.dueDate && (
             <span className={styles.dueDate}>{task.dueDate}</span>
           )}

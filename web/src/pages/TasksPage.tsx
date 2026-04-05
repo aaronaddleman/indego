@@ -48,12 +48,20 @@ function buildTree(tasks: Task[]): TaskNode[] {
   return build(null);
 }
 
+function countDescendants(node: TaskNode): number {
+  let count = node.children.length;
+  for (const child of node.children) {
+    count += countDescendants(child);
+  }
+  return count;
+}
+
 function TaskTree({ nodes, depth = 0 }: { nodes: TaskNode[]; depth?: number }) {
   return (
     <>
       {nodes.map(node => (
         <div key={node.id}>
-          <TaskCard task={node} depth={depth} />
+          <TaskCard task={node} depth={depth} subtaskCount={countDescendants(node)} />
           {node.children.length > 0 && (
             <TaskTree nodes={node.children} depth={depth + 1} />
           )}

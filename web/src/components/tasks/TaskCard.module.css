@@ -70,6 +70,15 @@
   margin-top: var(--space-1);
 }
 
+.subtaskCount {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-on-surface-muted);
+}
+
 .dueDate {
   font-size: var(--font-size-xs);
   color: var(--color-on-surface-muted);
