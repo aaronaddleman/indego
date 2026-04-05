@@ -29,10 +29,14 @@ export default function TaskDetailPage() {
   const [showSubtaskForm, setShowSubtaskForm] = useState(false);
 
   const { data, loading, error } = useQuery(GET_TASK, { variables: { id } });
-  const { data: tasksData } = useQuery(GET_TASKS);
 
   const task: Task | null = data?.task ?? null;
-  const allTasks = tasksData?.tasks ?? [];
+
+  const { data: tasksData } = useQuery(GET_TASKS, {
+    variables: task?.listId ? { listId: task.listId } : {},
+    skip: !task?.listId,
+  });
+  const allTasks: Task[] = tasksData?.tasks ?? [];
   const subtasks = allTasks.filter((t: Task) => t.parentId === id);
 
   const refetchQueries = ['GetTask', 'GetTasks', 'GetTaskLists'];
