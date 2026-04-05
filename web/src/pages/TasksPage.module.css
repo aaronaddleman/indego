@@ -18,6 +18,32 @@
   margin-top: var(--space-1);
 }
 
+.layout {
+  display: flex;
+  gap: var(--space-6);
+}
+
+.sidebar {
+  width: 20%;
+  min-width: 160px;
+  flex-shrink: 0;
+}
+
+.content {
+  flex: 1;
+  min-width: 0;
+}
+
+@media (max-width: 600px) {
+  .layout {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+  }
+}
+
 .taskList {
   display: flex;
   flex-direction: column;

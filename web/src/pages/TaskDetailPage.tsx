@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/client';
 import Markdown from 'react-markdown';
-import { GET_TASK, GET_TASKS, GET_TASK_LISTS } from '../graphql/queries';
+import { GET_TASK, GET_TASKS } from '../graphql/queries';
 import { COMPLETE_TASK, UNCOMPLETE_TASK } from '../graphql/mutations';
 import PageShell from '../components/layout/PageShell';
 import PriorityBadge from '../components/tasks/PriorityBadge';
@@ -34,7 +34,7 @@ export default function TaskDetailPage() {
   const allTasks = tasksData?.tasks ?? [];
   const subtasks = allTasks.filter((t: Task) => t.parentId === id);
 
-  const refetchQueries = [{ query: GET_TASK, variables: { id } }, { query: GET_TASKS }, { query: GET_TASK_LISTS }];
+  const refetchQueries = ['GetTask', 'GetTasks', 'GetTaskLists'];
   const [completeTask] = useMutation(COMPLETE_TASK, { refetchQueries });
   const [uncompleteTask] = useMutation(UNCOMPLETE_TASK, { refetchQueries });
 

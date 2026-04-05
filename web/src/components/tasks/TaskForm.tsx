@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { CREATE_TASK, UPDATE_TASK, DELETE_TASK } from '../../graphql/mutations';
-import { GET_TASKS, GET_TASK_LISTS } from '../../graphql/queries';
 import ConfirmDialog from '../common/ConfirmDialog';
 import styles from './TaskForm.module.css';
 
@@ -39,7 +38,7 @@ export default function TaskForm({ task, listId, parentId, onClose }: Props) {
   const [error, setError] = useState('');
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
-  const refetchQueries = [{ query: GET_TASKS }, { query: GET_TASK_LISTS }];
+  const refetchQueries = ['GetTasks', 'GetTaskLists', 'GetTask'];
   const [createTask, { loading: creating }] = useMutation(CREATE_TASK, { refetchQueries });
   const [updateTask, { loading: updating }] = useMutation(UPDATE_TASK, { refetchQueries });
   const [deleteTask, { loading: deleting }] = useMutation(DELETE_TASK, { refetchQueries });

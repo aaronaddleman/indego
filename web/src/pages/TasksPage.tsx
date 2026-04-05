@@ -89,42 +89,48 @@ export default function TasksPage() {
         <h1 className={styles.pageTitle}>Tasks</h1>
       </div>
 
-      <ListSelector
-        selectedId={activeListId}
-        onSelect={(id) => setSelectedListId(id)}
-      />
+      <div className={styles.layout}>
+        <aside className={styles.sidebar}>
+          <ListSelector
+            selectedId={activeListId}
+            onSelect={(id) => setSelectedListId(id)}
+          />
+        </aside>
 
-      {activeListId && (
-        <>
-          <QuickAdd listId={activeListId} />
+        <div className={styles.content}>
+          {activeListId && (
+            <>
+              <QuickAdd listId={activeListId} />
 
-          {loading && <p className={styles.status}>Loading tasks...</p>}
+              {loading && <p className={styles.status}>Loading tasks...</p>}
 
-          {!loading && tree.length === 0 && completedCount === 0 && (
-            <p className={styles.status}>No tasks yet. Type above to add one.</p>
+              {!loading && tree.length === 0 && completedCount === 0 && (
+                <p className={styles.status}>No tasks yet. Type above to add one.</p>
+              )}
+
+              <div className={styles.taskList}>
+                <TaskTree nodes={tree} />
+              </div>
+
+              {completedCount > 0 && (
+                <button
+                  className={styles.toggleCompleted}
+                  onClick={() => setShowCompleted(!showCompleted)}
+                >
+                  <span className="material-symbols-outlined" style={{ fontSize: 18 }}>
+                    {showCompleted ? 'visibility_off' : 'visibility'}
+                  </span>
+                  {showCompleted ? 'Hide' : 'Show'} {completedCount} completed
+                </button>
+              )}
+            </>
           )}
 
-          <div className={styles.taskList}>
-            <TaskTree nodes={tree} />
-          </div>
-
-          {completedCount > 0 && (
-            <button
-              className={styles.toggleCompleted}
-              onClick={() => setShowCompleted(!showCompleted)}
-            >
-              <span className="material-symbols-outlined" style={{ fontSize: 18 }}>
-                {showCompleted ? 'visibility_off' : 'visibility'}
-              </span>
-              {showCompleted ? 'Hide' : 'Show'} {completedCount} completed
-            </button>
+          {!activeListId && !loading && (
+            <p className={styles.status}>Loading lists...</p>
           )}
-        </>
-      )}
-
-      {!activeListId && !loading && (
-        <p className={styles.status}>Loading lists...</p>
-      )}
+        </div>
+      </div>
     </PageShell>
   );
 }

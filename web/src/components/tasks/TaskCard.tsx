@@ -1,7 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { COMPLETE_TASK, UNCOMPLETE_TASK } from '../../graphql/mutations';
-import { GET_TASKS } from '../../graphql/queries';
 import PriorityBadge from './PriorityBadge';
 import styles from './TaskCard.module.css';
 
@@ -21,8 +20,8 @@ interface Props {
 
 export default function TaskCard({ task, depth = 0 }: Props) {
   const navigate = useNavigate();
-  const [completeTask] = useMutation(COMPLETE_TASK, { refetchQueries: [{ query: GET_TASKS }] });
-  const [uncompleteTask] = useMutation(UNCOMPLETE_TASK, { refetchQueries: [{ query: GET_TASKS }] });
+  const [completeTask] = useMutation(COMPLETE_TASK, { refetchQueries: ['GetTasks', 'GetTaskLists'] });
+  const [uncompleteTask] = useMutation(UNCOMPLETE_TASK, { refetchQueries: ['GetTasks', 'GetTaskLists'] });
 
   const handleToggle = async (e: React.MouseEvent) => {
     e.stopPropagation();

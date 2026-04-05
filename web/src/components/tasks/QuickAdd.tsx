@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { CREATE_TASK } from '../../graphql/mutations';
-import { GET_TASKS, GET_TASK_LISTS } from '../../graphql/queries';
 import styles from './QuickAdd.module.css';
 
 interface Props {
@@ -13,7 +12,7 @@ interface Props {
 export default function QuickAdd({ listId, parentId, placeholder = 'Add a task...' }: Props) {
   const [title, setTitle] = useState('');
   const [createTask, { loading }] = useMutation(CREATE_TASK, {
-    refetchQueries: [{ query: GET_TASKS }, { query: GET_TASK_LISTS }],
+    refetchQueries: ['GetTasks', 'GetTaskLists'],
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
