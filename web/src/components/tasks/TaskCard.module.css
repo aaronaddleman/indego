@@ -17,6 +17,21 @@
   background: var(--color-surface-low);
 }
 
+.expandBtn {
+  padding: 0;
+  color: var(--color-on-surface-muted);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform var(--transition-fast);
+  transform: rotate(-90deg);
+}
+
+.expandBtnOpen {
+  transform: rotate(0deg);
+}
+
 .checkbox {
   width: 24px;
   height: 24px;

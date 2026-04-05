@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useCallback } from 'react';
 import { useQuery } from '@apollo/client';
 import { GET_TASKS, GET_TASK_LISTS } from '../graphql/queries';
 import PageShell from '../components/layout/PageShell';
@@ -63,20 +63,40 @@ function countSubtasks(allTasks: Task[], parentId: string): { total: number; com
   return { total, completed };
 }
 
+function TaskTreeNode({ node, allTasks, depth }: { node: TaskNode; allTasks: Task[]; depth: number }) {
+  const [expanded, setExpanded] = useState(false);
+  const counts = countSubtasks(allTasks, node.id);
+  const hasChildren = node.children.length > 0;
+
+  const toggleExpand = useCallback((e: React.MouseEvent) => {
+    e.stopPropagation();
+    setExpanded(prev => !prev);
+  }, []);
+
+  return (
+    <div>
+      <TaskCard
+        task={node}
+        depth={depth}
+        subtaskCount={counts.total}
+        subtaskCompleted={counts.completed}
+        expandable={hasChildren}
+        expanded={expanded}
+        onToggleExpand={toggleExpand}
+      />
+      {hasChildren && expanded && (
+        <TaskTree nodes={node.children} allTasks={allTasks} depth={depth + 1} />
+      )}
+    </div>
+  );
+}
+
 function TaskTree({ nodes, allTasks, depth = 0 }: { nodes: TaskNode[]; allTasks: Task[]; depth?: number }) {
   return (
     <>
-      {nodes.map(node => {
-        const counts = countSubtasks(allTasks, node.id);
-        return (
-          <div key={node.id}>
-            <TaskCard task={node} depth={depth} subtaskCount={counts.total} subtaskCompleted={counts.completed} />
-            {node.children.length > 0 && (
-              <TaskTree nodes={node.children} allTasks={allTasks} depth={depth + 1} />
-            )}
-          </div>
-        );
-      })}
+      {nodes.map(node => (
+        <TaskTreeNode key={node.id} node={node} allTasks={allTasks} depth={depth} />
+      ))}
     </>
   );
 }

@@ -18,6 +18,9 @@ interface Props {
   depth?: number;
   subtaskCount?: number;
   subtaskCompleted?: number;
+  expandable?: boolean;
+  expanded?: boolean;
+  onToggleExpand?: (e: React.MouseEvent) => void;
 }
 
 function SubtaskProgress({ completed, total }: { completed: number; total: number }) {
@@ -45,7 +48,7 @@ function SubtaskProgress({ completed, total }: { completed: number; total: numbe
   );
 }
 
-export default function TaskCard({ task, depth = 0, subtaskCount = 0, subtaskCompleted = 0 }: Props) {
+export default function TaskCard({ task, depth = 0, subtaskCount = 0, subtaskCompleted = 0, expandable, expanded, onToggleExpand }: Props) {
   const navigate = useNavigate();
   const [completeTask] = useMutation(COMPLETE_TASK, { refetchQueries: ['GetTasks', 'GetTaskLists'] });
   const [uncompleteTask] = useMutation(UNCOMPLETE_TASK, { refetchQueries: ['GetTasks', 'GetTaskLists'] });
@@ -67,6 +70,11 @@ export default function TaskCard({ task, depth = 0, subtaskCount = 0, subtaskCom
       style={indent ? { marginLeft: indent } : undefined}
       onClick={() => navigate(`/tasks/${task.id}`)}
     >
+      {expandable && (
+        <button className={`${styles.expandBtn} ${expanded ? styles.expandBtnOpen : ''}`} onClick={onToggleExpand} aria-label={expanded ? 'Collapse' : 'Expand'}>
+          <span className="material-symbols-outlined" style={{ fontSize: 18 }}>expand_more</span>
+        </button>
+      )}
       <button
         className={`${styles.checkbox} ${task.completed ? styles.checked : ''}`}
         onClick={handleToggle}
