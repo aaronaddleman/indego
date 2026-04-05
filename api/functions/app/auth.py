@@ -1,9 +1,12 @@
 """Firebase Auth + API Key middleware for GraphQL requests."""
 
 import hashlib
+import logging
 from datetime import datetime, timezone
 
 from firebase_admin import auth
+
+logger = logging.getLogger(__name__)
 from ariadne import format_error
 from graphql import GraphQLError
 from app.repositories.allowlist_repo import is_email_allowed, is_email_admin
@@ -105,21 +108,30 @@ def get_context_value(request):
     # Try API key
     api_key = request.headers.get("X-API-Key", "")
     if api_key:
+        logger.info("API key auth attempt (prefix: %s...)", api_key[:12])
         try:
             key_info = _verify_api_key(api_key)
             user_id = key_info["userId"]
             email = key_info["email"].lower()
+            logger.info("API key valid for user %s (%s)", user_id, email)
 
             # Allowlist check — fail closed
             if not email or not is_email_allowed(email):
+                logger.warning("API key auth failed: email %s not in allowlist", email)
                 return {"request": request, "user_id": None, "email": None, "auth_method": None}
 
             # Rate limit check
             if not ratelimit_repo.check_and_increment(user_id):
+                logger.warning("API key auth failed: rate limit exceeded for %s", user_id)
                 return {"request": request, "user_id": None, "email": None, "auth_method": None}
 
+            logger.info("API key auth success for %s", email)
             return {"request": request, "user_id": user_id, "email": email, "auth_method": "api_key"}
-        except AuthError:
+        except AuthError as e:
+            logger.warning("API key auth failed: %s", e.message)
+            return {"request": request, "user_id": None, "email": None, "auth_method": None}
+        except Exception as e:
+            logger.error("API key auth unexpected error: %s", e)
             return {"request": request, "user_id": None, "email": None, "auth_method": None}
 
     # No auth
