@@ -50,8 +50,8 @@ export default function ApiKeysSection() {
       setCreatedKey(result.createApiKey.key);
       setName('');
       setExpiresAt('');
-    } catch (e: any) {
-      setError(e.message || 'Failed to create key');
+    } catch (e: unknown) {
+      setError(e instanceof Error ? e.message : 'Failed to create key');
     } finally {
       setCreating(false);
     }
@@ -68,8 +68,8 @@ export default function ApiKeysSection() {
     try {
       await revokeApiKey({ variables: { id } });
       setRevokeConfirmId(null);
-    } catch (e: any) {
-      setError(e.message || 'Failed to revoke key');
+    } catch (e: unknown) {
+      setError(e instanceof Error ? e.message : 'Failed to revoke key');
     }
   };
 
