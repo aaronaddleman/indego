@@ -15,6 +15,20 @@ initialize_app()
 schema = create_schema()
 explorer = ExplorerGraphiQL()
 
+# Inject default headers hint into GraphiQL so users see auth examples
+_HEADERS_HINT = """<script>
+(function() {
+  var key = 'graphiql:headers';
+  if (!window.localStorage.getItem(key)) {
+    window.localStorage.setItem(key, JSON.stringify({
+      "Authorization": "Bearer <paste_firebase_token_here>",
+      "X-API-Key": "<or_paste_api_key_here>"
+    }, null, 2));
+  }
+})();
+</script>"""
+explorer.parsed_html = explorer.parsed_html.replace("</head>", _HEADERS_HINT + "\n</head>")
+
 app = Flask(__name__)
 
 
