@@ -19,9 +19,9 @@ interface Props {
 export default function ListSelector({ selectedId, onSelect }: Props) {
   const { data } = useQuery(GET_TASK_LISTS);
   const [createList] = useMutation(CREATE_TASK_LIST, {
-    refetchQueries: [{ query: GET_TASK_LISTS }],
+    refetchQueries: ['GetTaskLists'],
   });
-  const [showNew, setShowNew] = useState(false);
+  const [showDialog, setShowDialog] = useState(false);
   const [newName, setNewName] = useState('');
 
   const lists: TaskList[] = data?.taskLists ?? [];
@@ -32,50 +32,59 @@ export default function ListSelector({ selectedId, onSelect }: Props) {
     if (!trimmed) return;
     const result = await createList({ variables: { name: trimmed } });
     setNewName('');
-    setShowNew(false);
+    setShowDialog(false);
     if (result.data?.createTaskList) {
       onSelect(result.data.createTaskList.id);
     }
   };
 
   return (
-    <div className={styles.selector}>
-      {lists.map((list) => (
-        <button
-          key={list.id}
-          className={`${styles.item} ${selectedId === list.id ? styles.active : ''}`}
-          onClick={() => onSelect(list.id)}
-        >
-          <span className={`material-symbols-outlined ${styles.icon}`}>
-            {list.isInbox ? 'inbox' : 'list'}
-          </span>
-          <span className={styles.name}>{list.name}</span>
-          <span className={styles.count}>{list.taskCount}</span>
-        </button>
-      ))}
-      {showNew ? (
-        <form className={styles.newForm} onSubmit={handleCreate}>
-          <input
-            className={styles.newInput}
-            type="text"
-            value={newName}
-            onChange={(e) => setNewName(e.target.value)}
-            placeholder="List name"
-            autoFocus
-          />
-          <button type="submit" className={styles.newSubmit}>
-            <span className="material-symbols-outlined">check</span>
+    <>
+      <div className={styles.selector}>
+        {lists.map((list) => (
+          <button
+            key={list.id}
+            className={`${styles.item} ${selectedId === list.id ? styles.active : ''}`}
+            onClick={() => onSelect(list.id)}
+          >
+            <span className={`material-symbols-outlined ${styles.icon}`}>
+              {list.isInbox ? 'inbox' : 'list'}
+            </span>
+            <span className={styles.name}>{list.name}</span>
+            <span className={styles.count}>{list.taskCount}</span>
           </button>
-          <button type="button" className={styles.newCancel} onClick={() => setShowNew(false)}>
-            <span className="material-symbols-outlined">close</span>
-          </button>
-        </form>
-      ) : (
-        <button className={styles.addBtn} onClick={() => setShowNew(true)}>
+        ))}
+        <button className={styles.addBtn} onClick={() => setShowDialog(true)}>
           <span className={`material-symbols-outlined ${styles.icon}`}>add</span>
           <span className={styles.name}>New List</span>
         </button>
+      </div>
+
+      {showDialog && (
+        <div className={styles.overlay} onClick={() => setShowDialog(false)}>
+          <div className={styles.dialog} onClick={(e) => e.stopPropagation()}>
+            <h3 className={styles.dialogTitle}>New List</h3>
+            <form onSubmit={handleCreate}>
+              <input
+                className={styles.dialogInput}
+                type="text"
+                value={newName}
+                onChange={(e) => setNewName(e.target.value)}
+                placeholder="List name"
+                autoFocus
+              />
+              <div className={styles.dialogActions}>
+                <button type="button" className={styles.dialogCancel} onClick={() => setShowDialog(false)}>
+                  Cancel
+                </button>
+                <button type="submit" className={styles.dialogSubmit}>
+                  Create
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
       )}
-    </div>
+    </>
   );
 }

@@ -33,11 +33,16 @@
 
 .icon {
   font-size: 20px;
+  flex-shrink: 0;
 }
 
 .name {
   flex: 1;
   font-size: var(--font-size-sm);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
 }
 
 .count {
@@ -49,36 +54,75 @@
   border-radius: var(--radius-full);
   min-width: 20px;
   text-align: center;
+  flex-shrink: 0;
 }
 
-.newForm {
+/* Dialog */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
   display: flex;
   align-items: center;
-  gap: var(--space-2);
-  padding: var(--space-2) var(--space-4);
+  justify-content: center;
+  z-index: 200;
+  padding: var(--space-4);
 }
 
-.newInput {
-  flex: 1;
-  padding: var(--space-2);
+.dialog {
+  background: var(--color-surface-lowest);
+  border-radius: var(--radius-card);
+  padding: var(--space-6);
+  width: 100%;
+  max-width: 360px;
+  box-shadow: var(--shadow-lg);
+}
+
+.dialogTitle {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-on-surface);
+  margin-bottom: var(--space-4);
+}
+
+.dialogInput {
+  width: 100%;
+  padding: var(--space-3);
   border: none;
   border-radius: var(--radius-lg);
   background: var(--color-surface-highest);
   color: var(--color-on-surface);
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-base);
+  margin-bottom: var(--space-4);
 }
 
-.newSubmit,
-.newCancel {
-  padding: var(--space-1);
-  border-radius: var(--radius-md);
-  color: var(--color-on-surface-muted);
+.dialogInput:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--color-focus-ring);
 }
 
-.newSubmit:hover { color: var(--color-accent); }
-.newCancel:hover { color: var(--color-danger); }
+.dialogActions {
+  display: flex;
+  gap: var(--space-3);
+  justify-content: flex-end;
+}
 
-.newSubmit .material-symbols-outlined,
-.newCancel .material-symbols-outlined {
-  font-size: 20px;
+.dialogCancel {
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-lg);
+  color: var(--color-on-surface);
+  font-weight: var(--font-weight-medium);
+  background: var(--color-surface);
+}
+
+.dialogCancel:hover {
+  background: var(--color-surface-high);
+}
+
+.dialogSubmit {
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-full);
+  background: linear-gradient(135deg, var(--color-accent), var(--color-accent-light));
+  color: white;
+  font-weight: var(--font-weight-medium);
 }

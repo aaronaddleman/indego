@@ -53,6 +53,9 @@
   font-weight: var(--font-weight-medium);
   color: var(--color-on-surface);
   display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .titleDone {
