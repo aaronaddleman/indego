@@ -40,6 +40,12 @@ from app.transport.resolvers.admin import (
     resolve_add_allowed_email,
     resolve_remove_allowed_email,
     resolve_set_admin_status,
+    resolve_set_api_key_permission,
+)
+from app.transport.resolvers.apikey import (
+    resolve_api_keys,
+    resolve_create_api_key,
+    resolve_revoke_api_key,
 )
 from app.transport.resolvers.task import (
     resolve_tasks,
@@ -74,6 +80,7 @@ query.set_field("stats", resolve_stats)
 query.set_field("tasks", resolve_tasks)
 query.set_field("task", resolve_task)
 query.set_field("taskLists", resolve_task_lists)
+query.set_field("apiKeys", resolve_api_keys)
 query.set_field("allowedEmails", resolve_allowed_emails)
 
 # Mutations
@@ -92,6 +99,9 @@ mutation.set_field("reorderTask", resolve_reorder_task)
 mutation.set_field("createTaskList", resolve_create_task_list)
 mutation.set_field("updateTaskList", resolve_update_task_list)
 mutation.set_field("deleteTaskList", resolve_delete_task_list)
+mutation.set_field("createApiKey", resolve_create_api_key)
+mutation.set_field("revokeApiKey", resolve_revoke_api_key)
+mutation.set_field("setApiKeyPermission", resolve_set_api_key_permission)
 mutation.set_field("addAllowedEmail", resolve_add_allowed_email)
 mutation.set_field("removeAllowedEmail", resolve_remove_allowed_email)
 mutation.set_field("setAdminStatus", resolve_set_admin_status)

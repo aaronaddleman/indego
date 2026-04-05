@@ -80,6 +80,8 @@ See [PROJECT_WORKFLOW.md](PROJECT_WORKFLOW.md) for the full workflow definition,
 ## Conventions
 
 - `api/functions/schema.graphql` is the single source of truth — update it first, then resolvers, then clients
+- When adding or changing GraphQL queries/mutations, update the GraphiQL default tabs in `api/functions/server.py` (`_DEFAULT_TABS`) so the explorer stays current with the API
+- After schema or resolver changes, run the GraphQL validation tests: `docker compose run --rm test bash -c "python -m pytest functions/tests/test_validate_graphql.py -v"` — these are wiring tests that confirm schema, resolvers, and services are connected end-to-end via the Flask test client
 - All client projects (iOS, web) should reference the shared schema
 - Follow templates defined in PROJECT_WORKFLOW.md when creating documents
 - When generating or updating docs, always write to the `docs/` directory

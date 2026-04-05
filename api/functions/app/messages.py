@@ -21,5 +21,18 @@ HABIT_INVALID_DATE = "Invalid date format"
 HABIT_FUTURE_DATE = "Cannot log completion for a future date"
 HABIT_REMINDER_TIME_REQUIRED = "Reminder time is required when reminders are enabled"
 
+# ─── API Keys ───────────────────────────────────────────────────────────────
+APIKEY_INVALID = "Invalid API key"
+APIKEY_EXPIRED = "API key has expired"
+APIKEY_REVOKED = "API key has been revoked"
+APIKEY_RATE_LIMITED = "Rate limit exceeded. Try again later."
+APIKEY_PERMISSION_REQUIRED = "API key management permission required"
+APIKEY_MAX_KEYS = "Maximum of 2 active API keys allowed"
+APIKEY_NOT_FOUND = "API key not found"
+APIKEY_BEARER_REQUIRED = "API key management requires Bearer token authentication"
+APIKEY_NAME_REQUIRED = "API key name is required"
+APIKEY_EXPIRY_REQUIRED = "API key expiration date is required"
+APIKEY_EXPIRY_PAST = "Expiration date must be in the future"
+
 # ─── Validation ──────────────────────────────────────────────────────────────
 VALIDATION_INVALID_JSON = "Invalid JSON"

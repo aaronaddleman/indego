@@ -71,3 +71,13 @@ def set_admin_status(email: str, is_admin: bool, caller_email: str) -> dict:
         raise AdminError(ADMIN_CANNOT_REVOKE_LAST)
 
     return allowlist_repo.set_admin_status(email, is_admin)
+
+
+def set_api_key_permission(email: str, enabled: bool) -> dict:
+    """Set canManageApiKeys for an email."""
+    email = email.strip().lower()
+
+    if not allowlist_repo.is_email_allowed(email):
+        raise AdminError(ADMIN_NOT_FOUND)
+
+    return allowlist_repo.set_api_key_permission(email, enabled)

@@ -70,6 +70,29 @@ All deliverables use the defined templates (see Templates section below).
 - Keep user-facing docs and changelog current
 - Surface issues that require looping back (see Feedback Loops)
 
+**Testing Requirement: Red/Green TDD**
+
+All implementation work follows a strict **Red/Green TDD** process:
+
+1. **Red** — Write tests BEFORE implementation. Tests must fail (proving they test real behavior, not passing by accident). Run the test suite and confirm all new tests fail with expected errors (import errors, missing functions, unknown tools, etc.).
+
+2. **Green** — Implement the minimum code to make all tests pass. Do not write production code without a failing test driving it.
+
+3. **Coverage** — Every test run includes coverage reporting:
+   - Terminal output with `--cov` and `--cov-report=term-missing`
+   - Persistent HTML + JSON reports saved to `/data/coverage/` for tracking growth across phases
+   - Coverage should trend upward or remain stable. Drops are acceptable only when adding new modules with untestable external dependencies (API calls, live services).
+
+4. **Test Isolation** — All tests use temp directories for database state. No test depends on another test's side effects. External services (Claude API, Home Assistant, Ntfy) are mocked.
+
+5. **Phase Boundaries** — Each implementation phase is a commit boundary. Record test count and coverage at each phase to track growth:
+
+   | Phase | Tests | Coverage |
+   |-------|-------|----------|
+   | (fill in as phases complete) | | |
+
+6. **Docker-First Testing** — Tests run inside Docker containers to match the production environment. Never install dependencies on the host for testing.
+
 **On merge:**
 - **Update the consolidated ARD and PRD** (`docs/web/ARD.md`, `docs/api/ARD.md`, etc.) with the feature's architecture decisions and requirements
 - Do not just append — resolve conflicts and update existing sections affected by the new feature
@@ -297,3 +320,5 @@ Both gates use the **same approval process**:
 | Reminders v1 — Gate 2 (Documentation → Implementation) | 2026-03-28 | Project Lead | Approved | Technical Spec complete. SW notifications via importScripts, useReminderScheduler hook, PermissionWarning. |
 | Tasks & Lists — Gate 1 (Iteration → Documentation) | 2026-03-28 | Project Lead | Approved | ARD and PRD approved. Flat parentId model, GQL-friendly schema, P1-P4 priority, Inbox + custom lists, markdown descriptions. |
 | Tasks & Lists — Gate 2 (Documentation → Implementation) | 2026-03-28 | Project Lead | Approved | Technical Spec, Deployment Plan, Changelog complete. 4 phases: API, nav restructure, task views, subtasks. |
+| API Key Auth — Gate 1 (Iteration → Documentation) | 2026-04-05 | Project Lead | Approved | ARD and PRD approved. SHA-256 hashed keys, indego_ prefix, apiKeys/{hash} collection, single canManageApiKeys permission flag, 60 req/min rate limit, Bearer OR X-API-Key middleware, max 2 keys per user with expiration. RBAC deferred (issue #29). |
+| API Key Auth — Gate 2 (Documentation → Implementation) | 2026-04-05 | Project Lead | Approved | Technical Spec, Deployment Plan, Changelog complete. Dual-path auth middleware, 3 new layered files (resolver/service/repo) + rate limit repo, 15 unit + 8 integration tests planned, CORS update, pre-deploy Firestore flag required. |

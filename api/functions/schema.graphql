@@ -18,6 +18,10 @@ enum TaskPriority {
   P4
 }
 
+enum ApiKeyPermission {
+  CAN_MANAGE_API_KEYS
+}
+
 enum SortPreference {
   MANUAL
   DUE_DATE
@@ -67,6 +71,11 @@ input UpdateTaskInput {
   parentId: ID
   priority: TaskPriority
   dueDate: Date
+}
+
+input CreateApiKeyInput {
+  name: String!
+  expiresAt: DateTime!
 }
 
 input DateRangeInput {
@@ -149,9 +158,24 @@ type Version {
   deployedAt: String!
 }
 
+type ApiKey {
+  id: ID!
+  name: String!
+  keyPrefix: String!
+  expiresAt: DateTime!
+  revokedAt: DateTime
+  createdAt: DateTime!
+}
+
+type CreateApiKeyPayload {
+  apiKey: ApiKey!
+  key: String!
+}
+
 type AllowedEmail {
   email: String!
   isAdmin: Boolean!
+  canManageApiKeys: Boolean!
 }
 
 type UserStats {
@@ -186,6 +210,9 @@ type Query {
 
   """Get all lists for the authenticated user"""
   taskLists: [TaskList!]!
+
+  """List the caller's API keys (requires canManageApiKeys + Bearer auth)"""
+  apiKeys: [ApiKey!]!
 
   """List all allowed emails (admin only)"""
   allowedEmails: [AllowedEmail!]!
@@ -238,6 +265,15 @@ type Mutation {
 
   """Delete a list — orphaned tasks move to Inbox"""
   deleteTaskList(id: ID!): Boolean!
+
+  """Create a new API key (requires Bearer auth + canManageApiKeys). Returns full key once."""
+  createApiKey(input: CreateApiKeyInput!): CreateApiKeyPayload!
+
+  """Revoke an API key by ID (requires Bearer auth + canManageApiKeys)"""
+  revokeApiKey(id: ID!): ApiKey!
+
+  """Set API key management permission for a user (admin only)"""
+  setApiKeyPermission(email: String!, enabled: Boolean!): AllowedEmail!
 
   """Add an email to the allowlist (admin only)"""
   addAllowedEmail(email: String!): AllowedEmail!

@@ -28,3 +28,9 @@ def resolve_set_admin_status(_, info, email, isAdmin):
     require_admin(info.context)
     caller_email = info.context.get("email")
     return admin_service.set_admin_status(email, isAdmin, caller_email)
+
+
+def resolve_set_api_key_permission(_, info, email, enabled):
+    """Set canManageApiKeys for an email. Admin only."""
+    require_admin(info.context)
+    return admin_service.set_api_key_permission(email, enabled)
