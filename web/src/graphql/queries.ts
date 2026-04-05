@@ -55,6 +55,50 @@ export const GET_VERSION = gql`
   }
 `;
 
+const TASK_FIELDS = gql`
+  fragment TaskFields on Task {
+    id
+    title
+    description
+    listId
+    parentId
+    priority
+    dueDate
+    completed
+    completedAt
+    sortOrder
+    createdAt
+    updatedAt
+  }
+`;
+
+export const GET_TASKS = gql`
+  ${TASK_FIELDS}
+  query GetTasks($listId: ID, $completed: Boolean) {
+    tasks(listId: $listId, completed: $completed) { ...TaskFields }
+  }
+`;
+
+export const GET_TASK = gql`
+  ${TASK_FIELDS}
+  query GetTask($id: ID!) {
+    task(id: $id) { ...TaskFields }
+  }
+`;
+
+export const GET_TASK_LISTS = gql`
+  query GetTaskLists {
+    taskLists {
+      id
+      name
+      isInbox
+      sortPreference
+      taskCount
+      createdAt
+    }
+  }
+`;
+
 export const GET_ALLOWED_EMAILS = gql`
   query GetAllowedEmails {
     allowedEmails {

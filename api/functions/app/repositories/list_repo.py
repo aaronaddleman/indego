@@ -86,11 +86,12 @@ def delete_list(user_id: str, list_id: str) -> bool:
 
 
 def count_tasks(user_id: str, list_id: str) -> int:
-    """Count tasks in a list."""
+    """Count incomplete tasks in a list."""
     docs = list(
         firestore.client()
         .collection("users").document(user_id).collection("tasks")
         .where("listId", "==", list_id)
+        .where("completed", "==", False)
         .stream()
     )
     return len(docs)
