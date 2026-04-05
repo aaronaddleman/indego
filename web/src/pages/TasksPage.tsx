@@ -48,25 +48,35 @@ function buildTree(tasks: Task[]): TaskNode[] {
   return build(null);
 }
 
-function countDescendants(node: TaskNode): number {
-  let count = node.children.length;
-  for (const child of node.children) {
-    count += countDescendants(child);
+function countSubtasks(allTasks: Task[], parentId: string): { total: number; completed: number } {
+  let total = 0;
+  let completed = 0;
+  for (const t of allTasks) {
+    if (t.parentId === parentId) {
+      total++;
+      if (t.completed) completed++;
+      const sub = countSubtasks(allTasks, t.id);
+      total += sub.total;
+      completed += sub.completed;
+    }
   }
-  return count;
+  return { total, completed };
 }
 
-function TaskTree({ nodes, depth = 0 }: { nodes: TaskNode[]; depth?: number }) {
+function TaskTree({ nodes, allTasks, depth = 0 }: { nodes: TaskNode[]; allTasks: Task[]; depth?: number }) {
   return (
     <>
-      {nodes.map(node => (
-        <div key={node.id}>
-          <TaskCard task={node} depth={depth} subtaskCount={countDescendants(node)} />
-          {node.children.length > 0 && (
-            <TaskTree nodes={node.children} depth={depth + 1} />
-          )}
-        </div>
-      ))}
+      {nodes.map(node => {
+        const counts = countSubtasks(allTasks, node.id);
+        return (
+          <div key={node.id}>
+            <TaskCard task={node} depth={depth} subtaskCount={counts.total} subtaskCompleted={counts.completed} />
+            {node.children.length > 0 && (
+              <TaskTree nodes={node.children} allTasks={allTasks} depth={depth + 1} />
+            )}
+          </div>
+        );
+      })}
     </>
   );
 }
@@ -124,7 +134,7 @@ export default function TasksPage() {
               )}
 
               <div className={styles.taskList}>
-                <TaskTree nodes={tree} />
+                <TaskTree nodes={tree} allTasks={tasks} />
               </div>
 
               {completedCount > 0 && (

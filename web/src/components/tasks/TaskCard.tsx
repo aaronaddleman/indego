@@ -17,9 +17,35 @@ interface Props {
   task: Task;
   depth?: number;
   subtaskCount?: number;
+  subtaskCompleted?: number;
 }
 
-export default function TaskCard({ task, depth = 0, subtaskCount = 0 }: Props) {
+function SubtaskProgress({ completed, total }: { completed: number; total: number }) {
+  const pct = total > 0 ? (completed / total) * 100 : 0;
+  const r = 6;
+  const circumference = 2 * Math.PI * r;
+  const offset = circumference - (pct / 100) * circumference;
+
+  return (
+    <span className={styles.subtaskProgress}>
+      <svg width="16" height="16" viewBox="0 0 16 16">
+        <circle cx="8" cy="8" r={r} fill="none" stroke="var(--color-surface-highest)" strokeWidth="2" />
+        <circle
+          cx="8" cy="8" r={r} fill="none"
+          stroke={completed === total ? 'var(--color-success)' : 'var(--color-accent)'}
+          strokeWidth="2"
+          strokeDasharray={circumference}
+          strokeDashoffset={offset}
+          strokeLinecap="round"
+          transform="rotate(-90 8 8)"
+        />
+      </svg>
+      <span className={styles.subtaskLabel}>{completed}/{total}</span>
+    </span>
+  );
+}
+
+export default function TaskCard({ task, depth = 0, subtaskCount = 0, subtaskCompleted = 0 }: Props) {
   const navigate = useNavigate();
   const [completeTask] = useMutation(COMPLETE_TASK, { refetchQueries: ['GetTasks', 'GetTaskLists'] });
   const [uncompleteTask] = useMutation(UNCOMPLETE_TASK, { refetchQueries: ['GetTasks', 'GetTaskLists'] });
@@ -57,10 +83,7 @@ export default function TaskCard({ task, depth = 0, subtaskCount = 0 }: Props) {
         <div className={styles.meta}>
           <PriorityBadge priority={task.priority} />
           {subtaskCount > 0 && (
-            <span className={styles.subtaskCount}>
-              <span className="material-symbols-outlined" style={{ fontSize: 14 }}>account_tree</span>
-              {subtaskCount}
-            </span>
+            <SubtaskProgress completed={subtaskCompleted} total={subtaskCount} />
           )}
           {task.dueDate && (
             <span className={styles.dueDate}>{task.dueDate}</span>
