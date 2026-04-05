@@ -1,0 +1,23 @@
+.badge {
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 2px var(--space-2);
+  border-radius: var(--radius-full);
+}
+
+.P1 {
+  background: var(--color-danger-surface);
+  color: var(--color-danger);
+}
+
+.P2 {
+  background: var(--color-energy-surface);
+  color: var(--color-energy);
+}
+
+.P3 {
+  background: var(--color-accent-surface);
+  color: var(--color-accent);
+}

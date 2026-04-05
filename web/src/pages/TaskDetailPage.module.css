@@ -1,0 +1,163 @@
+.topBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-4);
+}
+
+.backBtn,
+.editBtn {
+  padding: var(--space-2);
+  border-radius: var(--radius-lg);
+  color: var(--color-on-surface-muted);
+  min-width: 44px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.backBtn:hover,
+.editBtn:hover {
+  background: var(--color-surface);
+}
+
+.header {
+  margin-bottom: var(--space-6);
+}
+
+.titleRow {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+}
+
+.checkbox {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-md);
+  border: 2px solid var(--color-outline-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 4px;
+  transition: all var(--transition-fast);
+}
+
+.checkbox:hover {
+  border-color: var(--color-accent);
+}
+
+.checked {
+  background: linear-gradient(135deg, var(--color-accent), var(--color-accent-light));
+  border-color: transparent;
+  color: white;
+}
+
+.taskTitle {
+  font-size: var(--font-size-2xl);
+  font-weight: 800;
+  color: var(--color-on-surface);
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+}
+
+.titleDone {
+  text-decoration: line-through;
+  opacity: 0.5;
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-top: var(--space-3);
+  margin-left: 40px;
+}
+
+.dueDate {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--font-size-sm);
+  color: var(--color-on-surface-muted);
+}
+
+.description {
+  background: var(--color-surface-lowest);
+  border-radius: var(--radius-card-sm);
+  padding: var(--space-5);
+  margin-bottom: var(--space-6);
+  color: var(--color-on-surface);
+  line-height: 1.6;
+}
+
+.description h1,
+.description h2,
+.description h3 {
+  margin-top: var(--space-4);
+  margin-bottom: var(--space-2);
+  color: var(--color-on-surface);
+}
+
+.description p {
+  margin-bottom: var(--space-3);
+}
+
+.description ul,
+.description ol {
+  padding-left: var(--space-6);
+  margin-bottom: var(--space-3);
+}
+
+.description code {
+  font-size: var(--font-size-sm);
+  background: var(--color-surface-highest);
+  padding: 2px var(--space-1);
+  border-radius: var(--radius-sm);
+}
+
+.description pre {
+  background: var(--color-surface-highest);
+  padding: var(--space-4);
+  border-radius: var(--radius-lg);
+  overflow-x: auto;
+  margin-bottom: var(--space-3);
+}
+
+.description pre code {
+  background: none;
+  padding: 0;
+}
+
+.description a {
+  color: var(--color-accent);
+}
+
+.subtasksSection {
+  margin-bottom: var(--space-6);
+}
+
+.sectionTitle {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-on-surface);
+  margin-bottom: var(--space-3);
+}
+
+.subtaskList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.addSubtask {
+  margin-top: var(--space-4);
+}
+
+.status {
+  color: var(--color-on-surface-muted);
+  text-align: center;
+  padding: var(--space-8);
+}

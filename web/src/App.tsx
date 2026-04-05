@@ -16,6 +16,7 @@ const HistoryPage = lazy(() => import('./pages/HistoryPage'));
 const StreaksPage = lazy(() => import('./pages/StreaksPage'));
 const StreakDetailPage = lazy(() => import('./pages/StreakDetailPage'));
 const TasksPage = lazy(() => import('./pages/TasksPage'));
+const TaskDetailPage = lazy(() => import('./pages/TaskDetailPage'));
 const SettingsPage = lazy(() => import('./pages/SettingsPage'));
 const AdminPage = lazy(() => import('./pages/AdminPage'));
 
@@ -50,6 +51,7 @@ export default function App() {
 
               {/* Tasks */}
               <Route path="/tasks" element={<AuthGuard><TasksPage /></AuthGuard>} />
+              <Route path="/tasks/:id" element={<AuthGuard><TaskDetailPage /></AuthGuard>} />
 
               {/* Settings & Admin */}
               <Route path="/settings" element={<AuthGuard><SettingsPage /></AuthGuard>} />

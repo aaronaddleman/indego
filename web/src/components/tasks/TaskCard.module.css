@@ -1,0 +1,73 @@
+.card {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  background: var(--color-surface-lowest);
+  border-radius: var(--radius-card-sm);
+  cursor: pointer;
+  transition: box-shadow var(--transition-fast);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.completed {
+  background: var(--color-surface-low);
+}
+
+.checkbox {
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-md);
+  border: 2px solid var(--color-outline-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+  transition: all var(--transition-fast);
+}
+
+.checkbox:hover {
+  border-color: var(--color-accent);
+}
+
+.checked {
+  background: linear-gradient(135deg, var(--color-accent), var(--color-accent-light));
+  border-color: transparent;
+  color: white;
+}
+
+.checkIcon {
+  font-size: 16px;
+}
+
+.content {
+  flex: 1;
+  min-width: 0;
+}
+
+.title {
+  font-weight: var(--font-weight-medium);
+  color: var(--color-on-surface);
+  display: block;
+}
+
+.titleDone {
+  text-decoration: line-through;
+  opacity: 0.5;
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-1);
+}
+
+.dueDate {
+  font-size: var(--font-size-xs);
+  color: var(--color-on-surface-muted);
+}

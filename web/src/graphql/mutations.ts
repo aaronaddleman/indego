@@ -78,3 +78,87 @@ export const SET_ADMIN_STATUS = gql`
     }
   }
 `;
+
+// ─── Tasks ────────────────────────────────────────────────────────────────
+
+const TASK_FIELDS = gql`
+  fragment TaskMutationFields on Task {
+    id
+    title
+    description
+    listId
+    parentId
+    priority
+    dueDate
+    completed
+    completedAt
+    sortOrder
+    createdAt
+    updatedAt
+  }
+`;
+
+export const CREATE_TASK = gql`
+  ${TASK_FIELDS}
+  mutation CreateTask($input: CreateTaskInput!) {
+    createTask(input: $input) { ...TaskMutationFields }
+  }
+`;
+
+export const UPDATE_TASK = gql`
+  ${TASK_FIELDS}
+  mutation UpdateTask($id: ID!, $input: UpdateTaskInput!) {
+    updateTask(id: $id, input: $input) { ...TaskMutationFields }
+  }
+`;
+
+export const DELETE_TASK = gql`
+  mutation DeleteTask($id: ID!) {
+    deleteTask(id: $id)
+  }
+`;
+
+export const COMPLETE_TASK = gql`
+  ${TASK_FIELDS}
+  mutation CompleteTask($id: ID!) {
+    completeTask(id: $id) { ...TaskMutationFields }
+  }
+`;
+
+export const UNCOMPLETE_TASK = gql`
+  ${TASK_FIELDS}
+  mutation UncompleteTask($id: ID!) {
+    uncompleteTask(id: $id) { ...TaskMutationFields }
+  }
+`;
+
+export const REORDER_TASK = gql`
+  ${TASK_FIELDS}
+  mutation ReorderTask($id: ID!, $sortOrder: Float!) {
+    reorderTask(id: $id, sortOrder: $sortOrder) { ...TaskMutationFields }
+  }
+`;
+
+// ─── Task Lists ───────────────────────────────────────────────────────────
+
+export const CREATE_TASK_LIST = gql`
+  mutation CreateTaskList($name: String!) {
+    createTaskList(name: $name) {
+      id name isInbox sortPreference taskCount createdAt
+    }
+  }
+`;
+
+export const UPDATE_TASK_LIST = gql`
+  mutation UpdateTaskList($id: ID!, $name: String, $sortPreference: SortPreference) {
+    updateTaskList(id: $id, name: $name, sortPreference: $sortPreference) {
+      id name isInbox sortPreference taskCount createdAt
+    }
+  }
+`;
+
+export const DELETE_TASK_LIST = gql`
+  mutation DeleteTaskList($id: ID!) {
+    deleteTaskList(id: $id)
+  }
+`;
