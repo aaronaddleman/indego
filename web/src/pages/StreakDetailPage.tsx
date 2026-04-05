@@ -6,6 +6,7 @@ import { LOG_COMPLETION, UNDO_COMPLETION } from '../graphql/mutations';
 import { useStreak } from '../hooks/useStreak';
 import { getLocalDate } from '../utils/date';
 import PageShell from '../components/layout/PageShell';
+import HabitSubNav from '../components/layout/HabitSubNav';
 import CompleteButton from '../components/habits/CompleteButton';
 import HabitForm from '../components/habits/HabitForm';
 import StreakChain from '../components/streaks/StreakChain';
@@ -43,7 +44,7 @@ export default function StreakDetailPage() {
   };
 
   return (
-    <PageShell title="Streak">
+    <PageShell title="Streak" subNav={<HabitSubNav />}>
       <div className={styles.topBar}>
         <button className={styles.backBtn} onClick={() => navigate(-1)}>
           <span className="material-symbols-outlined">arrow_back</span>

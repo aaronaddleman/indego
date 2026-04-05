@@ -1,0 +1,25 @@
+.headerSection {
+  margin-bottom: var(--space-8);
+}
+
+.eyebrow {
+  font-size: 11px;
+  font-weight: var(--font-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--color-on-surface-muted);
+}
+
+.pageTitle {
+  font-size: var(--font-size-3xl);
+  font-weight: 800;
+  color: var(--color-on-surface);
+  letter-spacing: -0.02em;
+  margin-top: var(--space-1);
+}
+
+.status {
+  color: var(--color-on-surface-muted);
+  text-align: center;
+  padding: var(--space-8);
+}
