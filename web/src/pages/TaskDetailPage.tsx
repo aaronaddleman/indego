@@ -26,6 +26,7 @@ export default function TaskDetailPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [showEdit, setShowEdit] = useState(false);
+  const [showSubtaskForm, setShowSubtaskForm] = useState(false);
 
   const { data, loading, error } = useQuery(GET_TASK, { variables: { id } });
   const { data: tasksData } = useQuery(GET_TASKS);
@@ -108,13 +109,22 @@ export default function TaskDetailPage() {
           )}
 
           <div className={styles.addSubtask}>
-            <QuickAdd listId={task.listId} parentId={task.id} placeholder="Add subtask..." />
+            <div className={styles.addRow}>
+              <QuickAdd listId={task.listId} parentId={task.id} placeholder="Add subtask..." />
+              <button className={styles.subtaskFormBtn} onClick={() => setShowSubtaskForm(true)} aria-label="New subtask with details">
+                <span className="material-symbols-outlined">tune</span>
+              </button>
+            </div>
           </div>
         </>
       )}
 
       {showEdit && task && (
         <TaskForm task={task} onClose={() => setShowEdit(false)} />
+      )}
+
+      {showSubtaskForm && task && (
+        <TaskForm listId={task.listId} parentId={task.id} onClose={() => setShowSubtaskForm(false)} />
       )}
     </PageShell>
   );
